@@ -1,0 +1,55 @@
+@import "variables";
+
+[class^="heading--"] {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+}
+
+.heading--h1 {
+  font-weight: 700;
+  font-size: 36px;
+}
+
+.heading--h2 {
+  font-weight: 700;
+  font-size: 32px;
+}
+
+.heading--h3 {
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.heading--h4 {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.heading--h5 {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.heading--h6 {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.heading--light {
+  font-weight: 400;
+}
+
+.text--20 {
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.text--16 {
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.text--14 {
+  font-weight: 400;
+  font-size: 14px;
+}

@@ -1,0 +1,41 @@
+@import "variables";
+
+.block-spacing {
+  padding: {
+    left: $defaultGutter;
+    right: $defaultGutter;
+  }
+
+  @include respond(
+    (
+      max: 1500px,
+    )
+  ) {
+    padding: {
+      left: $res1500;
+      right: $res1500;
+    }
+  }
+
+  @include respond(
+    (
+      max: 768px,
+    )
+  ) {
+    padding: {
+      left: $res768;
+      right: $res768;
+    }
+  }
+
+  @include respond(
+    (
+      max: 450px,
+    )
+  ) {
+    padding: {
+      left: $res450;
+      right: $res450;
+    }
+  }
+}
