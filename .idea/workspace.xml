@@ -2,23 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aa35fef8-5de0-42a3-93e5-cdf75878e4df" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/assets/welcome-screen.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/welcome/Welcome.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/welcome/Welcome.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/welcome/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/block-spacing.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/button.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/colours.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/headings.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/index.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/respond.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/variables.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintcache" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintcache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/welcome/Welcome.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/welcome/Welcome.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +72,7 @@
       <updated>1611425887259</updated>
       <workItem from="1611425889275" duration="2076000" />
       <workItem from="1611483425914" duration="638000" />
-      <workItem from="1611769971303" duration="3645000" />
+      <workItem from="1611769971303" duration="3893000" />
     </task>
     <task id="LOCAL-00001" summary="create react app">
       <created>1611426009270</created>
@@ -108,7 +95,21 @@
       <option name="project" value="LOCAL" />
       <updated>1611483071826</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="created global styles, variables and created welcome screen">
+      <created>1611783303989</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1611783303989</updated>
+    </task>
+    <task id="LOCAL-00005" summary="added reach router">
+      <created>1611783366294</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1611783366294</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -118,17 +119,19 @@
     <MESSAGE value="create react app" />
     <MESSAGE value="added typescript" />
     <MESSAGE value="added scss" />
-    <option name="LAST_COMMIT_MESSAGE" value="added scss" />
+    <MESSAGE value="created global styles, variables and created welcome screen" />
+    <MESSAGE value="added reach router" />
+    <option name="LAST_COMMIT_MESSAGE" value="added reach router" />
   </component>
   <component name="WindowStateProjectService">
     <state x="439" y="189" key="#ESLint" timestamp="1611482355246">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="439" y="189" key="#ESLint/0.0.1680.1050@0.0.1680.1050" timestamp="1611482355246" />
-    <state x="422" y="126" key="CommitChangelistDialog2" timestamp="1611783303882">
+    <state x="422" y="126" key="CommitChangelistDialog2" timestamp="1611783366027">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="422" y="126" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1611783303882" />
+    <state x="422" y="126" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1611783366027" />
     <state x="704" y="424" key="Github.ShareDialog" timestamp="1611426718399">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
@@ -149,9 +152,9 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state width="1657" height="251" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1611782412208" />
-    <state x="439" y="264" key="Vcs.Push.Dialog.v2" timestamp="1611783309740">
+    <state x="439" y="264" key="Vcs.Push.Dialog.v2" timestamp="1611783373485">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="439" y="264" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1611783309740" />
+    <state x="439" y="264" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1611783373485" />
   </component>
 </project>
