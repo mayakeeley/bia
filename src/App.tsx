@@ -1,6 +1,6 @@
 import "./App.scss";
 import React, { useState } from "react";
-import Welcome from "./Welcome";
+import Welcome from "./welcome";
 import firebase, { provider } from "./firebase";
 
 const App = () => {
