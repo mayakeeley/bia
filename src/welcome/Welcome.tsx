@@ -6,6 +6,8 @@ import {
   Typography,
   Button,
 } from "@material-ui/core";
+import Login from "../components/Login";
+
 import image from "../assets/welcome-screen.png";
 import { noop } from "../appUtils";
 import { lavenderBlush } from "theme";
@@ -29,7 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Welcome: React.FC = () => {
+const Welcome: React.FC<{ signIn: () => void; user: any }> = ({
+  signIn,
+  user,
+}) => {
   const classes = useStyles();
   return (
     <div className={classes.welcome}>
@@ -41,6 +46,7 @@ const Welcome: React.FC = () => {
       <Button onClick={noop} variant="contained">
         Let's go
       </Button>
+      <Login signIn={signIn} user={user} />
     </div>
   );
 };

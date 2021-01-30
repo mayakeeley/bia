@@ -1,20 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import Welcome from "./welcome";
-import { makeStyles, createStyles } from "@material-ui/core";
+import "./App.scss";
+import firebase, { provider } from "./firebase";
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    root: {
-      backgroundColor: "pink",
-    },
-  })
-);
+const App: React.FC = () => {
+  const [user, setUser] = useState<firebase.User | undefined>();
 
-const App = () => {
-  const classes = useStyles();
+  const signIn = () => {
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        result.user && setUser(result.user);
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const signOut = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        setUser(undefined);
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
-    <div className={classes.root}>
-      <Welcome />
+    <div className="App">
+      <Welcome user={user} signIn={signIn} />
     </div>
   );
 };
