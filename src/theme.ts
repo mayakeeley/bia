@@ -10,26 +10,26 @@ const defaultFonts = [
 
 const headingFonts = ["Poppins", "sans-serif"].join(",");
 
-export const white = "#ffffff";
+export const white = "#FFFFFF";
 export const black = "#000000";
 export const grey = "#868686";
-export const darkPink = "#ef7d95";
-export const pink = "#f7c0cb";
-export const lightPink = "#fff3f7";
-export const blue = "#88b6ec";
-export const green = "#adcdb8";
-export const yellow = "#f6b45c";
-export const orange = "#f07a48";
+export const lavenderBlush = "#FFF3F7";
+export const azalea = "#F7C0CB";
+export const mauvelous = "#EF7D95";
+export const jordyBlue = "#88B6EC";
+export const springRain = "#ADCDB8";
+export const rajah = "#F6B45C";
+export const jaffa = "#F07A48";
 
 const textColor = black;
 const contrastText = white;
-const primaryColor = pink;
-const secondaryColor = blue;
+const primaryColor = azalea;
+const secondaryColor = jordyBlue;
 
 const theme = createMuiTheme({
   palette: {
     background: {
-      default: "#ffffff",
+      default: white,
     },
     primary: {
       main: primaryColor,
@@ -40,11 +40,11 @@ const theme = createMuiTheme({
       contrastText,
     },
     success: {
-      main: green,
+      main: springRain,
       contrastText,
     },
     error: {
-      main: orange,
+      main: jaffa,
       contrastText,
     },
     info: {
@@ -104,21 +104,21 @@ const theme = createMuiTheme({
       // h6 = Title 6
     },
     subtitle1: {
-      fontFamily: defaultFonts,
+      fontFamily: headingFonts,
       color: textColor,
       fontWeight: 400,
       fontSize: "20px",
       // subtitle1 = Title 7
     },
     subtitle2: {
-      fontFamily: defaultFonts,
+      fontFamily: headingFonts,
       color: textColor,
       fontWeight: 400,
       fontSize: "16px",
       // subtitle2 = Title 8
     },
     body1: {
-      fontFamily: defaultFonts,
+      fontFamily: headingFonts,
       color: textColor,
       fontWeight: 400,
       fontSize: "14px",
@@ -135,6 +135,20 @@ const theme = createMuiTheme({
   props: {
     MuiToolbar: {
       variant: "dense",
+    },
+  },
+  overrides: {
+    MuiButton: {
+      root: {
+        "&.MuiButton-contained": {
+          backgroundColor: jordyBlue,
+          color: white,
+          "&$hover": {
+            backgroundColor: jordyBlue,
+            color: white,
+          },
+        },
+      },
     },
   },
 });
