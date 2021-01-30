@@ -1,6 +1,4 @@
 import { createMuiTheme } from "@material-ui/core";
-import green from "@material-ui/core/colors/green";
-import red from "@material-ui/core/colors/red";
 
 const defaultFonts = [
   "Open Sans",
@@ -10,22 +8,23 @@ const defaultFonts = [
   "sans-serif",
 ].join(",");
 
-const defaultFontsLight = [
-  "Open Sans Light",
-  "Arial Light",
-  "Helvetica Neue Light",
-  "Helvetica light",
-  "sans-serif",
-].join(",");
-
 const headingFonts = ["Poppins", "sans-serif"].join(",");
 
-const drawerWidth = 225;
+export const white = "#ffffff";
+export const black = "#000000";
+export const grey = "#868686";
+export const darkPink = "#ef7d95";
+export const pink = "#f7c0cb";
+export const lightPink = "#fff3f7";
+export const blue = "#88b6ec";
+export const green = "#adcdb8";
+export const yellow = "#f6b45c";
+export const orange = "#f07a48";
 
-const textColor = "#666666";
-const contrastText = "#ffffff";
-const inputFontSize = "1.2rem";
-const secondaryColor = "#329be2";
+const textColor = black;
+const contrastText = white;
+const primaryColor = pink;
+const secondaryColor = blue;
 
 const theme = createMuiTheme({
   palette: {
@@ -33,7 +32,7 @@ const theme = createMuiTheme({
       default: "#ffffff",
     },
     primary: {
-      main: "#ee2e24",
+      main: primaryColor,
       contrastText,
     },
     secondary: {
@@ -41,16 +40,16 @@ const theme = createMuiTheme({
       contrastText,
     },
     success: {
-      main: green[600],
+      main: green,
       contrastText,
     },
     error: {
-      main: red[600],
+      main: orange,
       contrastText,
     },
     info: {
-      main: "#d3d3d3",
-      dark: "#000000",
+      main: grey,
+      dark: black,
     },
     text: {
       primary: textColor,
@@ -67,129 +66,75 @@ const theme = createMuiTheme({
       color: textColor,
       fontWeight: 700,
       fontSize: "36px",
-      // h1 should be used for Home Product Headline
+      // h1 = Title 1
     },
     h2: {
       fontFamily: headingFonts,
-      fontSize: "24px",
       color: textColor,
-      // h2 should be used for Page Headline
+      fontWeight: 700,
+      fontSize: "30px",
+      // h2 = Title 2
     },
     h3: {
       fontFamily: headingFonts,
-      fontSize: "20px",
       color: textColor,
-      // h3 should be used for Section Headlines
+      fontWeight: 700,
+      fontSize: "25px",
+      // h3 = Title 3
+    },
+    h4: {
+      fontFamily: headingFonts,
+      color: textColor,
+      fontWeight: 700,
+      fontSize: "20px",
+      // h4 = Title 4
+    },
+    h5: {
+      fontFamily: headingFonts,
+      color: textColor,
+      fontWeight: 700,
+      fontSize: "16px",
+      // h5 = Title 5
+    },
+    h6: {
+      fontFamily: headingFonts,
+      color: textColor,
+      fontWeight: 700,
+      fontSize: "14px",
+      // h6 = Title 6
     },
     subtitle1: {
-      fontFamily: defaultFontsLight,
-      fontSize: "25px",
+      fontFamily: defaultFonts,
       color: textColor,
-      // subtitle1 should be used for Large Figures
+      fontWeight: 400,
+      fontSize: "20px",
+      // subtitle1 = Title 7
     },
     subtitle2: {
       fontFamily: defaultFonts,
-      fontSize: "20px",
-      // subtitle2 should be used for Promotion Text and applied a colour subject to Field Colour
+      color: textColor,
+      fontWeight: 400,
+      fontSize: "16px",
+      // subtitle2 = Title 8
     },
     body1: {
       fontFamily: defaultFonts,
-      fontSize: "1.4rem",
       color: textColor,
-      // using rem here as that's what's used in UPP
-      // body1 should be used for body text, and used in "semi-bold" for bold body text and table headers
-    },
-    body2: {
-      fontFamily: defaultFonts,
-      fontSize: "1.2rem",
-      color: textColor,
-      // using rem here as that's what's used in UPP
-      // body2 should be used for small body text
+      fontWeight: 400,
+      fontSize: "14px",
+      // body1 = Title 9
     },
     button: {
       fontFamily: defaultFonts,
       textTransform: "none",
-      fontSize: "13px",
+      fontSize: "14px",
+      color: contrastText,
+      fontWeight: 700,
     },
   },
   props: {
     MuiToolbar: {
       variant: "dense",
-    },
-    MuiTextField: {
-      size: "small",
-      color: "secondary",
-    },
-  },
-
-  overrides: {
-    MuiAppBar: {
-      colorDefault: { backgroundColor: "#fafafa" },
-    },
-    MuiCard: {
-      root: {
-        borderTop: "#ee2e24 2px solid",
-        borderRadius: "0 0 2px 2px",
-        padding: "16px",
-      },
-    },
-    MuiOutlinedInput: {
-      notchedOutline: {
-        "border-color": "lightGrey",
-      },
-    },
-    MuiInputBase: {
-      input: {
-        fontSize: inputFontSize,
-      },
-      root: {
-        borderRadius: 4,
-        backgroundColor: "white",
-        "&.MuiOutlinedInput-root": {
-          "&:hover fieldset": {
-            borderColor: "#bdbdbd",
-          },
-          "&.Mui-focused fieldset": {
-            borderColor: secondaryColor,
-          },
-        },
-      },
-    },
-    MuiFormControl: {
-      root: {
-        borderRadius: 4,
-        backgroundColor: "white",
-        "&.MuiOutlinedInput-root": {
-          "&:hover fieldset": {
-            borderColor: "#bdbdbd",
-          },
-          "&.Mui-focused fieldset": {
-            borderColor: secondaryColor,
-          },
-        },
-      },
-    },
-    MuiInputLabel: {
-      root: {
-        fontSize: inputFontSize,
-      },
-    },
-    MuiTab: {
-      root: {
-        backgroundColor: "#f5f5f5",
-        "&$selected": {
-          backgroundColor: "#eeeeee",
-        },
-      },
-    },
-    MuiDrawer: {
-      root: {
-        width: drawerWidth,
-      },
-      paper: {
-        width: drawerWidth,
-        backgroundColor: "#e1e1e1",
-      },
     },
   },
 });
