@@ -1,16 +1,41 @@
-import "./Welcome.scss";
 import React from "react";
+import {
+  makeStyles,
+  createStyles,
+  Typography,
+  Button,
+} from "@material-ui/core";
 import image from "../assets/welcome-screen.png";
+import { noop } from "../appUtils";
 
-function Welcome() {
+const useStyles = makeStyles(() =>
+  createStyles({
+    welcome: {
+      backgroundColor: "pink",
+      minHeight: "100vh",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    image: {
+      width: "80%",
+    },
+  })
+);
+
+const Welcome = () => {
+  const classes = useStyles();
   return (
-    <div className="welcome block-spacing">
-      <h1 className="heading--h1">Welcome</h1>
-      <img className="welcome__image" src={image} alt="welcome screen" />
-      <p className="text--20">Are you ready to start your own race?</p>
-      <button className="btn--primary">Let's go</button>
+    <div className={classes.welcome}>
+      <Typography variant="h1">Welcome</Typography>
+      <img className={classes.image} src={image} alt="welcome screen" />
+      <Typography paragraph>Are you ready to start your own race?</Typography>
+      <Button onClick={noop} variant="contained">
+        Let's go
+      </Button>
     </div>
   );
-}
+};
 
 export default Welcome;

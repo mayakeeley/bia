@@ -1,13 +1,12 @@
-import "./App.scss";
 import React from "react";
 import Welcome from "./welcome";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <Welcome/>
+      <Welcome />
     </div>
   );
-}
+};
 
 export default App;
