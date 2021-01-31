@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Welcome from "./welcome";
-import "./App.scss";
 import firebase, { provider } from "./firebase";
 
 const App: React.FC = () => {
@@ -32,11 +31,7 @@ const App: React.FC = () => {
       });
   };
 
-  return (
-    <div className="App">
-      <Welcome user={user} signIn={signIn} />
-    </div>
-  );
+  return <Welcome user={user} signIn={signIn} />;
 };
 
 export default App;
