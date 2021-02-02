@@ -1,7 +1,12 @@
 import React from "react";
-import { makeStyles, createStyles, Theme, Typography } from "@material-ui/core";
-import Login from "../components/Login";
-import image from "../assets/welcome-screen.png";
+import {
+  makeStyles,
+  createStyles,
+  Theme,
+  Typography,
+  Button,
+} from "@material-ui/core";
+import image from "../../assets/welcome-screen.png";
 import { lavenderBlush } from "theme";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -23,10 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Welcome: React.FC<{ signIn: () => void; user: any }> = ({
-  signIn,
-  user,
-}) => {
+const Welcome: React.FC<{ signIn: () => void }> = ({ signIn }) => {
   const classes = useStyles();
   return (
     <div className={classes.welcome} data-testid="welcome-page">
@@ -46,7 +48,9 @@ const Welcome: React.FC<{ signIn: () => void; user: any }> = ({
       >
         Are you ready to start your own race?
       </Typography>
-      <Login signIn={signIn} user={user} />
+      <Button onClick={signIn} variant="contained" data-testid="login-button">
+        Let's go
+      </Button>
     </div>
   );
 };
