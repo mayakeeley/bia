@@ -79,7 +79,7 @@ const theme = createMuiTheme({
       fontFamily: headingFonts,
       color: textColor,
       fontWeight: 700,
-      fontSize: "25px",
+      fontSize: "24px",
       // h3 = Title 3
     },
     h4: {
