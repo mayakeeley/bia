@@ -1,9 +1,8 @@
-import "./App.scss";
 import React, { useState } from "react";
 import Welcome from "./welcome";
 import firebase, { provider } from "./firebase";
 
-const App = () => {
+const App: React.FC = () => {
   const [user, setUser] = useState<firebase.User | undefined>();
 
   const signIn = () => {
@@ -32,11 +31,7 @@ const App = () => {
       });
   };
 
-  return (
-    <div className="App">
-      <Welcome user={user} signIn={signIn} />
-    </div>
-  );
+  return <Welcome user={user} signIn={signIn} />;
 };
 
 export default App;
