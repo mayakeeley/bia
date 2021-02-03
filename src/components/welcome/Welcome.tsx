@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, FC } from "react";
 import {
   makeStyles,
   createStyles,
@@ -28,13 +28,26 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Welcome: React.FC<{ signIn: () => void }> = ({ signIn }) => {
+const Welcome: FC<{ signIn: () => void }> = ({ signIn }) => {
   const classes = useStyles();
+  const [shouldRender, setShouldRender] = useState(false);
+
+  const renderHi = () => {
+    return shouldRender && <p>Hi Mitch, you bitch</p>;
+  };
   return (
     <div className={classes.welcome} data-testid="welcome-page">
       <Typography variant="h1" data-testid="welcome-title">
         Welcome
       </Typography>
+      <Button
+        onClick={() => setShouldRender(!shouldRender)}
+        variant="contained"
+        data-testid="login-button"
+      >
+        Hi Mitch
+      </Button>
+      {renderHi()}
       <img
         className={classes.image}
         src={image}
