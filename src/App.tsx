@@ -1,3 +1,4 @@
+import CreateProfile from "pages/CreateProfile";
 import React, { useState } from "react";
 import Welcome from "./components/welcome";
 import firebase, { provider } from "./firebase";
@@ -28,8 +29,13 @@ const App: React.FC = () => {
         console.log(error);
       });
   };
+  const renderCreateProfilePage = true;
 
-  return <Welcome signIn={signIn} />;
+  return renderCreateProfilePage ? (
+    <CreateProfile />
+  ) : (
+    <Welcome signIn={signIn} />
+  );
 };
 
 export default App;
