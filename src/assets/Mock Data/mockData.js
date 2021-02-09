@@ -163,5 +163,26 @@ const mockData = {
                 {}
             ]
         }
+    ],
+
+    activities: [],
+
+    matches: [
+        {
+            matchId: 1,
+            dateOfMatch: "2021-08-02",
+            userIds: [
+                "8360",
+                "8359"
+            ],
+            messages: [
+                {
+                    messageId: 100,
+                    time: "2021-08-02 22:33GMT",
+                    messageContent: "Are we going to the pub?",
+                    userId: 8360
+                }
+            ]
+        },
     ]
 }
