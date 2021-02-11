@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   makeStyles,
   createStyles,
@@ -9,13 +9,7 @@ import {
 import image from "../../assets/welcome-screen.png";
 import { lavenderBlush } from "theme";
 import firebase, { provider } from "../../firebase";
-import {
-  HashRouter as Router,
-  Route,
-  Link,
-  Switch,
-  useHistory,
-} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,8 +30,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Welcome: React.FC = () => {
-  const [user, setUser] = useState<firebase.User | undefined>();
+const Welcome: React.FC<{
+  setUser: (user: firebase.User | undefined) => void;
+  user: firebase.User | undefined;
+}> = ({ setUser, user }) => {
   const classes = useStyles();
 
   const history = useHistory();

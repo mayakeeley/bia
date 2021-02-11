@@ -10,20 +10,21 @@ const mockData = {
             about: "I love lardy cakes.",
             activities: [
                 {
-                    activityId: skiing,
+                    activityId: "skiing",
                     level: 3
                 },
                 {
-                    activityId: hockey,
+                    activityId: "hockey",
                     level: 2
                 },
                 {
-                    activityId: running,
+                    activityId: "running",
                     level: 1
                 }
             ],
             goals: ["lose weight"],
-            users: [
+            seenUsers: [8359],
+            likedUsers: [
                 {
                     uid: 8359,
                     liked: false
@@ -40,20 +41,21 @@ const mockData = {
             about: "I love eccles cakes.",
             activities: [
                 {
-                    activityId: skiing,
+                    activityId: "skiing",
                     level: 2
                 },
                 {
-                    activityId: swimming,
+                    activityId: "swimming",
                     level: 2
                 },
                 {
-                    activityId: walking,
+                    activityId: "walking",
                     level: 2
                 }
             ],
             goals: ["make friends"],
-            users: [
+            seenUsers: [8631],
+            likedUsers: [
                 {
                     uid: 8631,
                     liked: true
@@ -70,20 +72,21 @@ const mockData = {
             about: "I love welsh cakes.",
             activities: [
                 {
-                    activityId: fencing,
+                    activityId: "fencing",
                     level: 2
                 },
                 {
-                    activityId: golf,
+                    activityId: "golf",
                     level: 1
                 },
                 {
-                    activityId: walking,
+                    activityId: "walking",
                     level: 2
                 }
             ],
             goals: ["make friends"],
-            users: [
+            seenUsers: [8631, 8632, 8630],
+            likedUsers: [
                 {
                     uid: 8631,
                     liked: true
@@ -108,20 +111,21 @@ const mockData = {
             about: "I love victoria sponge.",
             activities: [
                 {
-                    activityId: bowles,
+                    activityId: "bowles",
                     level: 2
                 },
                 {
-                    activityId: tableTennis,
+                    activityId: "tableTennis",
                     level: 1
                 },
                 {
-                    activityId: walking,
+                    activityId: "walking",
                     level: 2
                 }
             ],
             goals: ["make friends"],
-            users: [
+            seenUsers: [8631, 8632, 8359],
+            likedUsers: [
                 {
                     uid: 8631,
                     liked: false
@@ -146,20 +150,21 @@ const mockData = {
             about: "I love battenburg.",
             activities: [
                 {
-                    activityId: bowles,
+                    activityId: "bowles",
                     level: 2
                 },
                 {
-                    activityId: fencing,
+                    activityId: "fencing",
                     level: 1
                 },
                 {
-                    activityId: walking,
+                    activityId: "walking",
                     level: 2
                 }
             ],
             goals: ["make friends"],
-            users: [
+            seenUsers: [],
+            likedUsers: [
                 {}
             ]
         }
@@ -186,3 +191,5 @@ const mockData = {
         },
     ]
 }
+
+export default mockData
