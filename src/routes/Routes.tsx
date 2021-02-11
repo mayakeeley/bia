@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Welcome from "../pages/Welcome/Welcome";
 import Matches from "../pages/Matches/Matches";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import firebase from "../firebase";
 import MockData from "../assets/Mock Data/MockData";
 
@@ -18,6 +18,7 @@ const App: React.FC = () => {
           component={() => <Welcome setUser={setUser} user={user} />}
         />
         <Route
+          exact
           path="/matches"
           component={() =>
             mockUser ? (
