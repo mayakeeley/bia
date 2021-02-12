@@ -8,6 +8,8 @@ import {
 } from "@material-ui/core";
 import image from "../../assets/welcome-screen.png";
 import { lavenderBlush } from "theme";
+import firebase, { provider } from "../../firebase";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -28,8 +30,39 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Welcome: React.FC<{ signIn: () => void }> = ({ signIn }) => {
+const Welcome: React.FC<{
+  setUser: (user: firebase.User | undefined) => void;
+  user: firebase.User | undefined;
+}> = ({ setUser, user }) => {
   const classes = useStyles();
+
+  const history = useHistory();
+
+  const signIn = async () => {
+    await firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        result.user && setUser(result.user);
+        history.push("/matches");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const signOut = async () => {
+    await firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        setUser(undefined);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className={classes.welcome} data-testid="welcome-page">
       <Typography variant="h1" data-testid="welcome-title">
