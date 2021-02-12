@@ -1,11 +1,11 @@
 import React from "react";
 import Match from "../../component/Match/Match";
 import { User } from "../../types";
-import MockData from "../../assets/mockData/MockData";
+import mockData from "../../assets/MockData/MockData";
 
 const Matches: React.FC<{ user: User }> = ({ user }) => {
   // const [firstAvailableUser, setFirstAvailableUsers] = useState<User>();
-  const users = MockData.users;
+  const users = mockData.users;
 
   const availableUsers = users.filter(
     (x: User) => !user.seenUsers.includes(x.uid) && x.uid !== user.uid

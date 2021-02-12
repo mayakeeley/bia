@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="aa35fef8-5de0-42a3-93e5-cdf75878e4df" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Login.test.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Login.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/index.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/welcome/Welcome.test.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/welcome/Welcome.test.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/welcome/Welcome.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/welcome/Welcome.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/welcome/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/welcome/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Matches/Matches.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Matches/Matches.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Routes.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +25,6 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -134,52 +128,5 @@
     <MESSAGE value="created global styles, variables and created welcome screen" />
     <MESSAGE value="added reach router" />
     <option name="LAST_COMMIT_MESSAGE" value="added reach router" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="439" y="189" key="#ESLint" timestamp="1611482355246">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="439" y="189" key="#ESLint/0.0.1680.1050@0.0.1680.1050" timestamp="1611482355246" />
-    <state x="577" y="278" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1612290707415">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="577" y="278" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1612290707415" />
-    <state x="422" y="126" key="CommitChangelistDialog2" timestamp="1612290855941">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="422" y="126" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1612290855941" />
-    <state x="704" y="424" key="Github.ShareDialog" timestamp="1611426718399">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="704" y="424" key="Github.ShareDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1611426718399" />
-    <state width="1657" height="251" key="GridCell.Tab.0.bottom" timestamp="1612290908294">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state width="1657" height="251" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1612290908294" />
-    <state width="1657" height="251" key="GridCell.Tab.0.bottom/0.23.1680.949@0.23.1680.949" timestamp="1612290286285" />
-    <state width="1657" height="251" key="GridCell.Tab.0.center" timestamp="1612290908293">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state width="1657" height="251" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1612290908293" />
-    <state width="1657" height="251" key="GridCell.Tab.0.center/0.23.1680.949@0.23.1680.949" timestamp="1612290286284" />
-    <state width="1657" height="251" key="GridCell.Tab.0.left" timestamp="1612290908293">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state width="1657" height="251" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1612290908293" />
-    <state width="1657" height="251" key="GridCell.Tab.0.left/0.23.1680.949@0.23.1680.949" timestamp="1612290286283" />
-    <state width="1657" height="251" key="GridCell.Tab.0.right" timestamp="1612290908294">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state width="1657" height="251" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1612290908294" />
-    <state width="1657" height="251" key="GridCell.Tab.0.right/0.23.1680.949@0.23.1680.949" timestamp="1612290286284" />
-    <state x="439" y="264" key="Vcs.Push.Dialog.v2" timestamp="1612290877016">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="439" y="264" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1612290877016" />
-    <state x="622" y="448" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1612290311265">
-      <screen x="0" y="0" width="1680" height="1050" />
-    </state>
-    <state x="622" y="448" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1680.1050@0.0.1680.1050" timestamp="1612290311265" />
-    <state x="622" y="428" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1680.949@0.23.1680.949" timestamp="1612290253246" />
   </component>
 </project>

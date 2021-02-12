@@ -3,11 +3,11 @@ import Welcome from "../pages/Welcome/Welcome";
 import Matches from "../pages/Matches/Matches";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import firebase from "../firebase";
-import MockData from "../assets/mockData/MockData";
+import mockData from "../assets/MockData/MockData";
 
 const App: React.FC = () => {
   const [user, setUser] = useState<firebase.User | undefined>();
-  const mockUser = MockData.users.find((user) => user.uid === 8360);
+  const mockUser = mockData.users.find((user) => user.uid === 8360);
 
   return (
     <Router>
