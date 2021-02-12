@@ -3,7 +3,7 @@ import Welcome from "../pages/Welcome/Welcome";
 import Matches from "../pages/Matches/Matches";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import firebase from "../firebase";
-import MockData from "../assets/Mock Data/MockData";
+import MockData from "../assets/mockData/MockData";
 
 const App: React.FC = () => {
   const [user, setUser] = useState<firebase.User | undefined>();
