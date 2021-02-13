@@ -1,7 +1,7 @@
 import React from "react";
-import { User } from "../../models/user.model";
+import { UserModel } from "../../models/user.model";
 
-const Match: React.FC<{ user: User }> = ({ user }) => {
+const Match: React.FC<{ user: UserModel }> = ({ user }) => {
   return <article>{user.about}</article>;
 };
 

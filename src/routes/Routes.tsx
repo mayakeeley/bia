@@ -7,7 +7,7 @@ import mockData from "../assets/mockData/MockData";
 
 const App: React.FC = () => {
   const [user, setUser] = useState<firebase.User | undefined>();
-  const mockUser = mockData.users.find((user) => user.uid === 8360);
+  const mockUser = mockData.users.find((user) => user.uid === '83601A');
 
   return (
     <Router>
