@@ -1,7 +1,8 @@
-import CreateProfile from "pages/CreateProfile";
+import CreateProfile from "pages/CreateProfile/CreateProfile";
 import React, { useState } from "react";
 import Welcome from "./components/welcome";
 import firebase, { provider } from "./firebase";
+import { Router, Link } from "@reach/router";
 
 const App: React.FC = () => {
   const [user, setUser] = useState<firebase.User | undefined>();
@@ -29,7 +30,7 @@ const App: React.FC = () => {
         console.log(error);
       });
   };
-  const renderCreateProfilePage = true;
+  const renderCreateProfilePage = false;
 
   return renderCreateProfilePage ? (
     <CreateProfile />
