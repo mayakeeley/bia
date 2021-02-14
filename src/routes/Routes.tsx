@@ -3,7 +3,8 @@ import Welcome from "../pages/Welcome/Welcome";
 import Matches from "../pages/Matches/Matches";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import firebase from "../firebase";
-import mockData from "../assets/MockData/MockData";
+import mockData from "../assets/mockData/MockData.js";
+import CreateProfile from "pages/CreateProfile/CreateProfile";
 
 const App: React.FC = () => {
   const [user, setUser] = useState<firebase.User | undefined>();
@@ -23,6 +24,17 @@ const App: React.FC = () => {
           component={() =>
             mockUser ? (
               <Matches user={mockUser} />
+            ) : (
+              <Welcome setUser={setUser} user={user} />
+            )
+          }
+        />
+        <Route
+          exact
+          path="/createProfile"
+          component={() =>
+            user ? (
+              <CreateProfile user={user} />
             ) : (
               <Welcome setUser={setUser} user={user} />
             )

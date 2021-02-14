@@ -1,14 +1,8 @@
 import { createMuiTheme } from "@material-ui/core";
 
-const defaultFonts = [
-  "Open Sans",
-  "Arial",
-  "Helvetica Neue",
-  "Helvetica",
-  "sans-serif",
-].join(",");
+export const defaultFonts = ["Poppins", "sans-serif"].join(",");
 
-const headingFonts = ["Poppins", "sans-serif"].join(",");
+export const headingFonts = ["Poppins", "sans-serif"].join(",");
 
 export const white = "#FFFFFF";
 export const black = "#000000";
@@ -60,7 +54,7 @@ const theme = createMuiTheme({
       `htmlFontSize` is the font size for the <html> element, browser default is 16px, (62.5% of 16px = 10px)  
     */
     htmlFontSize: 10,
-    fontFamily: defaultFonts,
+    fontFamily: headingFonts,
     h1: {
       fontFamily: headingFonts,
       color: textColor,
@@ -125,7 +119,7 @@ const theme = createMuiTheme({
       // body1 = Title 9
     },
     button: {
-      fontFamily: defaultFonts,
+      fontFamily: headingFonts,
       textTransform: "none",
       fontSize: "14px",
       color: contrastText,
@@ -138,6 +132,31 @@ const theme = createMuiTheme({
     },
   },
   overrides: {
+    MuiCard: {
+      root: {
+        backgroundColor: jordyBlue,
+        borderRadius: "20px",
+        color: white,
+      },
+    },
+    MuiTypography: {
+      root: {
+        "&.MuiTypography-paragraph": {
+          marginBottom: "2px",
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      root: {
+        borderRadius: "20px",
+        backgroundColor: white,
+        marginBottom: "16px",
+        "&.MuiOutlinedInput-adornedStart": {
+          paddingLeft: "2px",
+        },
+      },
+    },
+
     MuiButton: {
       root: {
         "&.MuiButton-contained": {

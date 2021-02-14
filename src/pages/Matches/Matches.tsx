@@ -1,7 +1,7 @@
 import React from "react";
 import Match from "../../component/Match/Match";
 import { User } from "../../types";
-import mockData from "../../assets/MockData/MockData";
+import mockData from "../../assets/mockData/MockData.js";
 
 const Matches: React.FC<{ user: User }> = ({ user }) => {
   // const [firstAvailableUser, setFirstAvailableUsers] = useState<User>();

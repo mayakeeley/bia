@@ -37,6 +37,9 @@ const Welcome: React.FC<{
   const classes = useStyles();
 
   const history = useHistory();
+  const validUsers = ["asd"];
+  const isValidUser = (userItem?: firebase.User) =>
+    userItem && validUsers.includes(userItem.uid);
 
   const signIn = async () => {
     await firebase
@@ -44,7 +47,11 @@ const Welcome: React.FC<{
       .signInWithPopup(provider)
       .then((result) => {
         result.user && setUser(result.user);
-        history.push("/matches");
+        result.user
+          ? isValidUser(result.user)
+            ? history.push("/matches")
+            : history.push("/createProfile")
+          : history.push("/createProfile");
       })
       .catch((error) => {
         console.log(error);

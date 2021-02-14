@@ -4,105 +4,139 @@ import {
   createStyles,
   Theme,
   Typography,
-  TextField,
-  Chip,
-  Input,
-  Select,
-  MenuItem,
+  Button,
+  Grid,
 } from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import { cities } from "./cities";
-import { activites } from "./activities";
+import { v4 as uuidv4 } from "uuid";
+import firebase, { firestore } from "../../firebase";
+import { ActivityOutput, ActivityInput } from "types";
+import { lavenderBlush } from "theme";
+import { AccountCircle as AccountCircleIcon } from "@material-ui/icons";
+import BasicInfo from "./BasicInfo";
+import Activities from "./Activities";
+import Level from "./Level";
 
-const CreateProfile: React.FC = () => {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      backgroundColor: lavenderBlush,
+      height: "100vh",
+      padding: theme.spacing(2, 3),
+    },
+    button: { borderRadius: "20px", margin: "auto" },
+    buttonWrapper: { display: "flex", justifyContent: "center" },
+  })
+);
+
+const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
+  const classes = useStyles();
+  const uid = uuidv4();
   const [values, setValues] = useState({
-    firstName: "",
-    dateOfBirth: "2000-01-01",
-    selectedCity: "",
-    selectedActivities: [] as string[],
+    uid: uid,
+    name: "",
+    dob: "2000-01-01",
+    location: "",
+    activities: [] as ActivityInput[],
+    about: "",
+    goals: [] as string[],
+    photoUrl: user.photoURL || "",
+    googleuid: user.uid || "",
   });
-
+  const [activities, setActivities] = useState<ActivityOutput[]>();
+  const visitPage1 = () => {
+    setProgress(1);
+    getActivities();
+  };
   console.log(values);
+
+  const getActivities = () => {
+    firestore
+      .collection("Activities")
+      .get()
+      .then((querySnapshot) => {
+        const activities = querySnapshot.docs.map((doc) => {
+          return {
+            activityId: doc.data().activityId,
+            activityName: doc.data().activityName,
+            levels: doc.data().levels,
+          };
+        });
+        setActivities(activities);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const [progress, setProgress] = useState(0);
+
+  const renderForm = (progress: number) => {
+    switch (progress) {
+      case 0:
+      default:
+        return <BasicInfo values={values} setValues={setValues} />;
+      case 1:
+        return activities ? (
+          <Activities
+            values={values}
+            setValues={setValues}
+            activities={activities}
+          />
+        ) : (
+          <BasicInfo values={values} setValues={setValues} />
+        );
+      case 2:
+        return activities ? (
+          <Level
+            values={values}
+            setValues={setValues}
+            activities={activities}
+          />
+        ) : (
+          <BasicInfo values={values} setValues={setValues} />
+        );
+    }
+  };
+
   return (
-    <>
-      <Typography gutterBottom>First Name</Typography>
-      <TextField
-        id="firstName"
-        name="First Name"
-        inputProps={{ "data-testid": `create-profile-first-name` }}
-        variant={"outlined"}
-        size="small"
-        onChange={(e) => setValues({ ...values, firstName: e.target.value })}
-        value={values.firstName}
-      />
-      <TextField
-        id="date"
-        label="Date of Birth"
-        type="date"
-        variant={"outlined"}
-        value={values.dateOfBirth}
-        onChange={(e) => setValues({ ...values, dateOfBirth: e.target.value })}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
+    <Grid
+      container
+      justify="space-evenly"
+      direction="column"
+      className={classes.root}
+    >
+      <Grid container alignItems="center" spacing={1}>
+        <Grid item>
+          <Typography variant="h2">Create Profile</Typography>
+        </Grid>
+        <Grid item>
+          <AccountCircleIcon />
+        </Grid>
+      </Grid>
 
-      <Autocomplete
-        options={cities}
-        value={values.selectedCity}
-        autoHighlight
-        data-testid="cities-drop-down-value-selection"
-        onChange={(_, e) => setValues({ ...values, selectedCity: e || "" })}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="outlined"
-            id="country-name"
-            inputProps={{
-              ...params.inputProps,
-              "data-testid": "country-name",
-            }}
-            data-testid="country-dropdown-text-field"
-            name="City"
-            label="City"
-          />
-        )}
-      />
+      {renderForm(progress)}
 
-      {values.selectedActivities.length > 0 &&
-        values.selectedActivities.map((x) => (
-          <Chip
-            label={x}
-            onDelete={(x) =>
-              setValues({
-                ...values,
-                selectedActivities: values.selectedActivities.filter(
-                  (activity) => activity !== x
-                ),
-              })
+      <div>
+        <Grid xs={12} className={classes.buttonWrapper}>
+          <Button
+            className={classes.button}
+            variant="contained"
+            onClick={() =>
+              progress === 0 ? visitPage1() : setProgress(progress + 1)
             }
-          />
-        ))}
-      <Select
-        labelId="demo-mutiple-name-label"
-        id="demo-mutiple-name"
-        multiple
-        value={values.selectedActivities}
-        onChange={(e) =>
-          setValues({
-            ...values,
-            selectedActivities: e.target.value as string[],
-          })
-        }
-        input={<Input />}
-      >
-        {activites.map((activity) => (
-          <MenuItem key={activity} value={activity}>
-            {activity}
-          </MenuItem>
-        ))}
-      </Select>
-    </>
+          >
+            Next
+          </Button>
+        </Grid>
+        <Grid
+          xs={12}
+          className={classes.buttonWrapper}
+          onClick={() =>
+            progress === 2 ? visitPage1() : setProgress(progress - 1)
+          }
+        >
+          <Button>Back</Button>
+        </Grid>
+      </div>
+    </Grid>
   );
 };
 
