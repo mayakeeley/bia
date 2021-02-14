@@ -4,6 +4,7 @@ import ProfileIcon from '../../assets/icons/navbar-profile.svg';
 import MessageIcon from '../../assets/icons/navbar-message.svg';
 import {createStyles, makeStyles, Theme} from "@material-ui/core";
 import {lavenderBlush, mauvelous} from "../../theme";
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -35,7 +36,7 @@ const NavBar: React.FC = () => {
 	const navLinks = [{ icon: ProfileIcon, link: '/profile'}, { icon: SwipeIcon, link: '/matches'}, { icon: MessageIcon, link: '/messages'}];
 
 	const links = navLinks.map((link, index) => {
-		return <a key={index} href={link.link}><img className={classes.icon} src={link.icon} alt={link.link}/></a>
+		return <Link to={link.link} key={index}><img className={classes.icon} src={link.icon} alt={link.link}/></Link>
 	})
 
 
