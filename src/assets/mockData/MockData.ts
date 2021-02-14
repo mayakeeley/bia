@@ -131,7 +131,7 @@ export const mockData: { users: UserModel[], activities: ActivityModel[], matche
     matches: [
         {
             matchId: 'skjen97',
-            timestamp: "2021-08-02 22:30GMT",
+            timestamp: "2021-08-02T22:30",
             userIds: [
                 "83601A",
                 "83591A"
@@ -139,10 +139,20 @@ export const mockData: { users: UserModel[], activities: ActivityModel[], matche
             messages: [
                 {
                     messageId: '10ksjfelkjr0',
-                    timestamp: "2021-08-02 22:33GMT",
+                    timestamp: "2021-08-02T22:33",
                     messageContent: "Are we going to the pub?",
                     userId: '83601A'
                 }
+            ]
+        },
+        {
+            matchId: 'sksdfj834',
+            timestamp: "2021-08-02T22:30",
+            userIds: [
+                "83601A",
+                "83611A"
+            ],
+            messages: [
             ]
         },
     ]

@@ -4,6 +4,7 @@ import Matches from "../pages/Matches/Matches";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import firebase from "../firebase";
 import mockData from "../assets/mockData/MockData";
+import Messages from "../pages/Messages/Messages";
 
 const App: React.FC = () => {
   const [user, setUser] = useState<firebase.User | undefined>();
@@ -28,6 +29,17 @@ const App: React.FC = () => {
             )
           }
         />
+          <Route
+              exact
+              path="/messages"
+              component={() =>
+                  mockUser ? (
+                      <Messages user={mockUser} />
+                  ) : (
+                      <Welcome setUser={setUser} user={user} />
+                  )
+              }
+          />
       </Switch>
     </Router>
   );

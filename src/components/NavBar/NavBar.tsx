@@ -18,8 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
 			padding: theme.spacing(2, 4),
 			display: 'flex',
 			justifyContent: 'space-between',
-			borderTop: '1px solid #EF7D95',
-			margin: theme.spacing(0, 1)
+			boxShadow: '0 -1em 1em rgba(0, 0, 0, 0.08)'
 		},
 		navWrapper: {
 			backgroundColor: lavenderBlush,

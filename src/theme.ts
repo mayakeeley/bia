@@ -1,4 +1,4 @@
-import { createMuiTheme } from "@material-ui/core";
+import {createMuiTheme} from "@material-ui/core";
 
 const defaultFonts = [
   "Open Sans",
@@ -23,20 +23,17 @@ export const jaffa = "#F07A48";
 
 const textColor = black;
 const contrastText = white;
-const primaryColor = azalea;
-const secondaryColor = jordyBlue;
-
 const theme = createMuiTheme({
   palette: {
     background: {
       default: white,
     },
     primary: {
-      main: primaryColor,
+      main: azalea,
       contrastText,
     },
     secondary: {
-      main: secondaryColor,
+      main: jordyBlue,
       contrastText,
     },
     success: {
