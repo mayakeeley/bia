@@ -9,12 +9,15 @@ import {
 } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
 import firebase, { firestore } from "../../firebase";
-import { ActivityOutput, ActivityInput } from "types";
+import { ActivityOutput, ActivityInput, RelayUser } from "types";
 import { lavenderBlush } from "theme";
 import { AccountCircle as AccountCircleIcon } from "@material-ui/icons";
 import BasicInfo from "./BasicInfo";
 import Activities from "./Activities";
 import Level from "./Level";
+import Goals from "./Goals";
+import Bio from "./Bio";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
   const classes = useStyles();
   const uid = uuidv4();
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<RelayUser>({
     uid: uid,
     name: "",
     dob: "2000-01-01",
@@ -47,7 +50,21 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
     setProgress(1);
     getActivities();
   };
+  const history = useHistory();
   console.log(values);
+
+  const createUser = (user: RelayUser) => {
+    firestore
+      .collection("Users")
+      .doc()
+      .set(user)
+      .then(() => {
+        history.push("/matches");
+      })
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+      });
+  };
 
   const getActivities = () => {
     firestore
@@ -67,6 +84,20 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
   };
 
   const [progress, setProgress] = useState(0);
+
+  const getIsButtonEnabled = (progress: number, values: RelayUser) => {
+    switch (progress) {
+      case 0:
+      default:
+        return values.name.length > 0 && values.location.length > 0;
+      case 1:
+        return values.activities.length > 0 && values.activities.length <= 3;
+      case 2:
+        return true;
+      case 3:
+        return values.goals.length > 0;
+    }
+  };
 
   const renderForm = (progress: number) => {
     switch (progress) {
@@ -93,8 +124,13 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
         ) : (
           <BasicInfo values={values} setValues={setValues} />
         );
+      case 3:
+        return <Goals values={values} setValues={setValues} />;
+      case 4:
+        return <Bio values={values} setValues={setValues} />;
     }
   };
+  console.log(progress);
 
   return (
     <Grid
@@ -115,26 +151,42 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
       {renderForm(progress)}
 
       <div>
-        <Grid xs={12} className={classes.buttonWrapper}>
-          <Button
-            className={classes.button}
-            variant="contained"
+        {progress === 4 ? (
+          <Grid xs={12} className={classes.buttonWrapper}>
+            <Button
+              className={classes.button}
+              variant="contained"
+              disabled={!getIsButtonEnabled(progress, values)}
+              onClick={() => createUser(values)}
+            >
+              Submit
+            </Button>
+          </Grid>
+        ) : (
+          <Grid xs={12} className={classes.buttonWrapper}>
+            <Button
+              className={classes.button}
+              variant="contained"
+              disabled={!getIsButtonEnabled(progress, values)}
+              onClick={() =>
+                progress === 0 ? visitPage1() : setProgress(progress + 1)
+              }
+            >
+              Next
+            </Button>
+          </Grid>
+        )}
+        {progress !== 0 && (
+          <Grid
+            xs={12}
+            className={classes.buttonWrapper}
             onClick={() =>
-              progress === 0 ? visitPage1() : setProgress(progress + 1)
+              progress === 2 ? visitPage1() : setProgress(progress - 1)
             }
           >
-            Next
-          </Button>
-        </Grid>
-        <Grid
-          xs={12}
-          className={classes.buttonWrapper}
-          onClick={() =>
-            progress === 2 ? visitPage1() : setProgress(progress - 1)
-          }
-        >
-          <Button>Back</Button>
-        </Grid>
+            <Button>Back</Button>
+          </Grid>
+        )}
       </div>
     </Grid>
   );

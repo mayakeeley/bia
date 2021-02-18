@@ -76,6 +76,8 @@ const useStyles = makeStyles((theme: Theme) =>
     fabSelected: {
       backgroundColor: mauvelous,
     },
+    titleAndInfo: { padding: theme.spacing(2, 0) },
+
     autocomplete: {
       "&>div>div": {
         top: "calc(50% - 20px)",
@@ -111,13 +113,15 @@ const Level: React.FC<{
   };
   return (
     <>
-      <Typography variant="h4" gutterBottom>
-        Level
-      </Typography>
-      <Typography variant="subtitle2" className={classes.infoText}>
-        Select your level for
-        <br /> each activity
-      </Typography>
+      <div className={classes.titleAndInfo}>
+        <Typography variant="h4" gutterBottom>
+          Level
+        </Typography>
+        <Typography variant="subtitle2" className={classes.infoText}>
+          Select your level for
+          <br /> each activity
+        </Typography>
+      </div>
       <Grid container justify="space-evenly">
         {values.activities.map((activity) => (
           <Grid item className={classes.activity}>

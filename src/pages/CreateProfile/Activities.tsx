@@ -56,6 +56,8 @@ const useStyles = makeStyles((theme: Theme) =>
     fabSelected: {
       backgroundColor: mauvelous,
     },
+    titleAndInfo: { padding: theme.spacing(2, 0) },
+
     autocomplete: {
       "&>div>div": {
         top: "calc(50% - 20px)",
@@ -98,13 +100,15 @@ const Activities: React.FC<{
 
   return (
     <>
-      <Typography variant="h4" gutterBottom>
-        Activities
-      </Typography>
-      <Typography variant="subtitle2" className={classes.infoText}>
-        Choose your top three
-        <br /> ways to exercise
-      </Typography>
+      <div className={classes.titleAndInfo}>
+        <Typography variant="h4" gutterBottom>
+          Activities
+        </Typography>
+        <Typography variant="subtitle2" className={classes.infoText}>
+          Choose your top three
+          <br /> ways to exercise
+        </Typography>
+      </div>
       <div>
         <div className={classes.activitiesLine1}>
           {activitiesList1.map((activity) => (

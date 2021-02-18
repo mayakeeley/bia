@@ -24,6 +24,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     input: { borderRadius: "20px", width: "100%" },
     icon: { color: jordyBlue },
+    titleAndInfo: { padding: theme.spacing(2, 0) },
+
     autocomplete: {
       "&>div>div": {
         top: "calc(50% - 20px)",
@@ -41,13 +43,15 @@ const BasicInfo: React.FC<{
   console.log(values);
   return (
     <>
-      <Typography variant="h4" gutterBottom>
-        Name & Age
-      </Typography>
-      <Typography variant="subtitle2" className={classes.infoText}>
-        Enter your first name and
-        <br /> select your birthday
-      </Typography>
+      <div className={classes.titleAndInfo}>
+        <Typography variant="h4" gutterBottom>
+          Name & Age
+        </Typography>
+        <Typography variant="subtitle2" className={classes.infoText}>
+          Enter your first name and
+          <br /> select your birthday
+        </Typography>
+      </div>
       <Grid container className={classes.inputs}>
         <Grid item>
           <Typography paragraph>First Name</Typography>
