@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import image from "../../assets/images/welcome-screen.png";
 import { lavenderBlush } from "theme";
-import firebase, { provider } from "../../firebase";
+import firebase, { firestore, provider } from "../../firebase";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -35,11 +35,24 @@ const Welcome: React.FC<{
   user: firebase.User | undefined;
 }> = ({ setUser, user }) => {
   const classes = useStyles();
-
   const history = useHistory();
-  const validUsers = ["asd"];
-  const isValidUser = (userItem?: firebase.User) =>
-    userItem && validUsers.includes(userItem.uid);
+
+  const getIsValidUser = (user: firebase.User) => {
+    var isValid = false;
+    firestore
+      .collection("Users")
+      .get()
+      .then((querySnapshot) => {
+        const users = querySnapshot.docs.map((doc) => doc.data().googleuid);
+
+        isValid = user && users && users.includes(user.uid);
+
+        isValid ? history.push("/matches") : history.push("/createProfile");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const signIn = async () => {
     await firebase
@@ -47,11 +60,8 @@ const Welcome: React.FC<{
       .signInWithPopup(provider)
       .then((result) => {
         result.user && setUser(result.user);
-        result.user
-          ? isValidUser(result.user)
-            ? history.push("/matches")
-            : history.push("/createProfile")
-          : history.push("/createProfile");
+
+        result.user && getIsValidUser(result.user);
       })
       .catch((error) => {
         console.log(error);

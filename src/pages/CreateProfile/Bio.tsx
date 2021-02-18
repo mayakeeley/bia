@@ -1,35 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   makeStyles,
   createStyles,
   Theme,
   Typography,
   TextField,
-  InputAdornment,
   Grid,
 } from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import { cities } from "./cities";
 import { RelayUser } from "types";
-import { grey, jordyBlue } from "theme";
-import { Adjust as FillerIcon } from "@material-ui/icons";
-import HelpIcon from "@material-ui/icons/Help";
+import { grey } from "theme";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    titleAndInfo: { padding: theme.spacing(2, 0) },
     infoText: {
       color: grey,
     },
-
     input: { borderRadius: "20px", width: "100%" },
-    icon: { color: jordyBlue },
-    helpIcon: { fontSize: "24px" },
-    titleAndInfo: { padding: theme.spacing(2, 0) },
-    autocomplete: {
-      "&>div>div": {
-        top: "calc(50% - 20px)",
-      },
-    },
   })
 );
 
@@ -49,6 +36,7 @@ const Bio: React.FC<{
           <br /> introduce yourself
         </Typography>
       </div>
+
       <Grid container>
         <Grid item xs={12}>
           <TextField

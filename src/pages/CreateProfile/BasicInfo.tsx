@@ -5,14 +5,12 @@ import {
   Theme,
   Typography,
   TextField,
-  InputAdornment,
   Grid,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { cities } from "./cities";
 import { RelayUser } from "types";
 import { grey, jordyBlue } from "theme";
-import { Adjust as FillerIcon } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,7 +23,6 @@ const useStyles = makeStyles((theme: Theme) =>
     input: { borderRadius: "20px", width: "100%" },
     icon: { color: jordyBlue },
     titleAndInfo: { padding: theme.spacing(2, 0) },
-
     autocomplete: {
       "&>div>div": {
         top: "calc(50% - 20px)",
@@ -40,7 +37,6 @@ const BasicInfo: React.FC<{
 }> = ({ values, setValues }) => {
   const classes = useStyles();
 
-  console.log(values);
   return (
     <>
       <div className={classes.titleAndInfo}>
@@ -52,23 +48,18 @@ const BasicInfo: React.FC<{
           <br /> select your birthday
         </Typography>
       </div>
+
       <Grid container className={classes.inputs}>
         <Grid item>
           <Typography paragraph>First Name</Typography>
         </Grid>
+
         <Grid item xs={12}>
           <TextField
             id="firstName"
             name="First Name"
             inputProps={{
               "data-testid": `create-profile-first-name`,
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <FillerIcon className={classes.icon} />
-                </InputAdornment>
-              ),
             }}
             variant={"outlined"}
             size="small"
@@ -77,33 +68,30 @@ const BasicInfo: React.FC<{
             className={classes.input}
           />
         </Grid>
+
         <Grid item>
           <Typography paragraph>Date of Birth</Typography>
         </Grid>
+
         <Grid item xs={12}>
           <TextField
             id="date"
             type="date"
+            inputProps={{
+              "data-testid": `create-profile-dob`,
+            }}
             variant={"outlined"}
             value={values.dob}
             onChange={(e) => setValues({ ...values, dob: e.target.value })}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <FillerIcon className={classes.icon} />
-                </InputAdornment>
-              ),
-            }}
             size="small"
             className={classes.input}
           />
         </Grid>
+
         <Grid item>
           <Typography paragraph>Location</Typography>
         </Grid>
+
         <Grid item xs={12}>
           <Autocomplete
             options={cities}
@@ -119,10 +107,9 @@ const BasicInfo: React.FC<{
                 id="country-name"
                 inputProps={{
                   ...params.inputProps,
-                  "data-testid": "country-name",
+                  "data-testid": "create-profile-city",
                 }}
                 className={classes.autocomplete}
-                data-testid="country-dropdown-text-field"
                 name="City"
               />
             )}

@@ -10,15 +10,7 @@ import {
   Card,
 } from "@material-ui/core";
 import { RelayUser, ActivityOutput } from "types";
-import {
-  lavenderBlush,
-  grey,
-  jordyBlue,
-  white,
-  mauvelous,
-  black,
-  azalea,
-} from "theme";
+import { grey, white, mauvelous, black, azalea } from "theme";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,28 +32,8 @@ const useStyles = makeStyles((theme: Theme) =>
     levelTitle: { fontWeight: 800 },
     selectedCard: { padding: theme.spacing(2), color: white },
     activity: { display: "flex", flexDirection: "column" },
-    activitiesLine1: {},
-    activitiesLine2: {
-      marginLeft: theme.spacing(8),
-      position: "relative",
-      top: theme.spacing(-4),
-    },
-
     infoText: {
       color: grey,
-    },
-    inputs: {
-      marginTop: theme.spacing(4),
-    },
-    input: { borderRadius: "20px", width: "100%" },
-    icon: { color: jordyBlue },
-    fabInfo: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      "&>svg": {
-        fontSize: "24px",
-      },
     },
     fab: {
       margin: theme.spacing(2),
@@ -73,16 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: "16px",
       color: white,
     },
-    fabSelected: {
-      backgroundColor: mauvelous,
-    },
     titleAndInfo: { padding: theme.spacing(2, 0) },
-
-    autocomplete: {
-      "&>div>div": {
-        top: "calc(50% - 20px)",
-      },
-    },
   })
 );
 
@@ -95,22 +58,24 @@ const Level: React.FC<{
   const [selectedActivity, setSelectedActivity] = useState(
     values.activities[0]
   );
+
   const getActivityLevels = (activity: string) => {
     const levels =
-      activities.find((x) => x.activityName === activity)?.levels || [];
+      activities.find((option) => option.activityName === activity)?.levels ||
+      [];
     const sortedLevels = levels.sort((a, b) => (a.level > b.level ? 1 : -1));
     return sortedLevels;
   };
-  getActivityLevels(selectedActivity.activityName);
 
-  const updateLevel = (level) => {
+  const updateLevel = (level: number) => {
     const selectedActivityIndex = values.activities.findIndex(
-      (x) => x.activityName === selectedActivity.activityName
+      (option) => option.activityName === selectedActivity.activityName
     );
     values.activities[selectedActivityIndex].level = level;
     setSelectedActivity({ ...selectedActivity, level });
     setValues(values);
   };
+
   return (
     <>
       <div className={classes.titleAndInfo}>
@@ -150,23 +115,23 @@ const Level: React.FC<{
         <Typography variant="h4" className={classes.cardTitle}>
           {selectedActivity.activityName}
         </Typography>
-        {getActivityLevels(selectedActivity.activityName).map((x) => (
+        {getActivityLevels(selectedActivity.activityName).map((level) => (
           <Card
-            onClick={() => updateLevel(x.level)}
+            onClick={() => updateLevel(level.level)}
             className={`${classes.level} ${
-              x.level === selectedActivity.level && classes.selectedLevel
+              level.level === selectedActivity.level && classes.selectedLevel
             }`}
           >
             <Typography
               variant="subtitle1"
               className={classes.levelTitle}
-            >{`Level ${x.level}`}</Typography>
+            >{`Level ${level.level}`}</Typography>
             <div>
               <Typography paragraph className={classes.levelDetails}>
-                {x.frequency}
+                {level.frequency}
               </Typography>
               <Typography paragraph className={classes.levelDetails}>
-                {x.ability}
+                {level.ability}
               </Typography>
             </div>
           </Card>

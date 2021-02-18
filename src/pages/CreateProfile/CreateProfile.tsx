@@ -34,6 +34,10 @@ const useStyles = makeStyles((theme: Theme) =>
 const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
   const classes = useStyles();
   const uid = uuidv4();
+  const history = useHistory();
+
+  const [progress, setProgress] = useState(0);
+  const [activities, setActivities] = useState<ActivityOutput[]>();
   const [values, setValues] = useState<RelayUser>({
     uid: uid,
     name: "",
@@ -45,13 +49,11 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
     photoUrl: user.photoURL || "",
     googleuid: user.uid || "",
   });
-  const [activities, setActivities] = useState<ActivityOutput[]>();
+
   const visitPage1 = () => {
     setProgress(1);
     getActivities();
   };
-  const history = useHistory();
-  console.log(values);
 
   const createUser = (user: RelayUser) => {
     firestore
@@ -82,8 +84,6 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
       })
       .catch((error) => console.log(error));
   };
-
-  const [progress, setProgress] = useState(0);
 
   const getIsButtonEnabled = (progress: number, values: RelayUser) => {
     switch (progress) {
@@ -130,7 +130,6 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
         return <Bio values={values} setValues={setValues} />;
     }
   };
-  console.log(progress);
 
   return (
     <Grid

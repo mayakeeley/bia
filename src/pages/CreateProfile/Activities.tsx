@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   makeStyles,
   createStyles,
@@ -8,34 +8,20 @@ import {
   Chip,
 } from "@material-ui/core";
 import { RelayUser, ActivityOutput } from "types";
-import {
-  lavenderBlush,
-  grey,
-  jordyBlue,
-  white,
-  mauvelous,
-  headingFonts,
-} from "theme";
+import { grey, white, mauvelous } from "theme";
 import DirectionsRunRoundedIcon from "@material-ui/icons/DirectionsRunRounded";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     chip: { fontSize: "16px", margin: theme.spacing(1) },
-    activitiesLine1: {},
     activitiesLine2: {
       marginLeft: theme.spacing(8),
       position: "relative",
       top: theme.spacing(-4),
     },
-
     infoText: {
       color: grey,
     },
-    inputs: {
-      marginTop: theme.spacing(4),
-    },
-    input: { borderRadius: "20px", width: "100%" },
-    icon: { color: jordyBlue },
     fabInfo: {
       display: "flex",
       flexDirection: "column",
@@ -57,12 +43,6 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: mauvelous,
     },
     titleAndInfo: { padding: theme.spacing(2, 0) },
-
-    autocomplete: {
-      "&>div>div": {
-        top: "calc(50% - 20px)",
-      },
-    },
   })
 );
 
@@ -110,7 +90,7 @@ const Activities: React.FC<{
         </Typography>
       </div>
       <div>
-        <div className={classes.activitiesLine1}>
+        <div>
           {activitiesList1.map((activity) => (
             <Fab
               color="primary"

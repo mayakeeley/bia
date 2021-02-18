@@ -5,18 +5,16 @@ import {
   Theme,
   Typography,
   TextField,
-  InputAdornment,
   Grid,
 } from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import { cities } from "./cities";
 import { RelayUser } from "types";
-import { grey, jordyBlue } from "theme";
-import { Adjust as FillerIcon } from "@material-ui/icons";
+import { grey } from "theme";
 import HelpIcon from "@material-ui/icons/Help";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    titleAndInfo: { padding: theme.spacing(2, 0) },
+    helpIcon: { fontSize: "24px" },
     infoText: {
       color: grey,
     },
@@ -24,14 +22,6 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: theme.spacing(4),
     },
     input: { borderRadius: "20px", width: "100%" },
-    icon: { color: jordyBlue },
-    helpIcon: { fontSize: "24px" },
-    titleAndInfo: { padding: theme.spacing(2, 0) },
-    autocomplete: {
-      "&>div>div": {
-        top: "calc(50% - 20px)",
-      },
-    },
   })
 );
 
@@ -91,13 +81,6 @@ const Goals: React.FC<{
             inputProps={{
               "data-testid": `create-profile-goal-1`,
             }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <FillerIcon className={classes.icon} />
-                </InputAdornment>
-              ),
-            }}
             variant={"outlined"}
             size="small"
             onChange={(e) => setGoals({ ...goals, goal1: e.target.value })}
@@ -112,13 +95,6 @@ const Goals: React.FC<{
             inputProps={{
               "data-testid": `create-profile-goal-2`,
             }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <FillerIcon className={classes.icon} />
-                </InputAdornment>
-              ),
-            }}
             variant={"outlined"}
             size="small"
             onChange={(e) => setGoals({ ...goals, goal2: e.target.value })}
@@ -132,13 +108,6 @@ const Goals: React.FC<{
             name="Goal 3"
             inputProps={{
               "data-testid": `create-profile-goal-3`,
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <FillerIcon className={classes.icon} />
-                </InputAdornment>
-              ),
             }}
             variant={"outlined"}
             size="small"
