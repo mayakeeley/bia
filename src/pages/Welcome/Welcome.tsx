@@ -6,7 +6,7 @@ import {
   Typography,
   Button,
 } from "@material-ui/core";
-import image from "../../assets/welcome-screen.png";
+import image from "../../assets/images/welcome-screen.png";
 import { lavenderBlush } from "theme";
 import firebase, { provider } from "../../firebase";
 import { useHistory } from "react-router-dom";

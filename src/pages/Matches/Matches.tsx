@@ -1,18 +1,23 @@
 import React from "react";
-import Match from "../../component/Match/Match";
-import { User } from "../../types";
-import mockData from "../../assets/mockData/MockData.js";
+import Match from "../../components/Match/Match";
+import { UserModel } from "../../models/user.model";
+import mockData from "../../assets/mockData/MockData";
+import NavBar from "../../components/NavBar/NavBar";
 
-const Matches: React.FC<{ user: User }> = ({ user }) => {
+const Matches: React.FC<{ user: UserModel }> = ({ user }) => {
   // const [firstAvailableUser, setFirstAvailableUsers] = useState<User>();
   const users = mockData.users;
 
   const availableUsers = users.filter(
-    (x: User) => !user.seenUsers.includes(x.uid) && x.uid !== user.uid
+    (x: UserModel) => !user.users.hasOwnProperty(x.uid) && x.uid !== user.uid
   );
 
-  console.log(availableUsers);
-  return <Match user={availableUsers[0]} />;
+  return (
+    <div>
+      <Match user={availableUsers[0]} />
+      <NavBar />
+    </div>
+  );
 };
 
 export default Matches;
