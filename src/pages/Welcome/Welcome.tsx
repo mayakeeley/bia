@@ -39,6 +39,7 @@ const Welcome: React.FC<{
 
   const getIsValidUser = (user: firebase.User) => {
     var isValid = false;
+    console.log(user);
     firestore
       .collection("Users")
       .get()

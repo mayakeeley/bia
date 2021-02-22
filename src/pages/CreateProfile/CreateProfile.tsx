@@ -95,7 +95,9 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
       case 2:
         return true;
       case 3:
-        return values.goals.length > 0;
+        return values.goals.every((goal) => goal.length > 0);
+      case 4:
+        return values.about.length > 0;
     }
   };
 
@@ -151,7 +153,7 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
 
       <div>
         {progress === 4 ? (
-          <Grid xs={12} className={classes.buttonWrapper}>
+          <Grid item xs={12} className={classes.buttonWrapper}>
             <Button
               className={classes.button}
               variant="contained"
@@ -162,7 +164,7 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
             </Button>
           </Grid>
         ) : (
-          <Grid xs={12} className={classes.buttonWrapper}>
+          <Grid item xs={12} className={classes.buttonWrapper}>
             <Button
               className={classes.button}
               variant="contained"
@@ -177,6 +179,7 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
         )}
         {progress !== 0 && (
           <Grid
+            item
             xs={12}
             className={classes.buttonWrapper}
             onClick={() =>

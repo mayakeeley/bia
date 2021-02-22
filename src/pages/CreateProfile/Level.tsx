@@ -89,7 +89,7 @@ const Level: React.FC<{
       </div>
       <Grid container justify="space-evenly">
         {values.activities.map((activity) => (
-          <Grid item className={classes.activity}>
+          <Grid item className={classes.activity} key={activity.activityName}>
             <Fab
               className={classes.fab}
               onClick={() => setSelectedActivity(activity)}
@@ -121,6 +121,7 @@ const Level: React.FC<{
             className={`${classes.level} ${
               level.level === selectedActivity.level && classes.selectedLevel
             }`}
+            key={level.level}
           >
             <Typography
               variant="subtitle1"

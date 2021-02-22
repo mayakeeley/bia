@@ -97,6 +97,7 @@ const Activities: React.FC<{
               className={`${classes.fab} ${
                 isActivitySelected(activity.activityName) && classes.fabSelected
               }`}
+              key={activity.activityId}
               onClick={() => toggleActivity(activity.activityName)}
             >
               <div className={classes.fabInfo}>
@@ -116,6 +117,7 @@ const Activities: React.FC<{
                 isActivitySelected(activity.activityName) && classes.fabSelected
               }`}
               onClick={() => toggleActivity(activity.activityName)}
+              key={activity.activityId}
             >
               <div className={classes.fabInfo}>
                 <DirectionsRunRoundedIcon />
@@ -126,12 +128,13 @@ const Activities: React.FC<{
             </Fab>
           ))}
         </div>
-        {values.activities.map((x) => (
+        {values.activities.map((activity) => (
           <Chip
             color="secondary"
             className={classes.chip}
-            label={x.activityName}
-            onDelete={() => toggleActivity(x.activityName)}
+            label={activity.activityName}
+            key={activity.activityName}
+            onDelete={() => toggleActivity(activity.activityName)}
           />
         ))}
       </div>
