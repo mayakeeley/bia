@@ -100,6 +100,7 @@ const Level: React.FC<{
             </Fab>
             <Chip
               className={classes.chip}
+              onClick={() => setSelectedActivity(activity)}
               color="secondary"
               variant={
                 activity.activityName === selectedActivity.activityName
