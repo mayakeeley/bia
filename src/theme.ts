@@ -1,4 +1,4 @@
-import {createMuiTheme} from "@material-ui/core";
+import { createMuiTheme } from "@material-ui/core";
 
 const defaultFonts = [
   "Open Sans",
@@ -8,7 +8,7 @@ const defaultFonts = [
   "sans-serif",
 ].join(",");
 
-const headingFonts = ["Poppins", "sans-serif"].join(",");
+export const headingFonts = ["Poppins", "sans-serif"].join(",");
 
 export const white = "#FFFFFF";
 export const black = "#000000";
