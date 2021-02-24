@@ -84,6 +84,27 @@ const Profile: React.FC<{ user: UserModel }> = ({ user }) => {
   const users = mockdata.users;
   const classes = useStyles();
 
+  // const activitiesList = [
+  //   {
+  //     activityId: users[0].activities[0].activityId,
+  //     level: users[0].activities[0].level,
+  //   },
+  //   {
+  //     activityId: users[1].activities[1].activityId,
+  //     level: users[1].activities[1].level,
+  //   },
+  //   {
+  //     activityId: users[2].activities[2].activityId,
+  //     level: users[2].activities[2].level,
+  //   },
+  // ];
+  const activities = user.activities.map((activity, level, index) => {
+    return (
+      <div>
+        <h4 key={index}>{activity}</h4>;<p>{level}</p>
+      </div>
+    );
+  });
   return (
     <div className={classes.profileWrapper}>
       <div className={classes.profile}>
@@ -113,7 +134,6 @@ const Profile: React.FC<{ user: UserModel }> = ({ user }) => {
           <Typography variant="body1" className={classes.profileBody}>
             {users[0].about}
           </Typography>
-          <Typography variant="h4"> Activities</Typography>
 
           <Typography variant="h4"> Goals</Typography>
           <Typography variant="body1" className={classes.profileBody}>
