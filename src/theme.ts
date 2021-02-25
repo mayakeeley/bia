@@ -118,7 +118,7 @@ const theme = createMuiTheme({
       fontFamily: headingFonts,
       color: textColor,
       fontWeight: 400,
-      fontSize: "14px",
+      fontSize: "16px",
       // body1 = Title 9
     },
     button: {
