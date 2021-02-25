@@ -195,7 +195,7 @@ const Profile: React.FC<{ user: UserModel }> = ({ user }) => {
       </div>
     );
   });
-  console.log(user);
+
   return (
     <div className={classes.background}>
       <div className={classes.header}>
