@@ -14,14 +14,14 @@ import HelpIcon from "@material-ui/icons/Help";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     titleAndInfo: { padding: theme.spacing(2, 0) },
-    helpIcon: { fontSize: "24px" },
+    helpIcon: { fontSize: "2em" },
     infoText: {
       color: grey,
     },
     inputs: {
       marginTop: theme.spacing(4),
     },
-    input: { borderRadius: "20px", width: "100%" },
+    input: { borderRadius: "1.25em", width: "100%" },
   })
 );
 

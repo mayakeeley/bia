@@ -20,12 +20,12 @@ const useStyles = makeStyles((theme: Theme) =>
     inputs: {
       marginTop: theme.spacing(4),
     },
-    input: { borderRadius: "20px", width: "100%" },
+    input: { borderRadius: "1.25em", width: "100%" },
     icon: { color: jordyBlue },
     titleAndInfo: { padding: theme.spacing(2, 0) },
     autocomplete: {
       "&>div>div": {
-        top: "calc(50% - 20px)",
+        top: "calc(50% - 1.25em)",
       },
     },
   })

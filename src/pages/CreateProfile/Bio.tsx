@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
     infoText: {
       color: grey,
     },
-    input: { borderRadius: "20px", width: "100%" },
+    input: { borderRadius: "1.25em", width: "100%" },
   })
 );
 

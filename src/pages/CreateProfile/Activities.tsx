@@ -14,7 +14,7 @@ import DirectionsRunRoundedIcon from "@material-ui/icons/DirectionsRunRounded";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    chip: { fontSize: "16px", margin: theme.spacing(1) },
+    chip: { fontSize: "1em", margin: theme.spacing(1) },
 
     infoText: {
       color: grey,
@@ -24,19 +24,19 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "column",
       alignItems: "center",
       "&>svg": {
-        fontSize: "24px",
+        fontSize: "2em",
       },
     },
     fab: {
-      minWidth: "72px",
-      minHeight: "72px",
+      minWidth: "4.5em",
+      minHeight: "4.5em",
       width: "20vw",
       height: "20vw",
-      maxWidth: "120px",
-      maxHeight: "120px",
+      maxWidth: "7.5em",
+      maxHeight: "7.5em",
     },
     fabText: {
-      fontSize: "16px",
+      fontSize: "1em",
       color: white,
     },
     fabSelected: {

@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
       minHeight: "100vh",
       padding: theme.spacing(2, 3),
     },
-    button: { borderRadius: "20px", margin: "auto" },
+    button: { borderRadius: "1.25em", margin: "auto" },
     buttonWrapper: { display: "flex", justifyContent: "center" },
   })
 );
