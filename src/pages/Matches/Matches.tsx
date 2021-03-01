@@ -13,11 +13,11 @@ const Matches: React.FC<{ user: UserModel }> = ({ user }) => {
   );
 
   return (
-      <div>
+    <div>
       <Match user={availableUsers[0]} />
-      <NavBar/>
-      </div>
-      );
+      <NavBar />
+    </div>
+  );
 };
 
 export default Matches;
