@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       backgroundColor: lavenderBlush,
-      height: "100vh",
+      minHeight: "100vh",
       padding: theme.spacing(2, 3),
     },
     button: { borderRadius: "20px", margin: "auto" },

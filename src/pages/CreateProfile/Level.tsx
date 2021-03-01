@@ -14,7 +14,7 @@ import { grey, white, mauvelous, black, azalea } from "theme";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    chip: { fontSize: "16px" },
+    chip: { fontSize: "1em" },
     level: {
       backgroundColor: white,
       display: "flex",
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     cardTitle: { textAlign: "center", color: white },
     levelDetails: { textAlign: "right" },
-    levelTitle: { fontWeight: 800 },
+    levelTitle: { fontWeight: 800, whiteSpace: "nowrap" },
     selectedCard: { padding: theme.spacing(2), color: white },
     activity: { display: "flex", flexDirection: "column" },
     infoText: {
@@ -37,12 +37,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     fab: {
       margin: theme.spacing(2),
-      height: "88px",
-      width: "88px",
+      height: "5.5em",
+      width: "5.5em",
       backgroundColor: mauvelous,
     },
     fabText: {
-      fontSize: "16px",
+      fontSize: "1em",
       color: white,
     },
     titleAndInfo: { padding: theme.spacing(2, 0) },
