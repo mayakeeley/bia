@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "relay-8119b"
+    "default": "relay-8119b",
+    "relay": "relay-8119b"
   }
 }

@@ -97,7 +97,7 @@ export const mockData: { users: UserModel[], activities: ActivityModel[], matche
                     level: 2
                 }
             ],
-            goals: ["make friends"],
+            goals: ["make friends", 'make more friends', 'hope to meet people'],
             users: {'86311A': false, '86321A': true, "83591A": true},
         },
         {
@@ -126,7 +126,38 @@ export const mockData: { users: UserModel[], activities: ActivityModel[], matche
         }
     ],
 
-    activities: [],
+    activities: [
+        {
+            activityId: 'bowles',
+            activityName: 'Bowles',
+            activityIcon: '',
+            levels: [
+                { ability: 'a bit shit', frequency: 'not often' },
+                { ability: 'not quite so shit', frequency: 'sometimes'},
+                { ability: 'not shit', frequency: 'often'}
+            ]
+        },
+        {
+            activityId: 'tableTennis',
+            activityName: 'Table Tennis',
+            activityIcon: '',
+            levels: [
+                { ability: 'a bit shit', frequency: 'not often' },
+                { ability: 'not quite so shit', frequency: 'sometimes'},
+                { ability: 'not shit', frequency: 'often'}
+            ]
+        },
+        {
+            activityId: 'walking',
+            activityName: 'Walking',
+            activityIcon: '',
+            levels: [
+                { ability: 'a bit shit', frequency: 'not often' },
+                { ability: 'not quite so shit', frequency: 'sometimes'},
+                { ability: 'not shit', frequency: 'often'}
+            ]
+        }
+    ],
 
     matches: [
         {
