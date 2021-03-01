@@ -3,8 +3,28 @@ import Match from "../../components/Match/Match";
 import { UserModel } from "../../models/user.model";
 import mockData from "../../assets/mockData/MockData";
 import NavBar from "../../components/NavBar/NavBar";
+import {
+  createStyles,
+  Fab,
+  Grid,
+  makeStyles,
+  Theme,
+  Typography,
+} from "@material-ui/core";
+import { rajah, jordyBlue, white } from "theme";
+import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
+import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: { backgroundColor: jordyBlue, height: "100vh" },
+    title: { color: white, padding: theme.spacing(3, 0, 0, 3) },
+    button: { backgroundColor: rajah, color: white },
+  })
+);
 
 const Matches: React.FC<{ user: UserModel }> = ({ user }) => {
+  const classes = useStyles();
   // const [firstAvailableUser, setFirstAvailableUsers] = useState<User>();
   const users = mockData.users;
 
@@ -13,8 +33,19 @@ const Matches: React.FC<{ user: UserModel }> = ({ user }) => {
   );
 
   return (
-    <div>
+    <div className={classes.root}>
+      <Typography variant="h1" className={classes.title}>
+        Swipe
+      </Typography>
       <Match user={availableUsers[0]} />
+      <Grid container justify="space-around">
+        <Fab className={classes.button}>
+          <ClearRoundedIcon />
+        </Fab>
+        <Fab className={classes.button}>
+          <CheckRoundedIcon />
+        </Fab>
+      </Grid>
       <NavBar />
     </div>
   );
