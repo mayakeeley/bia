@@ -6,6 +6,7 @@ import {
   Typography,
   Fab,
   Chip,
+  Grid,
 } from "@material-ui/core";
 import { RelayUser, ActivityOutput } from "types";
 import { grey, white, mauvelous } from "theme";
@@ -14,11 +15,7 @@ import DirectionsRunRoundedIcon from "@material-ui/icons/DirectionsRunRounded";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     chip: { fontSize: "16px", margin: theme.spacing(1) },
-    activitiesLine2: {
-      marginLeft: theme.spacing(8),
-      position: "relative",
-      top: theme.spacing(-4),
-    },
+
     infoText: {
       color: grey,
     },
@@ -31,9 +28,12 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     fab: {
-      margin: theme.spacing(2),
-      height: "88px",
-      width: "88px",
+      minWidth: "72px",
+      minHeight: "72px",
+      width: "20vw",
+      height: "20vw",
+      maxWidth: "120px",
+      maxHeight: "120px",
     },
     fabText: {
       fontSize: "16px",
@@ -90,44 +90,50 @@ const Activities: React.FC<{
         </Typography>
       </div>
       <div>
-        <div>
+        <Grid container spacing={2} justify="center">
           {activitiesList1.map((activity) => (
-            <Fab
-              color="primary"
-              className={`${classes.fab} ${
-                isActivitySelected(activity.activityName) && classes.fabSelected
-              }`}
-              key={activity.activityId}
-              onClick={() => toggleActivity(activity.activityName)}
-            >
-              <div className={classes.fabInfo}>
-                <DirectionsRunRoundedIcon />
-                <Typography paragraph className={classes.fabText}>
-                  {activity.activityName}
-                </Typography>
-              </div>
-            </Fab>
+            <Grid item key={activity.activityId}>
+              <Fab
+                color="primary"
+                className={`${classes.fab} ${
+                  isActivitySelected(activity.activityName) &&
+                  classes.fabSelected
+                }`}
+                key={activity.activityId}
+                onClick={() => toggleActivity(activity.activityName)}
+              >
+                <div className={classes.fabInfo}>
+                  <DirectionsRunRoundedIcon />
+                  <Typography paragraph className={classes.fabText}>
+                    {activity.activityName}
+                  </Typography>
+                </div>
+              </Fab>
+            </Grid>
           ))}
-        </div>
-        <div className={classes.activitiesLine2}>
+        </Grid>
+        <Grid container spacing={2} justify="center">
           {activitiesList2.map((activity) => (
-            <Fab
-              color="primary"
-              className={`${classes.fab} ${
-                isActivitySelected(activity.activityName) && classes.fabSelected
-              }`}
-              onClick={() => toggleActivity(activity.activityName)}
-              key={activity.activityId}
-            >
-              <div className={classes.fabInfo}>
-                <DirectionsRunRoundedIcon />
-                <Typography paragraph className={classes.fabText}>
-                  {activity.activityName}
-                </Typography>
-              </div>
-            </Fab>
+            <Grid item key={activity.activityId}>
+              <Fab
+                color="primary"
+                className={`${classes.fab} ${
+                  isActivitySelected(activity.activityName) &&
+                  classes.fabSelected
+                }`}
+                onClick={() => toggleActivity(activity.activityName)}
+                key={activity.activityId}
+              >
+                <div className={classes.fabInfo}>
+                  <DirectionsRunRoundedIcon />
+                  <Typography paragraph className={classes.fabText}>
+                    {activity.activityName}
+                  </Typography>
+                </div>
+              </Fab>
+            </Grid>
           ))}
-        </div>
+        </Grid>
         {values.activities.map((activity) => (
           <Chip
             color="secondary"
