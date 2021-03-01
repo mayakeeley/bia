@@ -17,9 +17,14 @@ import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: { backgroundColor: jordyBlue, height: "100vh" },
+    root: {
+      backgroundColor: jordyBlue,
+      boxSizing: "border-box",
+      height: "100vh",
+      paddingBottom: "4.5em",
+    },
     title: { color: white, padding: theme.spacing(3, 0, 0, 3) },
-    button: { backgroundColor: rajah, color: white },
+    button: { backgroundColor: rajah, color: white, margin: "0 0 1em 0" },
   })
 );
 

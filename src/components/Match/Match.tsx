@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(2),
       position: "relative",
       bottom: theme.spacing(3),
-      height: "55vh",
+      height: "50vh",
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
