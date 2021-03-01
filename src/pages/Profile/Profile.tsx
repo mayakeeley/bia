@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 import { UserModel } from "models/user.model";
 import Navbar from "components/NavBar/NavBar";
@@ -12,7 +12,9 @@ import {
   white,
 } from "theme";
 import Settings from "assets/icons/settings.svg";
-import mockData from "assets/mockData/MockData";
+import { firestore } from "../../firebase";
+import { ActivityModel } from "models/activity.model";
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     background: {
@@ -153,11 +155,33 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Profile: React.FC<{ user: UserModel }> = ({ user }) => {
+  const [activities, setActivities] = useState<ActivityModel[]>();
   const classes = useStyles();
-  const mockActivities = mockData.activities;
-  const activities = user.activities.map((activity, index) => {
-    const activityObject = mockActivities.find(
-      (mock) => mock.activityId === activity.activityId
+
+  const getActivities = () => {
+    firestore
+      .collection("Activities")
+      .get()
+      .then((querySnapshot) => {
+        const activities = querySnapshot.docs.map((doc) => {
+          return {
+            activityId: doc.data().activityId,
+            activityName: doc.data().activityName,
+            levels: doc.data().levels,
+          };
+        });
+        setActivities(activities);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getActivities();
+  });
+
+  const mappedActivities = user.activities.map((activity, index) => {
+    const activityObject = activities?.find(
+      (data) => data.activityId === activity.activityId
     );
     return (
       <div className={classes.activity} key={index}>
@@ -250,7 +274,7 @@ const Profile: React.FC<{ user: UserModel }> = ({ user }) => {
           >
             {user.about}
           </Typography>
-          <div className={classes.activities}>{activities}</div>
+          <div className={classes.activities}>{mappedActivities}</div>
           <Typography
             className={classes.aboutHeading}
             variant="h4"

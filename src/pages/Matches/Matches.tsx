@@ -34,7 +34,7 @@ const Matches: React.FC<{ user: UserModel }> = ({ user }) => {
   const users = mockData.users;
 
   const availableUsers = users.filter(
-    (x: UserModel) => !user.users.hasOwnProperty(x.uid) && x.uid !== user.uid
+    (x: UserModel) => !user.users?.hasOwnProperty(x.uid) && x.uid !== user.uid
   );
 
   return (

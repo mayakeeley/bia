@@ -9,7 +9,6 @@ import {
 } from "@material-ui/core";
 import { v4 as uuidv4 } from "uuid";
 import firebase, { firestore } from "../../firebase";
-import { ActivityOutput, ActivityInput, RelayUser } from "types";
 import { lavenderBlush } from "theme";
 import { AccountCircle as AccountCircleIcon } from "@material-ui/icons";
 import BasicInfo from "./BasicInfo";
@@ -18,6 +17,8 @@ import Level from "./Level";
 import Goals from "./Goals";
 import Bio from "./Bio";
 import { useHistory } from "react-router-dom";
+import { ActivityModel } from "models/activity.model";
+import { UserModel } from "models/user.model";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,7 +28,13 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(2, 3),
     },
     button: { borderRadius: "1.25em", margin: "auto" },
-    buttonWrapper: { display: "flex", justifyContent: "center" },
+    buttonWrapper: {
+      display: "flex",
+      justifyContent: "center",
+    },
+    buttons: {
+      paddingTop: "1em",
+    },
   })
 );
 
@@ -37,13 +44,17 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
   const history = useHistory();
 
   const [progress, setProgress] = useState(0);
-  const [activities, setActivities] = useState<ActivityOutput[]>();
-  const [values, setValues] = useState<RelayUser>({
+  const [activities, setActivities] = useState<ActivityModel[]>();
+  const [values, setValues] = useState<UserModel>({
     uid: uid,
     name: "",
     dob: "2000-01-01",
     location: "",
-    activities: [] as ActivityInput[],
+    activities: [] as {
+      activityId: string;
+      level: number;
+      activityName: string;
+    }[],
     about: "",
     goals: [] as string[],
     photoUrl: user.photoURL || "",
@@ -55,13 +66,13 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
     getActivities();
   };
 
-  const createUser = (user: RelayUser) => {
+  const createUser = (user: UserModel) => {
     firestore
       .collection("Users")
       .doc()
       .set(user)
       .then(() => {
-        history.push("/matches");
+        history.push("/matches", user);
       })
       .catch((error) => {
         console.error("Error writing document: ", error);
@@ -85,7 +96,7 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
       .catch((error) => console.log(error));
   };
 
-  const getIsButtonEnabled = (progress: number, values: RelayUser) => {
+  const getIsButtonEnabled = (progress: number, values: UserModel) => {
     switch (progress) {
       case 0:
       default:
@@ -151,7 +162,7 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
 
       {renderForm(progress)}
 
-      <div>
+      <div className={classes.buttons}>
         {progress === 4 ? (
           <Grid item xs={12} className={classes.buttonWrapper}>
             <Button

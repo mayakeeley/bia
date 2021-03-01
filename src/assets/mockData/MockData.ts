@@ -10,6 +10,7 @@ export const mockData: {
   users: [
     {
       uid: "86311A",
+      googleuid: "86311A",
       photoUrl: "https://loremflickr.com/640/360",
       name: "Jane",
       dob: "1997-28-03",
@@ -37,6 +38,7 @@ export const mockData: {
     },
     {
       uid: "86321A",
+      googleuid: "86311A",
       photoUrl: "https://loremflickr.com/640/360",
       name: "Margot",
       dob: "1995-21-03",
@@ -64,6 +66,7 @@ export const mockData: {
     },
     {
       uid: "83591A",
+      googleuid: "86311A",
       photoUrl: "https://loremflickr.com/640/360",
       name: "Margaret",
       dob: "1996-01-06",
@@ -91,6 +94,7 @@ export const mockData: {
     },
     {
       uid: "83601A",
+      googleuid: "86311A",
       photoUrl: "https://loremflickr.com/640/360",
       name: "Maggie",
       dob: "1997-01-06",
@@ -118,6 +122,7 @@ export const mockData: {
     },
     {
       uid: "83611A",
+      googleuid: "86311A",
       photoUrl: "https://loremflickr.com/640/360",
       name: "Janet",
       dob: "1997-02-09",
@@ -150,7 +155,6 @@ export const mockData: {
     {
       activityId: "bowles",
       activityName: "Bowles",
-      activityIcon: "",
       levels: [
         { ability: "a bit shit", frequency: "not often" },
         { ability: "not quite so shit", frequency: "sometimes" },
@@ -160,7 +164,6 @@ export const mockData: {
     {
       activityId: "tableTennis",
       activityName: "Table Tennis",
-      activityIcon: "",
       levels: [
         { ability: "a bit shit", frequency: "not often" },
         { ability: "not quite so shit", frequency: "sometimes" },
@@ -170,7 +173,6 @@ export const mockData: {
     {
       activityId: "walking",
       activityName: "Walking",
-      activityIcon: "",
       levels: [
         { ability: "a bit shit", frequency: "not often" },
         { ability: "not quite so shit", frequency: "sometimes" },

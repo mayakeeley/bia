@@ -9,8 +9,8 @@ import {
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { cities } from "./cities";
-import { RelayUser } from "types";
 import { grey, jordyBlue } from "theme";
+import { UserModel } from "models/user.model";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const BasicInfo: React.FC<{
-  values: RelayUser;
-  setValues: (values: RelayUser) => void;
+  values: UserModel;
+  setValues: (values: UserModel) => void;
 }> = ({ values, setValues }) => {
   const classes = useStyles();
 
