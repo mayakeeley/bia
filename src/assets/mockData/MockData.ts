@@ -181,27 +181,58 @@ export const mockData: {
     },
   ],
 
-  matches: [
-    {
-      matchId: "skjen97",
-      timestamp: "2021-08-02T22:30",
-      userIds: ["83601A", "83591A"],
-      messages: [
+    matches: [
         {
-          messageId: "10ksjfelkjr0",
-          timestamp: "2021-08-02T22:33",
-          messageContent: "Are we going to the pub?",
-          userId: "83601A",
+            matchId: 'skjen97',
+            timestamp: "2021-08-02T22:30",
+            userIds: [
+                "83601A",
+                "83591A"
+            ],
+            messages: [
+                {
+                    messageId: '10ksjfelkjr0',
+                    timestamp: "2021-08-02T22:33",
+                    messageContent: "Are we going to the pub?",
+                    userId: '83601A'
+                },
+                {
+                    messageId: '10ksjfelkjr1',
+                    timestamp: "2021-08-02T22:35",
+                    messageContent: "spoons sound good?",
+                    userId: '83591A'
+                },
+                {
+                    messageId: '10ksjfelkjr2',
+                    timestamp: "2021-08-02T22:38",
+                    messageContent: "sure!",
+                    userId: '83601A'
+                }
+            ]
         },
-      ],
-    },
-    {
-      matchId: "sksdfj834",
-      timestamp: "2021-08-02T22:30",
-      userIds: ["83601A", "83611A"],
-      messages: [],
-    },
-  ],
-};
+        {
+            matchId: 'sksdfj834',
+            timestamp: "2021-08-02T22:30",
+            userIds: [
+                "83601A",
+                "83611A"
+            ],
+            messages: [
+                {
+                    messageId: '10ksjfelkjr4',
+                    timestamp: "2021-08-02T22:38",
+                    messageContent: "hey, how are ya?",
+                    userId: '83601A'
+                },
+                {
+                    messageId: '10ksjfelkjr5',
+                    timestamp: "2021-08-02T22:40",
+                    messageContent: "im good, you?",
+                    userId: '83611A'
+                }
+            ]
+        },
+    ]
+}
 
 export default mockData;

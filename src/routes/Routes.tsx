@@ -7,6 +7,7 @@ import CreateProfile from "pages/CreateProfile/CreateProfile";
 import mockData from "../assets/mockData/MockData";
 import Messages from "../pages/Messages/Messages";
 import Profile from "../pages/Profile/Profile";
+import Chat from "pages/Chat/Chat";
 
 const App: React.FC = () => {
   const [user, setUser] = useState<firebase.User | undefined>();
@@ -19,6 +20,17 @@ const App: React.FC = () => {
           exact
           path="/"
           component={() => <Welcome setUser={setUser} user={user} />}
+        />
+        <Route
+          exact
+          path="/chat/:id"
+          component={() =>
+            mockUser ? (
+              <Chat user={mockUser} />
+            ) : (
+              <Welcome setUser={setUser} user={user} />
+            )
+          }
         />
         <Route
           exact
