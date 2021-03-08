@@ -5,6 +5,7 @@ import {
   jordyBlue,
   lavenderBlush,
   mauvelous,
+  azalea,
   grey,
   white,
   black,
@@ -21,10 +22,10 @@ const Message: React.FC<{
       message: {
         display: "flex",
         padding: "1em",
-        width: '95%',
-        justifyContent: 'center',
+        width: "95%",
+        justifyContent: "center",
       },
-    image: {
+      image: {
         borderRadius: "50%",
         width: "4em",
         height: "4em",
@@ -32,20 +33,21 @@ const Message: React.FC<{
         marginTop: "1em",
       },
       sentMessage: {
-        '& $messageContent': {
-            backgroundColor: mauvelous,
-            borderRadius: "1em 1em 0 1em",
+        "& $messageContent": {
+          backgroundColor: mauvelous,
+          borderRadius: "1em 1em 0 1em",
         },
-        '& $image': {
-            marginLeft: '1em',
+        "& $image": {
+          marginLeft: "1em",
+          marginRight: "0",
         },
-        flexDirection: 'row-reverse',
+        flexDirection: "row-reverse",
       },
       receivedMessage: {
-          '& $messageContent': {
-               backgroundColor: lavenderBlush,
-               borderRadius: "1em 1em 1em 0",
-          }
+        "& $messageContent": {
+          backgroundColor: azalea,
+          borderRadius: "1em 1em 1em 0",
+        },
       },
       messageContent: {
         color: black,
@@ -62,11 +64,12 @@ const Message: React.FC<{
     return classes.join(" ");
   };
   return (
-    <div className={joinAllClasses(classes.message,       
-        sendingUser === user.uid
-            ? classes.sentMessage
-            : classes.receivedMessage
-        )}>
+    <div
+      className={joinAllClasses(
+        classes.message,
+        sendingUser === user.uid ? classes.sentMessage : classes.receivedMessage
+      )}
+    >
       <img
         className={classes.image}
         src={
@@ -74,11 +77,8 @@ const Message: React.FC<{
         }
         alt="user profile pic"
       />
-      <div
-        className={
-          classes.messageContent}
-      >
-        <p> {message.messageContent} </p>
+      <div className={classes.messageContent}>
+        <Typography variant="body1"> {message.messageContent} </Typography>
       </div>
     </div>
   );
