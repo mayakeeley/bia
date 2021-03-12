@@ -22,15 +22,14 @@ const Message: React.FC<{
       message: {
         display: "flex",
         padding: "1em",
-        width: "95%",
-        justifyContent: "center",
+        width: "90%",
       },
       image: {
         borderRadius: "50%",
-        width: "4em",
-        height: "4em",
+        width: "3em",
+        height: "3em",
         marginRight: "1em",
-        marginTop: "1em",
+        marginTop: "2.5em",
       },
       sentMessage: {
         "& $messageContent": {
@@ -42,17 +41,21 @@ const Message: React.FC<{
           marginRight: "0",
         },
         flexDirection: "row-reverse",
+        float: "right",
+        width: "92%",
       },
       receivedMessage: {
         "& $messageContent": {
           backgroundColor: azalea,
           borderRadius: "1em 1em 1em 0",
         },
+        width: "92%",
+        float: "left",
       },
       messageContent: {
+        display: "inline",
         color: black,
         boxShadow: "0.1em 0.25em 0.25em rgba(0, 0, 0, 0.08)",
-        display: "flex",
         padding: "1em",
         width: "85%",
       },
@@ -60,6 +63,10 @@ const Message: React.FC<{
   );
   const classes = useStyles();
   const sendingUser = message.userId;
+  const date = new Date(message.timestamp).toLocaleTimeString(undefined, {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
   const joinAllClasses = (...classes) => {
     return classes.join(" ");
   };
@@ -78,7 +85,10 @@ const Message: React.FC<{
         alt="user profile pic"
       />
       <div className={classes.messageContent}>
-        <Typography variant="body1"> {message.messageContent} </Typography>
+        <Typography variant="body2"> {message.messageContent} </Typography>
+        <Typography variant="body1" style={{ float: "right" }}>
+          {date}
+        </Typography>
       </div>
     </div>
   );

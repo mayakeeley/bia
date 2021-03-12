@@ -4,19 +4,21 @@ import {
   Button,
   createStyles,
   Grid,
+  Icon,
+  Input,
   Link,
   makeStyles,
   TextField,
   Theme,
   Typography,
 } from "@material-ui/core";
-import { jordyBlue, white, lavenderBlush } from "../../theme";
+import { jordyBlue, white, lavenderBlush, black, mauvelous } from "../../theme";
 import { UserModel } from "../../models/user.model";
 import mockData from "../../assets/mockData/MockData";
 import Message from "components/Message/Message";
 import PhoneIcon from "../../assets/icons/phone-call.svg";
 import VideoCameraIcon from "../../assets/icons/video-camera.svg";
-import SendArrowIcon from "../../assets/icons/forward-arrow.svg";
+import SendArrowIcon from "../../assets/icons/send-button.svg";
 import BackArrowIcon from "../../assets/icons/back-arrow.svg";
 import WhistleIcon from "../../assets/icons/whistle.svg";
 import { useParams } from "react-router-dom";
@@ -30,11 +32,13 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
     createStyles({
       wrapper: {
         backgroundColor: jordyBlue,
-        maxHeight: "100%",
-        maxWidth: "100%",
+      },
+      heading: {
+        display: "contents",
+        width: "fit-content",
       },
       body: {
-        maxWidth: "100%",
+        width: "100%",
         backgroundColor: lavenderBlush,
         marginTop: "4em",
         marginRight: "0",
@@ -45,8 +49,9 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
         color: white,
       },
       messages: {
-        paddingLeft: "0",
-        paddingRight: "0",
+        width: "100%",
+        paddingLeft: "1em",
+        paddingRight: "1em",
       },
       videoButton: {
         borderRadius: "50%",
@@ -63,9 +68,22 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
         backgroundColor: "orange",
         backgroundPosition: "50% 50%",
       },
+      whistleIconButton: {
+        width: "1.5em",
+        height: "1.5em",
+        float: "right",
+        marginTop: "-1.8em",
+      },
       whistleIcon: {
         width: "1.5em",
         height: "1.5em",
+      },
+      phoneIconButton: {
+        width: "1.5em",
+        height: "1.5em",
+        float: "right",
+        marginTop: "-1.8em",
+        marginRight: "2.5em",
       },
       phoneIcon: {
         width: "1.5em",
@@ -74,6 +92,15 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
       sendArrow: {
         width: "2em",
         height: "2em",
+        fill: mauvelous,
+      },
+      sendButton: {
+        margin: "0.5em",
+        height: "auto",
+        float: "right",
+      },
+      backArrowIconButton: {
+        marginBottom: "-0.5em",
       },
       backArrowIcon: {
         width: "1.5em",
@@ -82,11 +109,22 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
         marginBottom: "-1.8em",
         marginLeft: "0.75em",
       },
+      messageWrapper: {
+        width: "100%",
+        justifyContent: "center",
+      },
       sendMessage: {
-        //maxWidth: "95%",
+        width: "95%",
+        backgroundColor: white,
+        border: "1px solid",
+        borderColor: mauvelous,
+        borderRadius: "1em",
+        margin: "4em auto 2em",
       },
       messageInput: {
-        //maxWidth: "80%",
+        width: "80%",
+        height: "100%",
+        padding: "0.5em 1em",
       },
     })
   );
@@ -101,6 +139,7 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
 
   const [messages, setMessages] = useState<MessageModel[]>([]);
   const [message, setMessage] = useState<MessageModel>({
+    // make random uuid
     messageId: "10ksjfelkjj6",
     timestamp: "",
     messageContent: "",
@@ -121,22 +160,31 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
 
   return (
     <div className={classes.wrapper}>
-      <Button onClick={() => history.goBack()}>
-        <img
-          src={BackArrowIcon}
-          alt="Back arrow icon"
-          className={classes.backArrowIcon}
-        />
-      </Button>
-      <Typography variant="h3" className={classes.title}>
-        {chattingWithUser?.name}
-      </Typography>
-      <img
-        src={WhistleIcon}
-        alt="whistle icon"
-        className={classes.whistleIcon}
-      />
-      <img src={PhoneIcon} alt="call icon" className={classes.phoneIcon} />
+      <div className={classes.heading}>
+        <Button
+          onClick={() => history.goBack()}
+          className={classes.backArrowIconButton}
+        >
+          <img
+            src={BackArrowIcon}
+            alt="Back arrow icon"
+            className={classes.backArrowIcon}
+          />
+        </Button>
+        <Typography variant="h3" className={classes.title}>
+          {chattingWithUser?.name}
+        </Typography>
+        <Button className={classes.whistleIconButton}>
+          <img
+            src={WhistleIcon}
+            alt="whistle icon"
+            className={classes.whistleIcon}
+          />
+        </Button>
+        <Button className={classes.phoneIconButton}>
+          <img src={PhoneIcon} alt="call icon" className={classes.phoneIcon} />
+        </Button>
+      </div>
       <Grid
         container
         direction="column"
@@ -167,32 +215,35 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
             );
           })}
         </Grid>
-        <Grid item xs={12} className={classes.sendMessage}>
-          <TextField
-            className={classes.messageInput}
-            id="message"
-            name="Message"
-            inputProps={{
-              "data-testid": `create-profile-goal-1`,
-            }}
-            variant={"outlined"}
-            size="small"
-            value={message?.messageContent}
-            onChange={(e) =>
-              setMessage({
-                ...message,
-                timestamp: Date.now().toString(),
-                messageContent: e.target.value,
-              })
-            }
-          />
-          <Button onClick={sendMessage}>
-            <img
-              src={SendArrowIcon}
-              alt="send button icon"
-              className={classes.sendArrow}
+        <Grid item xs={12} className={classes.messageWrapper}>
+          <div className={classes.sendMessage}>
+            <Input
+              className={classes.messageInput}
+              id="message"
+              name="Message"
+              placeholder="Type message here..."
+              disableUnderline={true}
+              value={message?.messageContent}
+              onChange={(e) =>
+                setMessage({
+                  ...message,
+                  timestamp: new Date(Date.now()).toISOString(),
+                  messageContent: e.target.value,
+                })
+              }
             />
-          </Button>
+            <Button
+              color="default"
+              onClick={sendMessage}
+              className={classes.sendButton}
+            >
+              <img
+                src={SendArrowIcon}
+                alt="send button icon"
+                className={classes.sendArrow}
+              />
+            </Button>
+          </div>
         </Grid>
       </Grid>
     </div>
