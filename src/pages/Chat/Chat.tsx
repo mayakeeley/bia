@@ -4,15 +4,12 @@ import {
   Button,
   createStyles,
   Grid,
-  Icon,
   Input,
-  Link,
   makeStyles,
-  TextField,
   Theme,
   Typography,
 } from "@material-ui/core";
-import { jordyBlue, white, lavenderBlush, black, mauvelous } from "../../theme";
+import { jordyBlue, white, lavenderBlush, mauvelous } from "../../theme";
 import { UserModel } from "../../models/user.model";
 import mockData from "../../assets/mockData/MockData";
 import Message from "components/Message/Message";
@@ -60,6 +57,9 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
         textAlign: "center",
         marginTop: "-3em",
         marginBottom: "4em",
+        // backgroundImage: `url(${VideoCameraIcon})`,
+        // backgroundPosition: "center",
+        // backgroundColor: "orange",
       },
       videoImageIcon: {
         borderRadius: "50%",
@@ -95,7 +95,7 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
         fill: mauvelous,
       },
       sendButton: {
-        margin: "0.5em",
+        margin: "0.5em 0",
         height: "auto",
         float: "right",
       },

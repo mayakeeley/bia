@@ -1,15 +1,6 @@
-import mockData from "assets/mockData/MockData";
 import React from "react";
 import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
-import {
-  jordyBlue,
-  lavenderBlush,
-  mauvelous,
-  azalea,
-  grey,
-  white,
-  black,
-} from "../../theme";
+import { mauvelous, azalea, black } from "../../theme";
 import { UserModel } from "../../models/user.model";
 
 const Message: React.FC<{
