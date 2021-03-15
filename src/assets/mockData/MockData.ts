@@ -13,7 +13,7 @@ export const mockData: {
       googleuid: "86311A",
       photoUrl: "https://loremflickr.com/640/360",
       name: "Jane",
-      dob: "1997-28-03",
+      dob: "1997-03-03",
       location: "Manchester",
       about: "I love lardy cakes.",
       activities: [
@@ -41,7 +41,7 @@ export const mockData: {
       googleuid: "86311A",
       photoUrl: "https://loremflickr.com/640/360",
       name: "Margot",
-      dob: "1995-21-03",
+      dob: "1995-03-21",
       location: "Manchester",
       about: "I love eccles cakes.",
       activities: [
