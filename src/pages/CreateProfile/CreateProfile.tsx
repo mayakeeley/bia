@@ -19,6 +19,7 @@ import Bio from "./Bio";
 import { useHistory } from "react-router-dom";
 import { ActivityModel } from "models/activity.model";
 import { UserModel } from "models/user.model";
+import { useBiaUserContext } from "AppContext";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,6 +43,7 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
   const classes = useStyles();
   const uid = uuidv4();
   const history = useHistory();
+  const { setBiaUser } = useBiaUserContext();
 
   const [progress, setProgress] = useState(0);
   const [activities, setActivities] = useState<ActivityModel[]>();
@@ -72,6 +74,7 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
       .doc()
       .set(user)
       .then(() => {
+        setBiaUser(user);
         history.push("/matches", user);
       })
       .catch((error) => {

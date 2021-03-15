@@ -14,6 +14,7 @@ import {
 import { rajah, jordyBlue, white } from "theme";
 import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
 import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
+import { useBiaUserContext } from "AppContext";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -28,13 +29,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Matches: React.FC<{ user: UserModel }> = ({ user }) => {
+const Matches: React.FC = () => {
   const classes = useStyles();
-  // const [firstAvailableUser, setFirstAvailableUsers] = useState<User>();
   const users = mockData.users;
+  const { biaUser } = useBiaUserContext();
 
   const availableUsers = users.filter(
-    (x: UserModel) => !user.users?.hasOwnProperty(x.uid) && x.uid !== user.uid
+    (x: UserModel) =>
+      biaUser && !biaUser.users?.hasOwnProperty(x.uid) && x.uid !== biaUser.uid
   );
 
   return (
