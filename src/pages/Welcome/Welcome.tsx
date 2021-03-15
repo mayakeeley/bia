@@ -10,6 +10,7 @@ import image from "../../assets/images/welcome-screen.png";
 import { lavenderBlush } from "theme";
 import firebase, { firestore, provider } from "../../firebase";
 import { useHistory } from "react-router-dom";
+import { RelayUser } from "types";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,6 +37,10 @@ const Welcome: React.FC<{
 }> = ({ setUser, user }) => {
   const classes = useStyles();
   const history = useHistory();
+
+  const [relayUser, setRelayUser] = React.useState<RelayUser>();
+
+  console.log(user);
 
   const getIsValidUser = (user: firebase.User) => {
     var isValid = false;
