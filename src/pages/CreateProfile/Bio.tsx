@@ -7,8 +7,8 @@ import {
   TextField,
   Grid,
 } from "@material-ui/core";
-import { RelayUser } from "types";
 import { grey } from "theme";
+import { UserModel } from "models/user.model";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -16,13 +16,13 @@ const useStyles = makeStyles((theme: Theme) =>
     infoText: {
       color: grey,
     },
-    input: { borderRadius: "20px", width: "100%" },
+    input: { borderRadius: "1.25em", width: "100%" },
   })
 );
 
 const Bio: React.FC<{
-  values: RelayUser;
-  setValues: (values: RelayUser) => void;
+  values: UserModel;
+  setValues: (values: UserModel) => void;
 }> = ({ values, setValues }) => {
   const classes = useStyles();
 

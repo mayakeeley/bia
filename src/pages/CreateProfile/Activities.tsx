@@ -8,13 +8,14 @@ import {
   Chip,
   Grid,
 } from "@material-ui/core";
-import { RelayUser, ActivityOutput } from "types";
 import { grey, white, mauvelous } from "theme";
 import DirectionsRunRoundedIcon from "@material-ui/icons/DirectionsRunRounded";
+import { UserModel } from "models/user.model";
+import { ActivityModel } from "models/activity.model";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    chip: { fontSize: "16px", margin: theme.spacing(1) },
+    chip: { fontSize: "1em", margin: theme.spacing(1) },
 
     infoText: {
       color: grey,
@@ -24,19 +25,19 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "column",
       alignItems: "center",
       "&>svg": {
-        fontSize: "24px",
+        fontSize: "2em",
       },
     },
     fab: {
-      minWidth: "72px",
-      minHeight: "72px",
+      minWidth: "4.5em",
+      minHeight: "4.5em",
       width: "20vw",
       height: "20vw",
-      maxWidth: "120px",
-      maxHeight: "120px",
+      maxWidth: "7.5em",
+      maxHeight: "7.5em",
     },
     fabText: {
-      fontSize: "16px",
+      fontSize: "1em",
       color: white,
     },
     fabSelected: {
@@ -47,9 +48,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Activities: React.FC<{
-  values: RelayUser;
-  setValues: (values: RelayUser) => void;
-  activities: ActivityOutput[];
+  values: UserModel;
+  setValues: (values: UserModel) => void;
+  activities: ActivityModel[];
 }> = ({ values, setValues, activities }) => {
   const classes = useStyles();
 
@@ -61,21 +62,35 @@ const Activities: React.FC<{
   const activitiesList1 = activities.slice(0, cutPoint);
   const activitiesList2 = activities.slice(cutPoint);
 
-  const isActivitySelected = (activityName) =>
-    values.activities.filter((x) => x.activityName === activityName).length > 0;
+  const isActivitySelected = (activityId) =>
+    values.activities.findIndex(
+      (activity) => activity.activityId === activityId
+    ) !== -1;
 
-  const toggleActivity = (activityName: string) => {
-    isActivitySelected(activityName)
-      ? setValues({
-          ...values,
-          activities: values.activities.filter(
-            (activity) => activity.activityName !== activityName
-          ),
-        })
-      : setValues({
-          ...values,
-          activities: [...values.activities, { activityName, level: 1 }],
-        });
+  const toggleActivity = (activityId: string) => {
+    const activity = activities.find(
+      (activity) => activity.activityId === activityId
+    );
+    if (activity) {
+      isActivitySelected(activityId)
+        ? setValues({
+            ...values,
+            activities: values.activities.filter(
+              (valueActivity) => valueActivity.activityId !== activityId
+            ),
+          })
+        : setValues({
+            ...values,
+            activities: [
+              ...values.activities,
+              {
+                activityId: activity.activityId,
+                activityName: activity.activityName,
+                level: 1,
+              },
+            ],
+          });
+    }
   };
 
   return (
@@ -86,7 +101,9 @@ const Activities: React.FC<{
         </Typography>
         <Typography variant="subtitle2" className={classes.infoText}>
           Choose your top three
-          <br /> ways to exercise
+        </Typography>
+        <Typography variant="subtitle2" className={classes.infoText}>
+          ways to exercise
         </Typography>
       </div>
       <div>
@@ -96,11 +113,10 @@ const Activities: React.FC<{
               <Fab
                 color="primary"
                 className={`${classes.fab} ${
-                  isActivitySelected(activity.activityName) &&
-                  classes.fabSelected
+                  isActivitySelected(activity.activityId) && classes.fabSelected
                 }`}
                 key={activity.activityId}
-                onClick={() => toggleActivity(activity.activityName)}
+                onClick={() => toggleActivity(activity.activityId)}
               >
                 <div className={classes.fabInfo}>
                   <DirectionsRunRoundedIcon />
@@ -121,7 +137,7 @@ const Activities: React.FC<{
                   isActivitySelected(activity.activityName) &&
                   classes.fabSelected
                 }`}
-                onClick={() => toggleActivity(activity.activityName)}
+                onClick={() => toggleActivity(activity.activityId)}
                 key={activity.activityId}
               >
                 <div className={classes.fabInfo}>
@@ -140,7 +156,7 @@ const Activities: React.FC<{
             className={classes.chip}
             label={activity.activityName}
             key={activity.activityName}
-            onDelete={() => toggleActivity(activity.activityName)}
+            onDelete={() => toggleActivity(activity.activityId)}
           />
         ))}
       </div>

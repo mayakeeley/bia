@@ -9,12 +9,13 @@ import {
   Grid,
   Card,
 } from "@material-ui/core";
-import { RelayUser, ActivityOutput } from "types";
 import { grey, white, mauvelous, black, azalea } from "theme";
+import { UserModel } from "models/user.model";
+import { ActivityModel } from "models/activity.model";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    chip: { fontSize: "16px" },
+    chip: { fontSize: "1em" },
     level: {
       backgroundColor: white,
       display: "flex",
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     cardTitle: { textAlign: "center", color: white },
     levelDetails: { textAlign: "right" },
-    levelTitle: { fontWeight: 800 },
+    levelTitle: { fontWeight: 800, whiteSpace: "nowrap" },
     selectedCard: { padding: theme.spacing(2), color: white },
     activity: { display: "flex", flexDirection: "column" },
     infoText: {
@@ -37,39 +38,39 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     fab: {
       margin: theme.spacing(2),
-      height: "88px",
-      width: "88px",
+      height: "5.5em",
+      width: "5.5em",
       backgroundColor: mauvelous,
     },
     fabText: {
-      fontSize: "16px",
+      fontSize: "1em",
       color: white,
     },
     titleAndInfo: { padding: theme.spacing(2, 0) },
+    container: { paddingBottom: "1em" },
   })
 );
 
 const Level: React.FC<{
-  values: RelayUser;
-  setValues: (values: RelayUser) => void;
-  activities: ActivityOutput[];
+  values: UserModel;
+  setValues: (values: UserModel) => void;
+  activities: ActivityModel[];
 }> = ({ values, setValues, activities }) => {
   const classes = useStyles();
   const [selectedActivity, setSelectedActivity] = useState(
     values.activities[0]
   );
 
-  const getActivityLevels = (activity: string) => {
-    const levels =
-      activities.find((option) => option.activityName === activity)?.levels ||
-      [];
-    const sortedLevels = levels.sort((a, b) => (a.level > b.level ? 1 : -1));
-    return sortedLevels;
+  const getActivityLevels = (activityId: string) => {
+    return (
+      activities.find((option) => option.activityId === activityId)?.levels ||
+      []
+    );
   };
 
   const updateLevel = (level: number) => {
     const selectedActivityIndex = values.activities.findIndex(
-      (option) => option.activityName === selectedActivity.activityName
+      (option) => option.activityId === selectedActivity.activityId
     );
     values.activities[selectedActivityIndex].level = level;
     setSelectedActivity({ ...selectedActivity, level });
@@ -87,7 +88,7 @@ const Level: React.FC<{
           <br /> each activity
         </Typography>
       </div>
-      <Grid container justify="space-evenly">
+      <Grid className={classes.container} container justify="space-evenly">
         {values.activities.map((activity) => (
           <Grid item className={classes.activity} key={activity.activityName}>
             <Fab
@@ -116,18 +117,18 @@ const Level: React.FC<{
         <Typography variant="h4" className={classes.cardTitle}>
           {selectedActivity.activityName}
         </Typography>
-        {getActivityLevels(selectedActivity.activityName).map((level) => (
+        {getActivityLevels(selectedActivity.activityId).map((level, index) => (
           <Card
-            onClick={() => updateLevel(level.level)}
+            onClick={() => updateLevel(index + 1)}
             className={`${classes.level} ${
-              level.level === selectedActivity.level && classes.selectedLevel
+              index + 1 === selectedActivity.level && classes.selectedLevel
             }`}
-            key={level.level}
+            key={index + 1}
           >
             <Typography
               variant="subtitle1"
               className={classes.levelTitle}
-            >{`Level ${level.level}`}</Typography>
+            >{`Level ${index + 1}`}</Typography>
             <div>
               <Typography paragraph className={classes.levelDetails}>
                 {level.frequency}

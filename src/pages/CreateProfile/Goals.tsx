@@ -7,27 +7,27 @@ import {
   TextField,
   Grid,
 } from "@material-ui/core";
-import { RelayUser } from "types";
 import { grey } from "theme";
 import HelpIcon from "@material-ui/icons/Help";
+import { UserModel } from "models/user.model";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     titleAndInfo: { padding: theme.spacing(2, 0) },
-    helpIcon: { fontSize: "24px" },
+    helpIcon: { fontSize: "2em" },
     infoText: {
       color: grey,
     },
     inputs: {
       marginTop: theme.spacing(4),
     },
-    input: { borderRadius: "20px", width: "100%" },
+    input: { borderRadius: "1.25em", width: "100%" },
   })
 );
 
 const Goals: React.FC<{
-  values: RelayUser;
-  setValues: (values: RelayUser) => void;
+  values: UserModel;
+  setValues: (values: UserModel) => void;
 }> = ({ values, setValues }) => {
   const classes = useStyles();
 

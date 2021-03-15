@@ -9,8 +9,8 @@ import {
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { cities } from "./cities";
-import { RelayUser } from "types";
 import { grey, jordyBlue } from "theme";
+import { UserModel } from "models/user.model";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,20 +20,20 @@ const useStyles = makeStyles((theme: Theme) =>
     inputs: {
       marginTop: theme.spacing(4),
     },
-    input: { borderRadius: "20px", width: "100%" },
+    input: { borderRadius: "1.25em", width: "100%" },
     icon: { color: jordyBlue },
     titleAndInfo: { padding: theme.spacing(2, 0) },
     autocomplete: {
       "&>div>div": {
-        top: "calc(50% - 20px)",
+        top: "calc(50% - 1.25em)",
       },
     },
   })
 );
 
 const BasicInfo: React.FC<{
-  values: RelayUser;
-  setValues: (values: RelayUser) => void;
+  values: UserModel;
+  setValues: (values: UserModel) => void;
 }> = ({ values, setValues }) => {
   const classes = useStyles();
 
