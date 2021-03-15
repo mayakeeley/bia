@@ -13,6 +13,7 @@ import {
 } from "theme";
 import Settings from "assets/icons/settings.svg";
 import mockData from "assets/mockData/MockData";
+import { AppContextConsumer } from "contexts/AppContext";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     background: {
@@ -197,72 +198,76 @@ const Profile: React.FC<{ user: UserModel }> = ({ user }) => {
   });
 
   return (
-    <div className={classes.background}>
-      <div className={classes.header}>
-        <div className={classes.headerWrapper}>
-          <Typography
-            className={classes.light}
-            variant="h3"
-            data-testid="profile-title"
-          >
-            Profile
-          </Typography>
-          <img className={classes.icon} src={ProfileIcon} alt="profile" />
+    <AppContextConsumer>
+      {(appContext) => (
+        <div className={classes.background}>
+          <div className={classes.header}>
+            <div className={classes.headerWrapper}>
+              <Typography
+                className={classes.light}
+                variant="h3"
+                data-testid="profile-title"
+              >
+                Profile
+              </Typography>
+              <img className={classes.icon} src={ProfileIcon} alt="profile" />
+            </div>
+            <button className={classes.settingsButton}>
+              <img className={classes.settings} src={Settings} alt="settings" />
+            </button>
+          </div>
+          <div className={classes.tab}>
+            <div className={classes.blob}>
+              <img
+                className={classes.photo}
+                src={user.photoUrl}
+                alt="user profile"
+              />
+              <Typography
+                className={classes.light}
+                variant="h3"
+                data-testid="profile-title"
+              >
+                {user.name}
+              </Typography>
+              <Typography
+                className={classes.location}
+                variant="subtitle2"
+                data-testid="profile-subtitle"
+              >
+                {user.location}
+              </Typography>
+            </div>
+            <div className={classes.about}>
+              <Typography
+                className={classes.aboutHeading}
+                variant="h4"
+                data-testid="profile-title"
+              >
+                About
+              </Typography>
+              <Typography
+                className={classes.grey}
+                variant="body1"
+                data-testid="profile-about"
+              >
+                {user.about}
+              </Typography>
+              <div className={classes.activities}>{activities}</div>
+              <Typography
+                className={classes.aboutHeading}
+                variant="h4"
+                data-testid="profile-title"
+              >
+                Goals
+                <div className={classes.goals}>{goals}</div>
+              </Typography>
+            </div>
+          </div>
+          <Navbar />
         </div>
-        <button className={classes.settingsButton}>
-          <img className={classes.settings} src={Settings} alt="settings" />
-        </button>
-      </div>
-      <div className={classes.tab}>
-        <div className={classes.blob}>
-          <img
-            className={classes.photo}
-            src={user.photoUrl}
-            alt="user profile"
-          />
-          <Typography
-            className={classes.light}
-            variant="h3"
-            data-testid="profile-title"
-          >
-            {user.name}
-          </Typography>
-          <Typography
-            className={classes.location}
-            variant="subtitle2"
-            data-testid="profile-subtitle"
-          >
-            {user.location}
-          </Typography>
-        </div>
-        <div className={classes.about}>
-          <Typography
-            className={classes.aboutHeading}
-            variant="h4"
-            data-testid="profile-title"
-          >
-            About
-          </Typography>
-          <Typography
-            className={classes.grey}
-            variant="body1"
-            data-testid="profile-about"
-          >
-            {user.about}
-          </Typography>
-          <div className={classes.activities}>{activities}</div>
-          <Typography
-            className={classes.aboutHeading}
-            variant="h4"
-            data-testid="profile-title"
-          >
-            Goals
-            <div className={classes.goals}>{goals}</div>
-          </Typography>
-        </div>
-      </div>
-      <Navbar></Navbar>
-    </div>
+      )}
+    </AppContextConsumer>
   );
 };
 
