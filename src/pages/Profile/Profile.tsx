@@ -176,7 +176,9 @@ const Profile: React.FC<{ user: UserModel }> = ({ user }) => {
   };
 
   useEffect(() => {
-    getActivities();
+    if (!activities) {
+      getActivities();
+    }
   });
 
   const mappedActivities = user.activities.map((activity, index) => {
