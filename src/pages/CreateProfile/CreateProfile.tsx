@@ -65,8 +65,12 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
 
   const visitPage1 = () => {
     setProgress(1);
-    getActivities();
+    if (!activities) {
+      getActivities();
+    }
   };
+
+  console.log(user);
 
   const createUser = (user: UserModel) => {
     firestore

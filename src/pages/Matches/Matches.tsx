@@ -15,6 +15,7 @@ import { rajah, jordyBlue, white } from "theme";
 import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
 import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
 import { useBiaUserContext } from "AppContext";
+import { firestore } from "../../firebase";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,6 +34,16 @@ const Matches: React.FC = () => {
   const classes = useStyles();
   const users = mockData.users;
   const { biaUser } = useBiaUserContext();
+
+  const createMatch = () => {};
+
+  const checkMatch = () => {};
+
+  const likedUser = async (user: UserModel) => {
+    await firestore.collection("Users");
+  };
+
+  const dislikedUser = () => {};
 
   const availableUsers = users.filter(
     (x: UserModel) =>
