@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 import { mauvelous, azalea, black } from "../../theme";
 import { UserModel } from "../../models/user.model";
@@ -47,7 +47,7 @@ const Message: React.FC<{
         display: "inline",
         color: black,
         boxShadow: "0.1em 0.25em 0.25em rgba(0, 0, 0, 0.08)",
-        padding: "1em",
+        padding: "2em 1em 0 1em",
         width: "85%",
       },
     })
@@ -58,6 +58,16 @@ const Message: React.FC<{
     hour: "2-digit",
     minute: "2-digit",
   });
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [message]);
+
   const joinAllClasses = (...classes) => {
     return classes.join(" ");
   };
@@ -76,10 +86,11 @@ const Message: React.FC<{
         alt="user profile pic"
       />
       <div className={classes.messageContent}>
-        <Typography variant="body2"> {message.messageContent} </Typography>
+        <Typography variant="subtitle2"> {message.messageContent} </Typography>
         <Typography variant="body1" style={{ float: "right" }}>
           {date}
         </Typography>
+        <div ref={messagesEndRef} />
       </div>
     </div>
   );

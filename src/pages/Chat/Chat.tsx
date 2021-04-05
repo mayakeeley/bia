@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createRef, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Button,
@@ -47,26 +47,11 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
       },
       messages: {
         width: "100%",
+        maxHeight: "450px",
+        overflow: "auto",
         paddingLeft: "1em",
         paddingRight: "1em",
-      },
-      videoButton: {
-        borderRadius: "50%",
-        width: "6em",
-        height: "6em",
-        textAlign: "center",
-        marginTop: "-3em",
-        marginBottom: "4em",
-        // backgroundImage: `url(${VideoCameraIcon})`,
-        // backgroundPosition: "center",
-        // backgroundColor: "orange",
-      },
-      videoImageIcon: {
-        borderRadius: "50%",
-        width: "6em",
-        height: "6em",
-        backgroundColor: "orange",
-        backgroundPosition: "50% 50%",
+        paddingTop: "6em",
       },
       whistleIconButton: {
         width: "1.5em",
@@ -91,13 +76,16 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
       },
       sendArrow: {
         width: "2em",
-        height: "2em",
+        height: "1.5em",
         fill: mauvelous,
       },
       sendButton: {
         margin: "0.5em 0",
         height: "auto",
         float: "right",
+        "&:hover": {
+          backgroundColor: "transparent",
+        },
       },
       backArrowIconButton: {
         marginBottom: "-0.5em",
@@ -114,7 +102,7 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
         justifyContent: "center",
       },
       sendMessage: {
-        width: "95%",
+        width: "80%",
         backgroundColor: white,
         border: "1px solid",
         borderColor: mauvelous,
@@ -192,15 +180,6 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
         spacing={0}
         className={classes.body}
       >
-        <Grid item xs={12}>
-          <Button className={classes.videoButton}>
-            <img
-              src={VideoCameraIcon}
-              className={classes.videoImageIcon}
-              alt="video camera icon"
-            />
-          </Button>
-        </Grid>
         <Grid item xs={12} className={classes.messages}>
           {messages?.map((message, index) => {
             return (
