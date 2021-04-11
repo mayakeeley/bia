@@ -14,6 +14,7 @@ import {
 import { rajah, jordyBlue, white } from "theme";
 import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
 import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
+import { useBiaUserContext } from "AppContext";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -28,9 +29,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Matches: React.FC<{ user: UserModel }> = ({ user }) => {
+const Matches: React.FC = () => {
   const classes = useStyles();
   const users = mockData.users;
+  const { biaUser } = useBiaUserContext();
 
   const validatePotentialMatch = (myUser: UserModel, theirUser: UserModel) => {
     const myJudgedUsers = Object.keys(myUser.users || {});
@@ -41,21 +43,26 @@ const Matches: React.FC<{ user: UserModel }> = ({ user }) => {
     return isNotYetJudged && isNotMyUser;
   };
 
-  const availableUsers = users.filter((theirUser: UserModel) =>
-    validatePotentialMatch(user, theirUser)
+  const availableUsers = users.filter(
+    (theirUser: UserModel) =>
+      biaUser && validatePotentialMatch(biaUser, theirUser)
   );
+  // const availableUsers = users.filter(
+  //   (x: UserModel) =>
+  //     biaUser && !biaUser.users?.hasOwnProperty(x.uid) && x.uid !== biaUser.uid
+  // );
 
   const [localAvailableUsers, setLocalAvailableUsers] = useState(
     availableUsers
   );
-  console.log(user);
+  console.log(biaUser);
 
   //   const updateJudgedUsers = (myUserId: string, theirUserId: string)=> {
 
   // firestore.collection("Users").doc(doc.id).update({foo: "bar"});
   //   }
 
-  // const getIsValidUser = (user: firebase.User) => {
+  // const getIsValidUser = (biaUser: firebase.User) => {
   //   var isValid = false;
   //   firestore
   //     .collection("Users")
@@ -63,7 +70,7 @@ const Matches: React.FC<{ user: UserModel }> = ({ user }) => {
   //     .then((querySnapshot) => {
   //       const users = querySnapshot.docs.map((doc) => doc.data().googleuid);
 
-  //       isValid = user && users && users.includes(user.uid);
+  //       isValid = biaUser && users && users.includes(biaUser.uid);
 
   //       isValid ? history.push("/matches") : history.push("/createProfile");
   //     })
@@ -74,13 +81,13 @@ const Matches: React.FC<{ user: UserModel }> = ({ user }) => {
 
   const dislikeUser = (theirUser: UserModel) => {
     setLocalAvailableUsers(
-      localAvailableUsers.filter((user) => user.uid !== theirUser.uid)
+      localAvailableUsers.filter((biaUser) => biaUser.uid !== theirUser.uid)
     );
   };
 
   const likeUser = (theirUser: UserModel) => {
     setLocalAvailableUsers(
-      localAvailableUsers.filter((user) => user.uid !== theirUser.uid)
+      localAvailableUsers.filter((biaUser) => biaUser.uid !== theirUser.uid)
     );
   };
 

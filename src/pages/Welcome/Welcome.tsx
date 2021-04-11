@@ -10,6 +10,7 @@ import image from "../../assets/images/welcome-screen.png";
 import { lavenderBlush } from "theme";
 import firebase, { firestore, provider } from "../../firebase";
 import { useHistory } from "react-router-dom";
+import { useBiaUserContext } from "AppContext";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,22 +33,25 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Welcome: React.FC<{
   setUser: (user: firebase.User | undefined) => void;
-  user: firebase.User | undefined;
-}> = ({ setUser, user }) => {
+}> = ({ setUser }) => {
   const classes = useStyles();
   const history = useHistory();
+  const { setBiaUser } = useBiaUserContext();
 
-  const getIsValidUser = (user: firebase.User) => {
-    var isValid = false;
+  const getUser = (user: firebase.User) => {
     firestore
       .collection("Users")
+      .where("googleuid", "==", user.uid)
       .get()
       .then((querySnapshot) => {
-        const users = querySnapshot.docs.map((doc) => doc.data().googleuid);
-
-        isValid = user && users && users.includes(user.uid);
-
-        isValid ? history.push("/matches") : history.push("/createProfile");
+        const matchingUsers = [] as any[];
+        querySnapshot.forEach((doc) => {
+          matchingUsers.push(doc.data());
+        });
+        setBiaUser(matchingUsers[0]);
+        matchingUsers.length > 0
+          ? history.push("/matches")
+          : history.push("/createProfile");
       })
       .catch((error) => {
         console.log(error);
@@ -60,8 +64,7 @@ const Welcome: React.FC<{
       .signInWithPopup(provider)
       .then((result) => {
         result.user && setUser(result.user);
-
-        result.user && getIsValidUser(result.user);
+        result.user && getUser(result.user);
       })
       .catch((error) => {
         console.log(error);
