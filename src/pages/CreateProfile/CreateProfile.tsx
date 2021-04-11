@@ -61,6 +61,7 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
     goals: [] as string[],
     photoUrl: user.photoURL || "",
     googleuid: user.uid || "",
+    users: {},
   });
 
   const visitPage1 = () => {
@@ -73,7 +74,7 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
   const createUser = (user: UserModel) => {
     firestore
       .collection("Users")
-      .doc()
+      .doc(user.uid)
       .set(user)
       .then(() => {
         setBiaUser(user);

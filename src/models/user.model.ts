@@ -8,11 +8,15 @@ export interface UserModel {
   about: string;
   activities: UserActivityModel[];
   goals: string[];
-  users?: { [key: string]: boolean };
+  users: UserObject;
 }
 
 export interface UserActivityModel {
   activityId: string;
   level: number;
   activityName: string;
+}
+
+export interface UserObject {
+  [key: string]: boolean;
 }
