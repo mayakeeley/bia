@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Match from "../../components/Match/Match";
 import { UserModel } from "../../models/user.model";
 import mockData from "../../assets/mockData/MockData";
@@ -30,24 +30,77 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Matches: React.FC<{ user: UserModel }> = ({ user }) => {
   const classes = useStyles();
-  // const [firstAvailableUser, setFirstAvailableUsers] = useState<User>();
   const users = mockData.users;
 
-  const availableUsers = users.filter(
-    (x: UserModel) => !user.users?.hasOwnProperty(x.uid) && x.uid !== user.uid
+  const validatePotentialMatch = (myUser: UserModel, theirUser: UserModel) => {
+    const myJudgedUsers = Object.keys(myUser.users || {});
+
+    const isNotYetJudged = myJudgedUsers.includes(theirUser.uid);
+    const isNotMyUser = myUser.uid !== theirUser.uid;
+
+    return isNotYetJudged && isNotMyUser;
+  };
+
+  const availableUsers = users.filter((theirUser: UserModel) =>
+    validatePotentialMatch(user, theirUser)
   );
+
+  const [localAvailableUsers, setLocalAvailableUsers] = useState(
+    availableUsers
+  );
+  console.log(user);
+
+  //   const updateJudgedUsers = (myUserId: string, theirUserId: string)=> {
+
+  // firestore.collection("Users").doc(doc.id).update({foo: "bar"});
+  //   }
+
+  // const getIsValidUser = (user: firebase.User) => {
+  //   var isValid = false;
+  //   firestore
+  //     .collection("Users")
+  //     .get()
+  //     .then((querySnapshot) => {
+  //       const users = querySnapshot.docs.map((doc) => doc.data().googleuid);
+
+  //       isValid = user && users && users.includes(user.uid);
+
+  //       isValid ? history.push("/matches") : history.push("/createProfile");
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+
+  const dislikeUser = (theirUser: UserModel) => {
+    setLocalAvailableUsers(
+      localAvailableUsers.filter((user) => user.uid !== theirUser.uid)
+    );
+  };
+
+  const likeUser = (theirUser: UserModel) => {
+    setLocalAvailableUsers(
+      localAvailableUsers.filter((user) => user.uid !== theirUser.uid)
+    );
+  };
 
   return (
     <div className={classes.root}>
       <Typography variant="h1" className={classes.title}>
         Swipe
       </Typography>
-      <Match user={availableUsers[0]} />
+      <Match user={localAvailableUsers[0]} />
       <Grid container justify="space-around">
-        <Fab className={classes.button}>
+        <Fab
+          className={classes.button}
+          onClick={() => dislikeUser(localAvailableUsers[0])}
+        >
           <ClearRoundedIcon />
         </Fab>
-        <Fab className={classes.button}>
+        <Fab
+          className={classes.button}
+          onClick={() => likeUser(localAvailableUsers[0])}
+        >
           <CheckRoundedIcon />
         </Fab>
       </Grid>
