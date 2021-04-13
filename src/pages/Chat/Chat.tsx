@@ -185,7 +185,7 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
             return (
               <div>
                 <Message
-                  key={index}
+                  key={message.messageId}
                   user={user}
                   chattingWithUser={chattingWithUser}
                   message={message}
