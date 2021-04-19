@@ -13,13 +13,12 @@ import { jordyBlue, white, lavenderBlush, mauvelous } from "../../theme";
 import { UserModel } from "../../models/user.model";
 import mockData from "../../assets/mockData/MockData";
 import Message from "components/Message/Message";
-import PhoneIcon from "../../assets/icons/phone-call.svg";
-import VideoCameraIcon from "../../assets/icons/video-camera.svg";
 import SendArrowIcon from "../../assets/icons/send-button.svg";
 import BackArrowIcon from "../../assets/icons/back-arrow.svg";
 import WhistleIcon from "../../assets/icons/whistle.svg";
 import { useParams } from "react-router-dom";
 import { MessageModel } from "models/message.model";
+import NavBar from "components/NavBar/NavBar";
 interface RouteParams {
   id: string;
 }
@@ -29,17 +28,24 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
     createStyles({
       wrapper: {
         backgroundColor: jordyBlue,
+        marginBottom: "4.5em",
+        height: "calc(100vh - 4.5em)",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
       },
       heading: {
-        display: "contents",
-        width: "fit-content",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingTop: "1em",
       },
       body: {
         width: "100%",
         backgroundColor: lavenderBlush,
-        marginTop: "4em",
+        marginTop: "2em",
         marginRight: "0",
-        borderRadius: "4em 4em 0 0",
+        borderRadius: "2em 2em 0 0",
       },
       title: {
         textAlign: "center",
@@ -47,17 +53,16 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
       },
       messages: {
         width: "100%",
-        maxHeight: "450px",
+        height: "calc(100vh - 13.5em - 49px)",
+        minHeight: "calc(100vh - 13.5em - 49px)",
         overflow: "auto",
         paddingLeft: "1em",
         paddingRight: "1em",
-        paddingTop: "6em",
+        paddingTop: "2em",
       },
       whistleIconButton: {
         width: "1.5em",
         height: "1.5em",
-        float: "right",
-        marginTop: "-1.8em",
       },
       whistleIcon: {
         width: "1.5em",
@@ -66,9 +71,6 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
       phoneIconButton: {
         width: "1.5em",
         height: "1.5em",
-        float: "right",
-        marginTop: "-1.8em",
-        marginRight: "2.5em",
       },
       phoneIcon: {
         width: "1.5em",
@@ -82,36 +84,33 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
       sendButton: {
         margin: "0.5em 0",
         height: "auto",
-        float: "right",
+        width: "1.5em",
         "&:hover": {
           backgroundColor: "transparent",
         },
       },
-      backArrowIconButton: {
-        marginBottom: "-0.5em",
+      backArrowIconButton: {},
+      buttonWrapper: {
+        display: "flex",
       },
       backArrowIcon: {
         width: "1.5em",
         height: "1.5em",
-        marginTop: "1em",
-        marginBottom: "-1.8em",
-        marginLeft: "0.75em",
       },
       messageWrapper: {
         width: "100%",
         justifyContent: "center",
       },
       sendMessage: {
-        width: "80%",
         backgroundColor: white,
         border: "1px solid",
         borderColor: mauvelous,
         borderRadius: "1em",
-        margin: "4em auto 2em",
+        margin: "2em 1em",
       },
       messageInput: {
-        width: "80%",
         height: "100%",
+        width: "calc(100% - 4.5em)",
         padding: "0.5em 1em",
       },
     })
@@ -147,84 +146,82 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
   };
 
   return (
-    <div className={classes.wrapper}>
-      <div className={classes.heading}>
-        <Button
-          onClick={() => history.goBack()}
-          className={classes.backArrowIconButton}
+    <div>
+      <div className={classes.wrapper}>
+        <div className={classes.heading}>
+          <Button
+            onClick={() => history.goBack()}
+            className={classes.backArrowIconButton}
+          >
+            <img
+              src={BackArrowIcon}
+              alt="Back arrow icon"
+              className={classes.backArrowIcon}
+            />
+          </Button>
+          <Typography variant="h3" className={classes.title}>
+            {chattingWithUser?.name}
+          </Typography>
+          <Button className={classes.whistleIconButton}>
+            <img
+              src={WhistleIcon}
+              alt="whistle icon"
+              className={classes.whistleIcon}
+            />
+          </Button>
+        </div>
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          spacing={0}
+          className={classes.body}
         >
-          <img
-            src={BackArrowIcon}
-            alt="Back arrow icon"
-            className={classes.backArrowIcon}
-          />
-        </Button>
-        <Typography variant="h3" className={classes.title}>
-          {chattingWithUser?.name}
-        </Typography>
-        <Button className={classes.whistleIconButton}>
-          <img
-            src={WhistleIcon}
-            alt="whistle icon"
-            className={classes.whistleIcon}
-          />
-        </Button>
-        <Button className={classes.phoneIconButton}>
-          <img src={PhoneIcon} alt="call icon" className={classes.phoneIcon} />
-        </Button>
-      </div>
-      <Grid
-        container
-        direction="column"
-        alignItems="center"
-        spacing={0}
-        className={classes.body}
-      >
-        <Grid item xs={12} className={classes.messages}>
-          {messages?.map((message, index) => {
-            return (
-              <div>
+          <Grid item xs={12} className={classes.messages}>
+            {messages?.map((message, index) => {
+              return (
                 <Message
-                  key={message.messageId}
+                  key={index}
                   user={user}
                   chattingWithUser={chattingWithUser}
                   message={message}
                 />
-              </div>
-            );
-          })}
-        </Grid>
-        <Grid item xs={12} className={classes.messageWrapper}>
-          <div className={classes.sendMessage}>
-            <Input
-              className={classes.messageInput}
-              id="message"
-              name="Message"
-              placeholder="Type message here..."
-              disableUnderline={true}
-              value={message?.messageContent}
-              onChange={(e) =>
-                setMessage({
-                  ...message,
-                  timestamp: new Date(Date.now()).toISOString(),
-                  messageContent: e.target.value,
-                })
-              }
-            />
-            <Button
-              color="default"
-              onClick={sendMessage}
-              className={classes.sendButton}
-            >
-              <img
-                src={SendArrowIcon}
-                alt="send button icon"
-                className={classes.sendArrow}
+              );
+            })}
+          </Grid>
+          <Grid item xs={12} className={classes.messageWrapper}>
+            <div className={classes.sendMessage}>
+              <Input
+                className={classes.messageInput}
+                id="message"
+                name="Message"
+                placeholder="Type message here..."
+                disableUnderline={true}
+                value={message?.messageContent}
+                onChange={(e) =>
+                  setMessage({
+                    ...message,
+                    timestamp: new Date(Date.now()).toISOString(),
+                    messageContent: e.target.value,
+                  })
+                }
               />
-            </Button>
-          </div>
+              <Button
+                color="default"
+                onClick={sendMessage}
+                className={classes.sendButton}
+              >
+                <img
+                  src={SendArrowIcon}
+                  alt="send button icon"
+                  className={classes.sendArrow}
+                />
+              </Button>
+            </div>
+          </Grid>
         </Grid>
-      </Grid>
+      </div>
+      <NavBar></NavBar>
     </div>
   );
 };
