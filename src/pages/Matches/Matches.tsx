@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Match from "../../components/Match/Match";
-import { UserModel } from "../../models/user.model";
-import mockData from "../../assets/mockData/MockData";
+import { UserModel, UserObject } from "../../models/user.model";
 import NavBar from "../../components/NavBar/NavBar";
 import {
   createStyles,
@@ -15,6 +14,7 @@ import { rajah, jordyBlue, white } from "theme";
 import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
 import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
 import { useBiaUserContext } from "AppContext";
+import { firestore } from "../../firebase";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,28 +31,129 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Matches: React.FC = () => {
   const classes = useStyles();
-  const users = mockData.users;
   const { biaUser } = useBiaUserContext();
+  const [users, setUsers] = useState<UserModel[]>();
 
-  const availableUsers = users.filter(
-    (x: UserModel) =>
-      biaUser && !biaUser.users?.hasOwnProperty(x.uid) && x.uid !== biaUser.uid
+  const fetchUsers = () => {
+    firestore
+      .collection("Users")
+      .get()
+      .then((querySnapshot) => {
+        const docUsers = querySnapshot.docs.map((doc) => doc.data());
+        setUsers(docUsers as UserModel[]);
+      })
+      .catch((error) => console.log(error));
+  };
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  useEffect(() => {
+    users &&
+      biaUser &&
+      setLocalAvailableUsers(
+        users.filter((theirUser: UserModel) =>
+          validatePotentialMatch(biaUser, theirUser)
+        )
+      );
+  }, [users, biaUser]);
+
+  const validatePotentialMatch = (myUser: UserModel, theirUser: UserModel) => {
+    const isNotMyUser = myUser.uid !== theirUser.uid;
+
+    if (myUser.users) {
+      const myJudgedUsers = Object.keys(myUser.users || {});
+      const isNotYetJudged = !myJudgedUsers.includes(theirUser.uid);
+      return isNotYetJudged && isNotMyUser;
+    }
+
+    return isNotMyUser;
+  };
+
+  const availableUsers =
+    biaUser && users
+      ? users.filter((theirUser: UserModel) =>
+          validatePotentialMatch(biaUser, theirUser)
+        )
+      : [];
+
+  const [localAvailableUsers, setLocalAvailableUsers] = useState(
+    availableUsers
   );
 
-  return (
+  const [localJudgedUsers, setLocalJudgedUsers] = useState<UserObject[]>([]);
+
+  const updateJudgedUsers = (
+    myUserId: string,
+    theirUserId: string,
+    isLiked: boolean
+  ) => {
+    if (biaUser) {
+      firestore
+        .collection("Users")
+        .doc(myUserId)
+        .set(
+          {
+            ...biaUser,
+            users: {
+              ...biaUser.users,
+              ...localJudgedUsers,
+              [theirUserId]: isLiked,
+            },
+          },
+          { merge: true }
+        )
+        .then(() =>
+          setLocalJudgedUsers({ ...localJudgedUsers, [theirUserId]: isLiked })
+        )
+        .catch((error) => console.log(error));
+    }
+  };
+
+  const dislikeUser = (theirUser: UserModel) => {
+    setLocalAvailableUsers(
+      localAvailableUsers.filter((biaUser) => biaUser.uid !== theirUser.uid)
+    );
+    biaUser && updateJudgedUsers(biaUser.uid, theirUser.uid, false);
+  };
+
+  const likeUser = (theirUser: UserModel) => {
+    setLocalAvailableUsers(
+      localAvailableUsers.filter((biaUser) => biaUser.uid !== theirUser.uid)
+    );
+    biaUser && updateJudgedUsers(biaUser.uid, theirUser.uid, true);
+  };
+
+  return biaUser && localAvailableUsers.length > 0 ? (
     <div className={classes.root}>
       <Typography variant="h1" className={classes.title}>
         Swipe
       </Typography>
-      <Match user={availableUsers[0]} />
+      {localAvailableUsers.length > 0 && (
+        <Match user={localAvailableUsers[0]} />
+      )}
       <Grid container justify="space-around">
-        <Fab className={classes.button}>
+        <Fab
+          className={classes.button}
+          onClick={() => dislikeUser(localAvailableUsers[0])}
+        >
           <ClearRoundedIcon />
         </Fab>
-        <Fab className={classes.button}>
+        <Fab
+          className={classes.button}
+          onClick={() => likeUser(localAvailableUsers[0])}
+        >
           <CheckRoundedIcon />
         </Fab>
       </Grid>
+      <NavBar />
+    </div>
+  ) : (
+    <div className={classes.root}>
+      <Typography variant="body1" className={classes.title}>
+        No matches available I'm afraid. Please come back later!
+      </Typography>
+
       <NavBar />
     </div>
   );

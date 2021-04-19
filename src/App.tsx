@@ -14,6 +14,7 @@ const sampleUser: UserModel = {
   about: "string",
   activities: [{ activityId: "string", level: 1, activityName: "string" }],
   goals: [""],
+  users: {},
 };
 
 const App: React.FC = () => {

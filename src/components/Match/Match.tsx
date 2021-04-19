@@ -105,25 +105,21 @@ const Match: React.FC<{ user: UserModel }> = ({ user }) => {
         </Typography>
 
         <Grid container justify="space-evenly" spacing={1}>
-          {user.activities.map((activity) => (
-            <Grid
-              item
-              className={classes.activity}
-              key={activity.activityId}
-              xs={4}
-            >
-              <Fab className={classes.fab}>
-                <Typography variant="body1" className={classes.fabText}>
-                  {activity.activityName}
-                </Typography>
-              </Fab>
-              <Chip
-                className={classes.chip}
-                variant="default"
-                label={`Level ${activity.level}`}
-              />
-            </Grid>
-          ))}
+          {user.activities &&
+            user.activities.map((activity, index) => (
+              <Grid item className={classes.activity} key={index} xs={4}>
+                <Fab className={classes.fab}>
+                  <Typography variant="body1" className={classes.fabText}>
+                    {activity.activityName}
+                  </Typography>
+                </Fab>
+                <Chip
+                  className={classes.chip}
+                  variant="default"
+                  label={`Level ${activity.level}`}
+                />
+              </Grid>
+            ))}
         </Grid>
       </div>
     </>
