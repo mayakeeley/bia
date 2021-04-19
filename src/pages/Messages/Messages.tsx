@@ -3,9 +3,9 @@ import NavBar from "../../components/NavBar/NavBar";
 import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 import { jordyBlue, lavenderBlush, grey, white } from "../../theme";
 import mockData from "../../assets/mockData/MockData";
-import { useHistory } from "react-router-dom";
 import { useBiaUserContext } from "AppContext";
 
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     messages: {
@@ -47,9 +47,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Messages: React.FC = () => {
-  const { biaUser } = useBiaUserContext();
   const history = useHistory();
   const classes = useStyles();
+  const { biaUser } = useBiaUserContext();
   const matches = mockData.matches.filter((match) =>
     match.userIds.includes(biaUser?.uid || "")
   );
@@ -60,21 +60,16 @@ const Messages: React.FC = () => {
     const userId = match.userIds.find(
       (matchedUser) => matchedUser !== biaUser?.uid
     );
-
     const matchedUser = users.find((user) => user.uid === userId);
-
     const mostRecentMessage = match.messages.length
       ? match.messages[match.messages.length - 1]
       : undefined;
-
     const date = mostRecentMessage
       ? mostRecentMessage.timestamp
       : match.timestamp;
-
     const shortDate = new Date(date).toLocaleDateString(undefined, {
       weekday: "short",
     });
-
     return (
       <div
         className={classes.message}
