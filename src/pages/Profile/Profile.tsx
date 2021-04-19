@@ -177,7 +177,9 @@ const Profile: React.FC = () => {
   };
 
   useEffect(() => {
-    getActivities();
+    if (!activities) {
+      getActivities();
+    }
   });
 
   const mappedActivities =

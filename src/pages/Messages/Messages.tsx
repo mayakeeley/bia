@@ -1,11 +1,12 @@
 import React from "react";
 import NavBar from "../../components/NavBar/NavBar";
-import { createStyles, makeStyles, Typography } from "@material-ui/core";
+import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 import { jordyBlue, lavenderBlush, grey, white } from "../../theme";
 import mockData from "../../assets/mockData/MockData";
+import { useHistory } from "react-router-dom";
 import { useBiaUserContext } from "AppContext";
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     messages: {
       backgroundColor: jordyBlue,
@@ -46,77 +47,74 @@ const useStyles = makeStyles(() =>
 );
 
 const Messages: React.FC = () => {
-  const classes = useStyles();
   const { biaUser } = useBiaUserContext();
+  const history = useHistory();
+  const classes = useStyles();
+  const matches = mockData.matches.filter((match) =>
+    match.userIds.includes(biaUser?.uid || "")
+  );
+  const users = mockData.users.filter(
+    (mockUser) => mockUser.uid !== biaUser?.uid
+  );
+  const messages = matches.map((match, index) => {
+    const userId = match.userIds.find(
+      (matchedUser) => matchedUser !== biaUser?.uid
+    );
 
-  const matches =
-    biaUser &&
-    mockData.matches.filter((match) => match.userIds.includes(biaUser.uid));
+    const matchedUser = users.find((user) => user.uid === userId);
 
-  const users =
-    biaUser &&
-    mockData.users.filter((mockUser) => mockUser.uid !== biaUser.uid);
+    const mostRecentMessage = match.messages.length
+      ? match.messages[match.messages.length - 1]
+      : undefined;
 
-  const messages =
-    matches &&
-    matches.map((match, index) => {
-      const userId =
-        biaUser &&
-        match.userIds.find((matchedUser) => matchedUser !== biaUser.uid);
+    const date = mostRecentMessage
+      ? mostRecentMessage.timestamp
+      : match.timestamp;
 
-      const matchedUser =
-        users && users.find((biaUser) => biaUser.uid === userId);
-
-      const mostRecentMessage = match.messages.length
-        ? match.messages[match.messages.length - 1]
-        : undefined;
-
-      const date = mostRecentMessage
-        ? mostRecentMessage.timestamp
-        : match.timestamp;
-
-      const shortDate = new Date(date).toLocaleDateString(undefined, {
-        weekday: "short",
-      });
-
-      return (
-        <div className={classes.message} key={index}>
-          <img className={classes.photo} src={matchedUser?.photoUrl} alt="" />
-          <div className={classes.text}>
-            <div className={classes.heading}>
-              <Typography variant="h5" data-testid="welcome-title">
-                {matchedUser?.name}
-              </Typography>
-              <Typography variant="body1" data-testid="welcome-title">
-                {shortDate}
-              </Typography>
-            </div>
-            <Typography
-              className={classes.content}
-              variant="body1"
-              data-testid="welcome-title"
-            >
-              {mostRecentMessage
-                ? mostRecentMessage.messageContent
-                : "New match!"}
-            </Typography>
-          </div>
-        </div>
-      );
+    const shortDate = new Date(date).toLocaleDateString(undefined, {
+      weekday: "short",
     });
 
-  const displayedMessages =
-    messages && messages.length ? (
-      messages
-    ) : (
-      <Typography
-        className={classes.title}
-        variant="body1"
-        data-testid="welcome-title"
+    return (
+      <div
+        className={classes.message}
+        key={index}
+        onClick={() => history.push(`/chat/${matchedUser?.uid}`)}
       >
-        You have no matches yet, better get swiping!
-      </Typography>
+        <img className={classes.photo} src={matchedUser?.photoUrl} alt="" />
+        <div className={classes.text}>
+          <div className={classes.heading}>
+            <Typography variant="h5" data-testid="welcome-title">
+              {matchedUser?.name}
+            </Typography>
+            <Typography variant="body1" data-testid="welcome-title">
+              {shortDate}
+            </Typography>
+          </div>
+          <Typography
+            className={classes.content}
+            variant="body1"
+            data-testid="welcome-title"
+          >
+            {mostRecentMessage
+              ? mostRecentMessage.messageContent
+              : "New match!"}
+          </Typography>
+        </div>
+      </div>
     );
+  });
+  const displayedMessages = messages.length ? (
+    messages
+  ) : (
+    <Typography
+      className={classes.title}
+      variant="body1"
+      data-testid="welcome-title"
+    >
+      You have no matches yet, better get swiping!
+    </Typography>
+  );
   return (
     <div className={classes.messages}>
       <div className={classes.blockSpacing}>
