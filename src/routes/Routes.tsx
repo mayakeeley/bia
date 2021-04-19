@@ -7,6 +7,7 @@ import CreateProfile from "pages/CreateProfile/CreateProfile";
 import Messages from "../pages/Messages/Messages";
 import Profile from "../pages/Profile/Profile";
 import { useBiaUserContext } from "AppContext";
+import Chat from "pages/Chat/Chat";
 
 const App: React.FC = () => {
   const [user, setUser] = useState<firebase.User | undefined>();
@@ -16,6 +17,11 @@ const App: React.FC = () => {
     <Router>
       <Switch>
         <Route exact path="/" component={() => <Welcome setUser={setUser} />} />
+        <Route
+          exact
+          path="/chat/:id"
+          component={() => (biaUser ? <Chat /> : <Welcome setUser={setUser} />)}
+        />
         <Route
           exact
           path="/matches"
