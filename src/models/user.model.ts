@@ -11,4 +11,8 @@ export interface UserModel {
   users?: { [key: string]: boolean };
 }
 
-export interface UserActivityModel { activityId: string; level: number; activityName: string };
+export interface UserActivityModel {
+  activityId: string;
+  level: number;
+  activityName: string;
+}

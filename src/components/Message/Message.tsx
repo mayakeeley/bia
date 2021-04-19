@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from "react";
 import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 import { mauvelous, azalea, black } from "../../theme";
 import { UserModel } from "../../models/user.model";
+import { useBiaUserContext } from "AppContext";
 
 const Message: React.FC<{
-  user: UserModel;
   message: any;
   chattingWithUser: any;
-}> = ({ user, message, chattingWithUser }) => {
+}> = ({ message, chattingWithUser }) => {
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       message: {
@@ -54,6 +54,7 @@ const Message: React.FC<{
   );
   const classes = useStyles();
   const sendingUser = message.userId;
+  const { biaUser } = useBiaUserContext();
   const date = new Date(message.timestamp).toLocaleTimeString(undefined, {
     hour: "2-digit",
     minute: "2-digit",
@@ -75,13 +76,17 @@ const Message: React.FC<{
     <div
       className={joinAllClasses(
         classes.message,
-        sendingUser === user.uid ? classes.sentMessage : classes.receivedMessage
+        sendingUser === biaUser?.uid
+          ? classes.sentMessage
+          : classes.receivedMessage
       )}
     >
       <img
         className={classes.image}
         src={
-          sendingUser === user.uid ? user.photoUrl : chattingWithUser.photoUrl
+          sendingUser === biaUser?.uid
+            ? biaUser?.photoUrl
+            : chattingWithUser.photoUrl
         }
         alt="user profile pic"
       />

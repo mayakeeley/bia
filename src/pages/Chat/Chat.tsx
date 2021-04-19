@@ -10,7 +10,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import { jordyBlue, white, lavenderBlush, mauvelous } from "../../theme";
-import { UserModel } from "../../models/user.model";
 import mockData from "../../assets/mockData/MockData";
 import Message from "components/Message/Message";
 import SendArrowIcon from "../../assets/icons/send-button.svg";
@@ -19,11 +18,13 @@ import WhistleIcon from "../../assets/icons/whistle.svg";
 import { useParams } from "react-router-dom";
 import { MessageModel } from "models/message.model";
 import NavBar from "components/NavBar/NavBar";
+import { useBiaUserContext } from "AppContext";
+
 interface RouteParams {
   id: string;
 }
 
-const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
+const Chat: React.FC = () => {
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       wrapper: {
@@ -117,10 +118,12 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
   );
   const classes = useStyles();
   const history = useHistory();
+  const { biaUser } = useBiaUserContext();
+
   const params = useParams<RouteParams>();
   const chattingWithUser = mockData.users.find((u) => u.uid === params.id);
   const matches = mockData.matches.filter((match) =>
-    match.userIds.includes(user.uid)
+    match.userIds.includes(biaUser?.uid || "")
   );
   const match = matches.find((match) => match.userIds.includes(params.id));
 
@@ -130,7 +133,7 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
     messageId: "10ksjfelkjj6",
     timestamp: "",
     messageContent: "",
-    userId: user.uid,
+    userId: biaUser?.uid || "",
   });
 
   useEffect(() => {
@@ -182,7 +185,6 @@ const Chat: React.FC<{ user: UserModel }> = ({ user }) => {
               return (
                 <Message
                   key={index}
-                  user={user}
                   chattingWithUser={chattingWithUser}
                   message={message}
                 />

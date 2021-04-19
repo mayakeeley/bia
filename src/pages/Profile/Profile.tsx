@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
-import { UserModel } from "models/user.model";
 import Navbar from "components/NavBar/NavBar";
 import ProfileIcon from "assets/icons/profile.svg";
 import {
@@ -14,6 +13,7 @@ import {
 import Settings from "assets/icons/settings.svg";
 import { firestore } from "../../firebase";
 import { ActivityModel } from "models/activity.model";
+import { useBiaUserContext } from "AppContext";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -154,9 +154,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Profile: React.FC<{ user: UserModel }> = ({ user }) => {
+const Profile: React.FC = () => {
   const [activities, setActivities] = useState<ActivityModel[]>();
   const classes = useStyles();
+  const { biaUser } = useBiaUserContext();
 
   const getActivities = () => {
     firestore
@@ -181,114 +182,120 @@ const Profile: React.FC<{ user: UserModel }> = ({ user }) => {
     }
   });
 
-  const mappedActivities = user.activities.map((activity, index) => {
-    const activityObject = activities?.find(
-      (data) => data.activityId === activity.activityId
-    );
-    return (
-      <div className={classes.activity} key={index}>
-        <Typography
-          className={classes.activityName}
-          variant="h5"
-          data-testid="activity-level"
-        >
-          {activityObject?.activityName}
-        </Typography>
-        <Typography
-          className={classes.activityLevel}
-          variant="body1"
-          data-testid="activity-level"
-        >
-          Level {activity.level}
-        </Typography>
-      </div>
-    );
-  });
+  const mappedActivities =
+    biaUser &&
+    biaUser.activities.map((activity, index) => {
+      const activityObject = activities?.find(
+        (data) => data.activityId === activity.activityId
+      );
+      return (
+        <div className={classes.activity} key={index}>
+          <Typography
+            className={classes.activityName}
+            variant="h5"
+            data-testid="activity-level"
+          >
+            {activityObject?.activityName}
+          </Typography>
+          <Typography
+            className={classes.activityLevel}
+            variant="body1"
+            data-testid="activity-level"
+          >
+            Level {activity.level}
+          </Typography>
+        </div>
+      );
+    });
 
-  const goals = user.goals.map((goal, index) => {
-    return (
-      <div key={index} className={classes.goal}>
-        <Typography
-          variant="body1"
-          data-testid="goal"
-          className={classes.goalNumber}
-        >
-          {index + 1}
-        </Typography>
-        <Typography variant="body1" data-testid="goal">
-          {goal}
-        </Typography>
-      </div>
-    );
-  });
+  const goals =
+    biaUser &&
+    biaUser.goals.map((goal, index) => {
+      return (
+        <div key={index} className={classes.goal}>
+          <Typography
+            variant="body1"
+            data-testid="goal"
+            className={classes.goalNumber}
+          >
+            {index + 1}
+          </Typography>
+          <Typography variant="body1" data-testid="goal">
+            {goal}
+          </Typography>
+        </div>
+      );
+    });
 
   return (
-    <div className={classes.background}>
-      <div className={classes.header}>
-        <div className={classes.headerWrapper}>
-          <Typography
-            className={classes.light}
-            variant="h3"
-            data-testid="profile-title"
-          >
-            Profile
-          </Typography>
-          <img className={classes.icon} src={ProfileIcon} alt="profile" />
+    biaUser && (
+      <div className={classes.background}>
+        <div className={classes.header}>
+          <div className={classes.headerWrapper}>
+            <Typography
+              className={classes.light}
+              variant="h3"
+              data-testid="profile-title"
+            >
+              Profile
+            </Typography>
+            <img className={classes.icon} src={ProfileIcon} alt="profile" />
+          </div>
+          <button className={classes.settingsButton}>
+            <img className={classes.settings} src={Settings} alt="settings" />
+          </button>
         </div>
-        <button className={classes.settingsButton}>
-          <img className={classes.settings} src={Settings} alt="settings" />
-        </button>
+        <div className={classes.tab}>
+          <div className={classes.blob}>
+            <img
+              className={classes.photo}
+              src={biaUser.photoUrl}
+              alt="user profile"
+            />
+            <Typography
+              className={classes.light}
+              variant="h3"
+              data-testid="profile-title"
+            >
+              {biaUser.name}
+            </Typography>
+            <Typography
+              className={classes.location}
+              variant="subtitle2"
+              data-testid="profile-subtitle"
+            >
+              {biaUser.location}
+            </Typography>
+          </div>
+          <div className={classes.about}>
+            <Typography
+              className={classes.aboutHeading}
+              variant="h4"
+              data-testid="profile-title"
+            >
+              About
+            </Typography>
+            <Typography
+              className={classes.grey}
+              variant="body1"
+              data-testid="profile-about"
+            >
+              {biaUser.about}
+            </Typography>
+            <div className={classes.activities}>{mappedActivities}</div>
+            <Typography
+              className={classes.aboutHeading}
+              variant="h4"
+              data-testid="profile-title"
+            >
+              Goals
+              <div className={classes.goals}>{goals}</div>
+            </Typography>
+          </div>
+        </div>
+        <Navbar />
       </div>
-      <div className={classes.tab}>
-        <div className={classes.blob}>
-          <img
-            className={classes.photo}
-            src={user.photoUrl}
-            alt="user profile"
-          />
-          <Typography
-            className={classes.light}
-            variant="h3"
-            data-testid="profile-title"
-          >
-            {user.name}
-          </Typography>
-          <Typography
-            className={classes.location}
-            variant="subtitle2"
-            data-testid="profile-subtitle"
-          >
-            {user.location}
-          </Typography>
-        </div>
-        <div className={classes.about}>
-          <Typography
-            className={classes.aboutHeading}
-            variant="h4"
-            data-testid="profile-title"
-          >
-            About
-          </Typography>
-          <Typography
-            className={classes.grey}
-            variant="body1"
-            data-testid="profile-about"
-          >
-            {user.about}
-          </Typography>
-          <div className={classes.activities}>{mappedActivities}</div>
-          <Typography
-            className={classes.aboutHeading}
-            variant="h4"
-            data-testid="profile-title"
-          >
-            Goals
-            <div className={classes.goals}>{goals}</div>
-          </Typography>
-        </div>
-      </div>
-      <Navbar></Navbar>
-    </div>
+    )
   );
 };
 
