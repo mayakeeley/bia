@@ -3,10 +3,16 @@ import Match from "../../components/Match/Match";
 import { UserModel, UserObject } from "../../models/user.model";
 import NavBar from "../../components/NavBar/NavBar";
 import {
+  Button,
   createStyles,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Fab,
   Grid,
   makeStyles,
+  Slide,
   Theme,
   Typography,
 } from "@material-ui/core";
@@ -15,6 +21,9 @@ import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
 import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
 import { useBiaUserContext } from "AppContext";
 import { firestore } from "../../firebase";
+import { v4 as uuidv4 } from "uuid";
+import { DialogContentText } from "@material-ui/core";
+import { TransitionProps } from "@material-ui/core/transitions";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,10 +38,17 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & { children?: React.ReactElement<any, any> },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 const Matches: React.FC = () => {
   const classes = useStyles();
   const { biaUser } = useBiaUserContext();
   const [users, setUsers] = useState<UserModel[]>();
+  const [isMatchDialogOpen, setIsMatchDialogOpen] = useState(false);
 
   const fetchUsers = () => {
     firestore
@@ -117,11 +133,34 @@ const Matches: React.FC = () => {
     biaUser && updateJudgedUsers(biaUser.uid, theirUser.uid, false);
   };
 
-  const likeUser = (theirUser: UserModel) => {
+  const likeUser = (theirUser: UserModel, myUser: UserModel) => {
     setLocalAvailableUsers(
-      localAvailableUsers.filter((biaUser) => biaUser.uid !== theirUser.uid)
+      localAvailableUsers.filter((user) => user.uid !== theirUser.uid)
     );
-    biaUser && updateJudgedUsers(biaUser.uid, theirUser.uid, true);
+    myUser && updateJudgedUsers(myUser.uid, theirUser.uid, true);
+    if (checkForMatch(theirUser, myUser)) {
+      createMatch(theirUser, myUser);
+    }
+  };
+
+  const checkForMatch = (theirUser: UserModel, myUser: UserModel) =>
+    theirUser.users && theirUser.users[myUser.uid] === true;
+
+  const createMatch = (theirUser: UserModel, myUser: UserModel) => {
+    const matchId = uuidv4();
+    firestore
+      .collection("Matches")
+      .doc(matchId)
+      .set({
+        matchId,
+        messages: [],
+        timestamp: new Date(),
+        userIds: [theirUser.uid, myUser.uid],
+      })
+      .then(() => setIsMatchDialogOpen(true))
+      .catch((error) => {
+        console.error("Error writing document: ", error);
+      });
   };
 
   return biaUser && localAvailableUsers.length > 0 ? (
@@ -141,11 +180,30 @@ const Matches: React.FC = () => {
         </Fab>
         <Fab
           className={classes.button}
-          onClick={() => likeUser(localAvailableUsers[0])}
+          onClick={() => likeUser(localAvailableUsers[0], biaUser)}
         >
           <CheckRoundedIcon />
         </Fab>
       </Grid>
+      <Dialog
+        open={isMatchDialogOpen}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={() => setIsMatchDialogOpen(false)}
+      >
+        <DialogTitle id="alert-dialog-slide-title">You matched!</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Send them a message?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setIsMatchDialogOpen(false)} color="primary">
+            No, keep swiping!
+          </Button>
+          <Button onClick={() => setIsMatchDialogOpen(false)} color="primary">
+            Let's go!
+          </Button>
+        </DialogActions>
+      </Dialog>
       <NavBar />
     </div>
   ) : (
