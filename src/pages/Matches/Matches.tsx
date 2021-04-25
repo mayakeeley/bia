@@ -208,9 +208,8 @@ const Matches: React.FC = () => {
     </div>
   ) : (
     <div className={classes.root}>
-      <Typography variant="h1" className={classes.title}>
-        No matches available I'm afraid. Go to the pub to make friends instead,
-        please.
+      <Typography variant="body1" className={classes.title}>
+        No matches available I'm afraid. Please come back later!
       </Typography>
 
       <NavBar />
