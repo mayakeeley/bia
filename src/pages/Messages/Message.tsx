@@ -1,15 +1,9 @@
 import React from "react";
-import {
-  createStyles,
-  makeStyles,
-  Paper,
-  Theme,
-  Typography,
-} from "@material-ui/core";
+import { createStyles, makeStyles, Paper, Typography } from "@material-ui/core";
 import { lavenderBlush, grey } from "../../theme";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     message: {
       backgroundColor: lavenderBlush,
