@@ -4,7 +4,7 @@ import { mauvelous, azalea, black } from "../../theme";
 import { UserModel } from "../../models/user.model";
 import { useBiaUserContext } from "AppContext";
 
-const Message: React.FC<{
+const MessageChip: React.FC<{
   message: any;
   chattingWithUser: any;
 }> = ({ message, chattingWithUser }) => {
@@ -101,4 +101,4 @@ const Message: React.FC<{
   );
 };
 
-export default Message;
+export default MessageChip;

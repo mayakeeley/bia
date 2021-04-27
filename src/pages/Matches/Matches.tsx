@@ -156,6 +156,7 @@ const Matches: React.FC = () => {
         messages: [],
         timestamp: new Date(),
         userIds: [theirUser.uid, myUser.uid],
+        userDetails: [theirUser, myUser],
       })
       .then(() => setIsMatchDialogOpen(true))
       .catch((error) => {
