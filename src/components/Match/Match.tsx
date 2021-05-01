@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         basicInfo: {
             width: "90%",
-            marginTop: theme.spacing(4),
+            marginTop: theme.spacing(6),
         },
         about: {
             maxHeight: "25vh",
