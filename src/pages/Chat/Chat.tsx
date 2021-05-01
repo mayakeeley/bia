@@ -130,7 +130,7 @@ const Chat: React.FC = () => {
 
     useEffect(() => {
         fetchMatchById(id);
-    }, [isLoading]);
+    }, [isLoading, id]);
 
     useEffect(() => {
         if (match?.messages) {
