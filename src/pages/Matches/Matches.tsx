@@ -11,7 +11,6 @@ import {
   Fab,
   Grid,
   makeStyles,
-  Slide,
   Theme,
   Typography,
   createStyles,
@@ -22,8 +21,8 @@ import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
 import { firestore } from "../../firebase";
 import { v4 as uuidv4 } from "uuid";
 import { DialogContentText } from "@material-ui/core";
-import { TransitionProps } from "@material-ui/core/transitions";
 import { getBiaUser } from "utils/localstorage";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,12 +37,6 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & { children?: React.ReactElement<any, any> },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 const Matches: React.FC = () => {
   const classes = useStyles();
   const biaUser = getBiaUser();
@@ -51,6 +44,7 @@ const Matches: React.FC = () => {
   const [isMatchDialogOpen, setIsMatchDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [updatedUser, setUpdatedUser] = useState(biaUser);
+  const [currentMatchId, setCurrentMatchId] = useState<string>();
 
   const reFetchMyUser = (user: UserModel) => {
     firestore
@@ -110,7 +104,7 @@ const Matches: React.FC = () => {
   const [localAvailableUsers, setLocalAvailableUsers] = useState(
     availableUsers
   );
-
+  const history = useHistory();
   const [localJudgedUsers, setLocalJudgedUsers] = useState<UserObject[]>([]);
 
   const updateJudgedUsers = (
@@ -164,6 +158,7 @@ const Matches: React.FC = () => {
 
   const createMatch = (theirUser: UserModel, myUser: UserModel) => {
     const matchId = uuidv4();
+    setCurrentMatchId(matchId);
     firestore
       .collection("Matches")
       .doc(matchId)
@@ -204,7 +199,6 @@ const Matches: React.FC = () => {
       </Grid>
       <Dialog
         open={isMatchDialogOpen}
-        TransitionComponent={Transition}
         keepMounted
         onClose={() => setIsMatchDialogOpen(false)}
       >
@@ -216,7 +210,13 @@ const Matches: React.FC = () => {
           <Button onClick={() => setIsMatchDialogOpen(false)} color="primary">
             No, keep swiping!
           </Button>
-          <Button onClick={() => setIsMatchDialogOpen(false)} color="primary">
+          <Button
+            onClick={() => {
+              history.push(`/chat/${currentMatchId}`);
+              setIsMatchDialogOpen(false);
+            }}
+            color="primary"
+          >
             Let's go!
           </Button>
         </DialogActions>
