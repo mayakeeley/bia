@@ -5,6 +5,7 @@ import { BiaUserContext } from "./AppContext";
 import Routes from "./routes/Routes";
 import { createStyles, makeStyles, Theme } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
+import { grey, white, mauvelous, black, azalea } from "theme";
 
 const sampleUser: UserModel = {
   uid: "string",
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
     nonMobileWrapper: {
       minWidth: "100vw",
       minHeight: "100vh",
-      backgroundColor: "yellow",
+      backgroundColor: azalea,
       padding: 0,
       display: "flex",
       justifyContent: "flex-end",
