@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar/NavBar";
-import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
+import { createStyles, makeStyles, Typography } from "@material-ui/core";
 import { jordyBlue, lavenderBlush, grey, white } from "../../theme";
-import mockData from "../../assets/mockData/MockData";
-import { useHistory } from "react-router-dom";
+import { firestore } from "../../firebase";
+import { MatchModel } from "models/match.model";
+import Message from "./Message";
 import { getBiaUser } from "utils/localstorage";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         messages: {
             backgroundColor: jordyBlue,
@@ -41,68 +42,74 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         title: {
             color: white,
-            paddingBottom: "1em",
+            paddingBottom: "0.5em",
         },
     })
 );
 
 const Messages: React.FC = () => {
-    const history = useHistory();
     const classes = useStyles();
     const biaUser = getBiaUser();
-    const matches = mockData.matches.filter((match) =>
-        match.userIds.includes(biaUser?.uid || "")
-    );
-    const users = mockData.users.filter(
-        (mockUser) => mockUser.uid !== biaUser?.uid
-    );
+    const [matches, setMatches] = useState<MatchModel[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const fetchUsersMatches = () => {
+        firestore
+            .collection("Matches")
+            .where("userIds", "array-contains", biaUser?.uid)
+            .onSnapshot(
+                {
+                    includeMetadataChanges: true,
+                },
+                (querySnapshot) => {
+                    const docMatches = querySnapshot.docs.map((doc) =>
+                        doc.data()
+                    ) as MatchModel[];
+                    setMatches(docMatches);
+                    setIsLoading(false);
+                }
+            );
+    };
+
+    useEffect(() => {
+        fetchUsersMatches();
+    }, [isLoading]);
+
     const messages = matches.map((match, index) => {
-        const userId = match.userIds.find(
-            (matchedUser) => matchedUser !== biaUser?.uid
+        const user = match.userDetails.find(
+            (matchedUser) => matchedUser.uid !== biaUser?.uid
         );
-        const matchedUser = users.find((user) => user.uid === userId);
-        const mostRecentMessage = match.messages.length
-            ? match.messages[match.messages.length - 1]
-            : undefined;
-        const date = mostRecentMessage
-            ? mostRecentMessage.timestamp
-            : match.timestamp;
-        const shortDate = new Date(date).toLocaleDateString(undefined, {
-            weekday: "short",
-        });
+
+        const displayedMessage =
+            match.messages.length > 0
+                ? match.messages[match.messages.length - 1]
+                : { timestamp: match.timestamp, messageContent: "New match!" };
+
+        const shortDate = displayedMessage
+            ? new Date(displayedMessage?.timestamp).toLocaleDateString(
+                  undefined,
+                  {
+                      weekday: "short",
+                  }
+              )
+            : "Unknown";
+
         return (
-            <div
-                className={classes.message}
-                key={index}
-                onClick={() => history.push(`/chat/${matchedUser?.uid}`)}
-            >
-                <img
-                    className={classes.photo}
-                    src={matchedUser?.photoUrl}
-                    alt=""
-                />
-                <div className={classes.text}>
-                    <div className={classes.heading}>
-                        <Typography variant="h5" data-testid="welcome-title">
-                            {matchedUser?.name}
-                        </Typography>
-                        <Typography variant="body1" data-testid="welcome-title">
-                            {shortDate}
-                        </Typography>
-                    </div>
-                    <Typography
-                        className={classes.content}
-                        variant="body1"
-                        data-testid="welcome-title"
-                    >
-                        {mostRecentMessage
-                            ? mostRecentMessage.messageContent
-                            : "New match!"}
-                    </Typography>
+            user && (
+                <div key={index}>
+                    <Message
+                        name={user.name}
+                        photoUrl={user.photoUrl}
+                        shortDate={shortDate}
+                        messageText={displayedMessage?.messageContent || ""}
+                        index={index}
+                        matchId={match.matchId}
+                    />
                 </div>
-            </div>
+            )
         );
     });
+
     const displayedMessages = messages.length ? (
         messages
     ) : (
@@ -114,15 +121,16 @@ const Messages: React.FC = () => {
             You have no matches yet, better get swiping!
         </Typography>
     );
+
     return (
         <div className={classes.messages}>
             <div className={classes.blockSpacing}>
                 <Typography
                     className={classes.title}
-                    variant="h3"
+                    variant="h1"
                     data-testid="welcome-title"
                 >
-                    Messages
+                    Matches
                 </Typography>
                 {displayedMessages}
             </div>

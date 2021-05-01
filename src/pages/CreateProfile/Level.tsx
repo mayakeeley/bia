@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: "center",
             color: black,
             margin: theme.spacing(1),
-            padding: theme.spacing(1),
+            padding: theme.spacing(1, 2),
         },
         selectedLevel: {
             backgroundColor: azalea,
