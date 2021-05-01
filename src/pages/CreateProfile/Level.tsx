@@ -23,8 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: "center",
             color: black,
             margin: theme.spacing(1),
-            padding: "0.5em 1em",
-            cursor: "pointer",
+            padding: theme.spacing(1, 2),
         },
         selectedLevel: {
             backgroundColor: azalea,
