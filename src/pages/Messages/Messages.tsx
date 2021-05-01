@@ -38,7 +38,7 @@ const useStyles = makeStyles(() =>
             width: "100%",
         },
         blockSpacing: {
-            padding: "1em",
+            padding: "1.5em",
         },
         title: {
             color: white,

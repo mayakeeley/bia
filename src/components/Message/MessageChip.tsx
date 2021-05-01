@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
-import { mauvelous, azalea, black, jordyBlue } from "../../theme";
+import { mauvelous, azalea, black } from "../../theme";
 import { getBiaUser } from "utils/localstorage";
 
 const MessageChip: React.FC<{
