@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
 import { mauvelous, azalea, black } from "../../theme";
-import { UserModel } from "../../models/user.model";
 import { useBiaUserContext } from "AppContext";
 
 const Message: React.FC<{
