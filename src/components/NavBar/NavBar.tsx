@@ -25,7 +25,10 @@ const useStyles = makeStyles((theme: Theme) =>
       zIndex: theme.zIndex.appBar,
       position: "fixed",
       bottom: 0,
-      width: "100%",
+      width: "100vw",
+      [theme.breakpoints.up("md")]: {
+        width: "768px",
+      },
       boxSizing: "border-box",
     },
   })

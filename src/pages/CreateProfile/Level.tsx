@@ -86,8 +86,7 @@ const Level: React.FC<{
                     Level
                 </Typography>
                 <Typography variant="subtitle2" className={classes.infoText}>
-                    Select your level for
-                    <br /> each activity
+                    Select your level for each activity
                 </Typography>
             </div>
             <Grid

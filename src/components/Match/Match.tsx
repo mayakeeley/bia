@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         matchRoot: {
             margin: theme.spacing(0, 6),
-            padding: theme.spacing(2),
+            padding: theme.spacing(1, 2),
             position: "relative",
             bottom: theme.spacing(3),
             height: "50vh",
@@ -42,13 +42,12 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: "auto",
         },
         basicInfo: {
-            width: "90%",
             marginTop: theme.spacing(6),
         },
         about: {
             maxHeight: "25vh",
             overflow: "auto",
-            width: "90%",
+            alignSelf: "flex-start",
             fontSize: "14px",
             marginTop: theme.spacing(2),
             color: theme.palette.grey[700],
@@ -57,6 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            maxWidth: "5em",
         },
         fab: {
             margin: theme.spacing(2, 1),
@@ -64,6 +64,10 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingTop: "100%",
             position: "relative",
             backgroundColor: mauvelous,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: "50%",
         },
         fabText: {
             color: white,
@@ -112,7 +116,7 @@ const Match: React.FC<{ user: UserModel }> = ({ user }) => {
                     {user.about}
                 </Typography>
 
-                <Grid container justify="space-evenly" spacing={1}>
+                <Grid container justify="space-between" spacing={1}>
                     {user.activities &&
                         user.activities.map((activity, index) => (
                             <Grid
@@ -121,14 +125,14 @@ const Match: React.FC<{ user: UserModel }> = ({ user }) => {
                                 key={index}
                                 xs={4}
                             >
-                                <Fab className={classes.fab}>
+                                <div className={classes.fab}>
                                     <Typography
                                         variant="body1"
                                         className={classes.fabText}
                                     >
                                         {activity.activityName}
                                     </Typography>
-                                </Fab>
+                                </div>
                                 <Chip
                                     className={classes.chip}
                                     variant="default"

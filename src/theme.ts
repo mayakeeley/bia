@@ -18,6 +18,15 @@ export const jaffa = "#F07A48";
 const textColor = black;
 const contrastText = white;
 const theme = createMuiTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 768,
+      lg: 1280,
+      xl: 1920,
+    },
+  },
   palette: {
     background: {
       default: white,
