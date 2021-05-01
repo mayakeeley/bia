@@ -8,7 +8,6 @@ import {
     Grid,
 } from "@material-ui/core";
 import { grey } from "theme";
-import HelpIcon from "@material-ui/icons/Help";
 import { UserModel } from "models/user.model";
 
 const useStyles = makeStyles((theme: Theme) =>
