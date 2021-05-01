@@ -10,7 +10,6 @@ import {
     springRain,
     white,
 } from "theme";
-import Settings from "assets/icons/settings.svg";
 import { firestore } from "../../firebase";
 import { ActivityModel } from "models/activity.model";
 import { useBiaUserContext } from "AppContext";
