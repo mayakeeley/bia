@@ -4,18 +4,16 @@ import {
     createStyles,
     Theme,
     Typography,
-    Fab,
     Chip,
     Grid,
 } from "@material-ui/core";
-import { grey, white, mauvelous } from "theme";
-import DirectionsRunRoundedIcon from "@material-ui/icons/DirectionsRunRounded";
+import { grey, white, mauvelous, azalea } from "theme";
 import { UserModel } from "models/user.model";
 import { ActivityModel } from "models/activity.model";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        chip: { fontSize: "1em", margin: theme.spacing(1) },
+        chip: { fontSize: "1em", margin: theme.spacing(2, 1) },
 
         infoText: {
             color: grey,
@@ -35,6 +33,12 @@ const useStyles = makeStyles((theme: Theme) =>
             height: "20vw",
             maxWidth: "7.5em",
             maxHeight: "7.5em",
+            backgroundColor: azalea,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: "50%",
+            padding: "0.5em",
         },
         fabText: {
             fontSize: "1em",
@@ -103,7 +107,7 @@ const Activities: React.FC<{
                 <Grid container spacing={2} justify="center">
                     {activities.map((activity) => (
                         <Grid item key={activity.activityId}>
-                            <Fab
+                            <div
                                 color="primary"
                                 className={`${classes.fab} ${
                                     isActivitySelected(activity.activityId) &&
@@ -122,7 +126,7 @@ const Activities: React.FC<{
                                         {activity.activityName}
                                     </Typography>
                                 </div>
-                            </Fab>
+                            </div>
                         </Grid>
                     ))}
                 </Grid>

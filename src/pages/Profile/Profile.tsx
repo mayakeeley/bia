@@ -87,6 +87,9 @@ const useStyles = makeStyles((theme: Theme) =>
             borderTopLeftRadius: "1.5em",
             borderTopRightRadius: "1.5em",
             flex: "1 1 auto",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-evenly",
         },
         aboutHeading: {
             marginBottom: "0.5em",
@@ -264,7 +267,7 @@ const Profile: React.FC<{
                     <div className={classes.headerWrapper}>
                         <Typography
                             className={classes.light}
-                            variant="h3"
+                            variant="h1"
                             data-testid="profile-title"
                         >
                             Profile

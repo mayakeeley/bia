@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
             backgroundColor: lavenderBlush,
             minHeight: "100vh",
-            padding: theme.spacing(2, 3),
+            padding: theme.spacing(4, 3),
         },
         button: { borderRadius: "1.25em", margin: "auto" },
         buttonWrapper: {
@@ -155,20 +155,21 @@ const CreateProfile: React.FC<{ user: firebase.User }> = ({ user }) => {
     return (
         <Grid
             container
-            justify="space-evenly"
+            justify="space-between"
             direction="column"
             className={classes.root}
         >
-            <Grid container alignItems="center" spacing={1}>
-                <Grid item>
-                    <Typography variant="h2">Create Profile</Typography>
+            <div>
+                <Grid container alignItems="center" spacing={1}>
+                    <Grid item>
+                        <Typography variant="h2">Create Profile</Typography>
+                    </Grid>
+                    <Grid item>
+                        <AccountCircleIcon />
+                    </Grid>
                 </Grid>
-                <Grid item>
-                    <AccountCircleIcon />
-                </Grid>
-            </Grid>
-
-            {renderForm(progress)}
+                {renderForm(progress)}
+            </div>
 
             <div className={classes.buttons}>
                 {progress === 4 ? (
