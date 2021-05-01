@@ -10,7 +10,7 @@ import image from "../../assets/images/welcome-screen.png";
 import { lavenderBlush } from "theme";
 import firebase, { firestore, provider } from "../../firebase";
 import { useHistory } from "react-router-dom";
-import { useBiaUserContext } from "AppContext";
+import { getBiaUser, setBiaUser } from "utils/localstorage";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,7 +36,6 @@ const Welcome: React.FC<{
 }> = ({ setUser }) => {
   const classes = useStyles();
   const history = useHistory();
-  const { setBiaUser } = useBiaUserContext();
 
   const getUser = (user: firebase.User) => {
     firestore
@@ -48,10 +47,13 @@ const Welcome: React.FC<{
         querySnapshot.forEach((doc) => {
           matchingUsers.push({ ...doc.data(), docId: doc.id });
         });
-        setBiaUser(matchingUsers[0]);
-        matchingUsers.length > 0
-          ? history.push("/matches")
-          : history.push("/createProfile");
+        if (matchingUsers.length) {
+          setBiaUser(matchingUsers[0]);
+          setUser(matchingUsers[0]);
+          history.push("/matches");
+        } else {
+          history.push("/createProfile");
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -59,28 +61,21 @@ const Welcome: React.FC<{
   };
 
   const signIn = async () => {
-    await firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then((result) => {
-        result.user && setUser(result.user);
-        result.user && getUser(result.user);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const signOut = async () => {
-    await firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        setUser(undefined);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const user = getBiaUser();
+    if (!user) {
+      await firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          result.user && setUser(result.user);
+          result.user && getUser(result.user);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      history.push("/matches");
+    }
   };
 
   return (

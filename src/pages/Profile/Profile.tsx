@@ -10,10 +10,11 @@ import {
   springRain,
   white,
 } from "theme";
-import Settings from "assets/icons/settings.svg";
 import { firestore } from "../../firebase";
 import { ActivityModel } from "models/activity.model";
-import { useBiaUserContext } from "AppContext";
+import firebase from "firebase";
+import { useHistory } from "react-router-dom";
+import { deleteBiaUser, getBiaUser } from "utils/localstorage";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,6 +38,19 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: "transparent",
       border: "none",
       cursor: "pointer",
+      marginLeft: "auto",
+    },
+    logoutButton: {
+      cursor: "pointer",
+      borderRadius: "2em",
+      border: "none",
+      backgroundColor: jordyBlue,
+      padding: "0.2em 1em",
+      marginBottom: "0.3em",
+      marginRight: "-1em",
+    },
+    logoutText: {
+      color: white,
     },
     grey: {
       color: grey,
@@ -154,10 +168,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Profile: React.FC = () => {
+const Profile: React.FC<{
+  setUser: (user: firebase.User | undefined) => void;
+}> = ({ setUser }) => {
   const [activities, setActivities] = useState<ActivityModel[]>();
   const classes = useStyles();
-  const { biaUser } = useBiaUserContext();
+  const history = useHistory();
+  const biaUser = getBiaUser();
 
   const getActivities = () => {
     firestore
@@ -174,6 +191,19 @@ const Profile: React.FC = () => {
         setActivities(activities);
       })
       .catch((error) => console.log(error));
+  };
+
+  const signOut = async () => {
+    await firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        deleteBiaUser();
+        history.push("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -227,75 +257,77 @@ const Profile: React.FC = () => {
       );
     });
 
-  return biaUser ? (
-    <div className={classes.background}>
-      <div className={classes.header}>
-        <div className={classes.headerWrapper}>
-          <Typography
-            className={classes.light}
-            variant="h3"
-            data-testid="profile-title"
-          >
-            Profile
-          </Typography>
-          <img className={classes.icon} src={ProfileIcon} alt="profile" />
+  return (
+    biaUser && (
+      <div className={classes.background}>
+        <div className={classes.header}>
+          <div className={classes.headerWrapper}>
+            <Typography
+              className={classes.light}
+              variant="h3"
+              data-testid="profile-title"
+            >
+              Profile
+            </Typography>
+            <img className={classes.icon} src={ProfileIcon} alt="profile" />
+          </div>
+          <button className={classes.logoutButton} onClick={signOut}>
+            <Typography className={classes.logoutText} variant="subtitle2">
+              Log Out
+            </Typography>
+          </button>
         </div>
-        <button className={classes.settingsButton}>
-          <img className={classes.settings} src={Settings} alt="settings" />
-        </button>
+        <div className={classes.tab}>
+          <div className={classes.blob}>
+            <img
+              className={classes.photo}
+              src={biaUser.photoUrl}
+              alt="user profile"
+            />
+            <Typography
+              className={classes.light}
+              variant="h3"
+              data-testid="profile-title"
+            >
+              {biaUser.name}
+            </Typography>
+            <Typography
+              className={classes.location}
+              variant="subtitle2"
+              data-testid="profile-subtitle"
+            >
+              {biaUser.location}
+            </Typography>
+          </div>
+          <div className={classes.about}>
+            <Typography
+              className={classes.aboutHeading}
+              variant="h4"
+              data-testid="profile-title"
+            >
+              About
+            </Typography>
+            <Typography
+              className={classes.grey}
+              variant="body1"
+              data-testid="profile-about"
+            >
+              {biaUser.about}
+            </Typography>
+            <div className={classes.activities}>{mappedActivities}</div>
+            <Typography
+              className={classes.aboutHeading}
+              variant="h4"
+              data-testid="profile-title"
+            >
+              Goals
+              <div className={classes.goals}>{goals}</div>
+            </Typography>
+          </div>
+        </div>
+        <Navbar />
       </div>
-      <div className={classes.tab}>
-        <div className={classes.blob}>
-          <img
-            className={classes.photo}
-            src={biaUser.photoUrl}
-            alt="user profile"
-          />
-          <Typography
-            className={classes.light}
-            variant="h3"
-            data-testid="profile-title"
-          >
-            {biaUser.name}
-          </Typography>
-          <Typography
-            className={classes.location}
-            variant="subtitle2"
-            data-testid="profile-subtitle"
-          >
-            {biaUser.location}
-          </Typography>
-        </div>
-        <div className={classes.about}>
-          <Typography
-            className={classes.aboutHeading}
-            variant="h4"
-            data-testid="profile-title"
-          >
-            About
-          </Typography>
-          <Typography
-            className={classes.grey}
-            variant="body1"
-            data-testid="profile-about"
-          >
-            {biaUser.about}
-          </Typography>
-          <div className={classes.activities}>{mappedActivities}</div>
-          <Typography
-            className={classes.aboutHeading}
-            variant="h4"
-            data-testid="profile-title"
-          >
-            Goals
-            <div className={classes.goals}>{goals}</div>
-          </Typography>
-        </div>
-      </div>
-      <Navbar />
-    </div>
-  ) : (
-    <></>
+    )
   );
 };
 

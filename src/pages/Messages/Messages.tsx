@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar/NavBar";
-import { createStyles, makeStyles, Theme, Typography } from "@material-ui/core";
+import { createStyles, makeStyles, Typography } from "@material-ui/core";
 import { jordyBlue, lavenderBlush, grey, white } from "../../theme";
-import { useBiaUserContext } from "AppContext";
 import { firestore } from "../../firebase";
 import { MatchModel } from "models/match.model";
 import Message from "./Message";
+import { getBiaUser } from "utils/localstorage";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     messages: {
       backgroundColor: jordyBlue,
@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Messages: React.FC = () => {
   const classes = useStyles();
-  const { biaUser } = useBiaUserContext();
+  const biaUser = getBiaUser();
   const [matches, setMatches] = useState<MatchModel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 

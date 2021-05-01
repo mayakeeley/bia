@@ -4,7 +4,6 @@ import { UserModel, UserObject } from "../../models/user.model";
 import NavBar from "../../components/NavBar/NavBar";
 import {
   Button,
-  createStyles,
   Dialog,
   DialogActions,
   DialogContent,
@@ -15,15 +14,16 @@ import {
   Slide,
   Theme,
   Typography,
+  createStyles,
 } from "@material-ui/core";
 import { rajah, jordyBlue, white } from "theme";
 import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
 import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
-import { useBiaUserContext } from "AppContext";
 import { firestore } from "../../firebase";
 import { v4 as uuidv4 } from "uuid";
 import { DialogContentText } from "@material-ui/core";
 import { TransitionProps } from "@material-ui/core/transitions";
+import { getBiaUser } from "utils/localstorage";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,7 +46,7 @@ const Transition = React.forwardRef(function Transition(
 });
 const Matches: React.FC = () => {
   const classes = useStyles();
-  const { biaUser } = useBiaUserContext();
+  const biaUser = getBiaUser();
   const [users, setUsers] = useState<UserModel[]>();
   const [isMatchDialogOpen, setIsMatchDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);

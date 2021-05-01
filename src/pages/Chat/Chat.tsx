@@ -16,10 +16,10 @@ import WhistleIcon from "../../assets/icons/whistle.svg";
 import { useParams } from "react-router-dom";
 import { MessageModel } from "models/message.model";
 import NavBar from "components/NavBar/NavBar";
-import { useBiaUserContext } from "AppContext";
 import { MatchModel } from "models/match.model";
 import { firestore } from "../../firebase";
 import { v4 as uuidv4 } from "uuid";
+import { getBiaUser } from "utils/localstorage";
 
 interface RouteParams {
   id: string;
@@ -98,9 +98,9 @@ const useStyles = makeStyles(() =>
 );
 
 const Chat: React.FC = () => {
+  const biaUser = getBiaUser();
   const classes = useStyles();
   const history = useHistory();
-  const { biaUser } = useBiaUserContext();
   const { id } = useParams<RouteParams>();
 
   const [isLoading, setIsLoading] = useState(true);
