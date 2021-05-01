@@ -46,7 +46,6 @@ const Welcome: React.FC<{
       .then((querySnapshot) => {
         const matchingUsers = [] as any[];
         querySnapshot.forEach((doc) => {
-          console.log(doc.id);
           matchingUsers.push({ ...doc.data(), docId: doc.id });
         });
         setBiaUser(matchingUsers[0]);

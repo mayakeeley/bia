@@ -57,16 +57,18 @@ const Messages: React.FC = () => {
     firestore
       .collection("Matches")
       .where("userIds", "array-contains", biaUser?.uid)
-      .get()
-      .then((querySnapshot) => {
-        const docMatches = querySnapshot.docs.map((doc) =>
-          doc.data()
-        ) as MatchModel[];
-        console.log(docMatches);
-        setMatches(docMatches);
-        setIsLoading(false);
-      })
-      .catch((error) => console.log(error));
+      .onSnapshot(
+        {
+          includeMetadataChanges: true,
+        },
+        (querySnapshot) => {
+          const docMatches = querySnapshot.docs.map((doc) =>
+            doc.data()
+          ) as MatchModel[];
+          setMatches(docMatches);
+          setIsLoading(false);
+        }
+      );
   };
 
   useEffect(() => {
@@ -80,7 +82,7 @@ const Messages: React.FC = () => {
 
     const displayedMessage =
       match.messages.length > 0
-        ? match.messages.pop()
+        ? match.messages[match.messages.length - 1]
         : { timestamp: match.timestamp, messageContent: "New match!" };
 
     const shortDate = displayedMessage
@@ -92,12 +94,11 @@ const Messages: React.FC = () => {
     return (
       user && (
         <Message
-          uid={user.uid}
           name={user.name}
           photoUrl={user.photoUrl}
           shortDate={shortDate}
           messageText={displayedMessage?.messageContent || ""}
-          index={index}
+          key={index}
           matchId={match.matchId}
         />
       )

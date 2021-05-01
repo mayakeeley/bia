@@ -37,22 +37,20 @@ const useStyles = makeStyles(() =>
 );
 
 interface MessageProps {
-  uid: string;
   name: string;
   photoUrl: string;
   shortDate: string;
   messageText: string;
-  index: number;
+  key: number;
   matchId: string;
 }
 
 const Message: React.FC<MessageProps> = ({
-  uid,
   name,
   photoUrl,
   shortDate,
   messageText,
-  index,
+  key,
   matchId,
 }) => {
   const classes = useStyles();
@@ -63,7 +61,7 @@ const Message: React.FC<MessageProps> = ({
       onClick={() => history.push(`/chat/${matchId}`)}
       className={classes.message}
       component="a"
-      key={index}
+      key={key}
     >
       <img className={classes.photo} src={photoUrl} alt="" />
       <div className={classes.text}>

@@ -49,6 +49,22 @@ const Matches: React.FC = () => {
   const { biaUser } = useBiaUserContext();
   const [users, setUsers] = useState<UserModel[]>();
   const [isMatchDialogOpen, setIsMatchDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [updatedUser, setUpdatedUser] = useState(biaUser);
+
+  const reFetchMyUser = (user: UserModel) => {
+    firestore
+      .collection("Users")
+      .doc(user.uid)
+      .onSnapshot({ includeMetadataChanges: true }, (doc) => {
+        doc.data() && setUpdatedUser(doc.data() as UserModel);
+        setIsLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    biaUser && reFetchMyUser(biaUser);
+  }, [isLoading]);
 
   const fetchUsers = () => {
     firestore
@@ -66,30 +82,28 @@ const Matches: React.FC = () => {
 
   useEffect(() => {
     users &&
-      biaUser &&
+      updatedUser &&
       setLocalAvailableUsers(
         users.filter((theirUser: UserModel) =>
-          validatePotentialMatch(biaUser, theirUser)
+          validatePotentialMatch(updatedUser, theirUser)
         )
       );
-  }, [users, biaUser]);
+  }, [users, updatedUser]);
 
   const validatePotentialMatch = (myUser: UserModel, theirUser: UserModel) => {
     const isNotMyUser = myUser.uid !== theirUser.uid;
-
     if (myUser.users) {
       const myJudgedUsers = Object.keys(myUser.users || {});
       const isNotYetJudged = !myJudgedUsers.includes(theirUser.uid);
       return isNotYetJudged && isNotMyUser;
     }
-
     return isNotMyUser;
   };
 
   const availableUsers =
-    biaUser && users
+    updatedUser && users
       ? users.filter((theirUser: UserModel) =>
-          validatePotentialMatch(biaUser, theirUser)
+          validatePotentialMatch(updatedUser, theirUser)
         )
       : [];
 
@@ -104,15 +118,15 @@ const Matches: React.FC = () => {
     theirUserId: string,
     isLiked: boolean
   ) => {
-    if (biaUser) {
+    if (updatedUser) {
       firestore
         .collection("Users")
         .doc(myUserId)
         .set(
           {
-            ...biaUser,
+            ...updatedUser,
             users: {
-              ...biaUser.users,
+              ...updatedUser.users,
               ...localJudgedUsers,
               [theirUserId]: isLiked,
             },
@@ -128,9 +142,11 @@ const Matches: React.FC = () => {
 
   const dislikeUser = (theirUser: UserModel) => {
     setLocalAvailableUsers(
-      localAvailableUsers.filter((biaUser) => biaUser.uid !== theirUser.uid)
+      localAvailableUsers.filter(
+        (updatedUser) => updatedUser.uid !== theirUser.uid
+      )
     );
-    biaUser && updateJudgedUsers(biaUser.uid, theirUser.uid, false);
+    updatedUser && updateJudgedUsers(updatedUser.uid, theirUser.uid, false);
   };
 
   const likeUser = (theirUser: UserModel, myUser: UserModel) => {
@@ -154,7 +170,7 @@ const Matches: React.FC = () => {
       .set({
         matchId,
         messages: [],
-        timestamp: new Date(),
+        timestamp: new Date().toLocaleDateString(),
         userIds: [theirUser.uid, myUser.uid],
         userDetails: [theirUser, myUser],
       })
@@ -164,7 +180,7 @@ const Matches: React.FC = () => {
       });
   };
 
-  return biaUser && localAvailableUsers.length > 0 ? (
+  return updatedUser && localAvailableUsers.length > 0 ? (
     <div className={classes.root}>
       <Typography variant="h1" className={classes.title}>
         Swipe
@@ -181,7 +197,7 @@ const Matches: React.FC = () => {
         </Fab>
         <Fab
           className={classes.button}
-          onClick={() => likeUser(localAvailableUsers[0], biaUser)}
+          onClick={() => likeUser(localAvailableUsers[0], updatedUser)}
         >
           <CheckRoundedIcon />
         </Fab>

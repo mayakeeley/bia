@@ -47,6 +47,7 @@ const useStyles = makeStyles(() =>
       width: "100%",
       backgroundColor: lavenderBlush,
       marginTop: "2em",
+      height: "100vh",
       marginRight: "0",
     },
     title: {
@@ -130,7 +131,6 @@ const Chat: React.FC = () => {
   const otherUser = match?.userDetails.find(
     (user) => user.uid !== biaUser?.uid
   );
-  console.log(messages);
 
   useEffect(() => {
     fetchMatchById(id);

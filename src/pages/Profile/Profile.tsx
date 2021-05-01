@@ -227,75 +227,75 @@ const Profile: React.FC = () => {
       );
     });
 
-  return (
-    biaUser && (
-      <div className={classes.background}>
-        <div className={classes.header}>
-          <div className={classes.headerWrapper}>
-            <Typography
-              className={classes.light}
-              variant="h3"
-              data-testid="profile-title"
-            >
-              Profile
-            </Typography>
-            <img className={classes.icon} src={ProfileIcon} alt="profile" />
-          </div>
-          <button className={classes.settingsButton}>
-            <img className={classes.settings} src={Settings} alt="settings" />
-          </button>
+  return biaUser ? (
+    <div className={classes.background}>
+      <div className={classes.header}>
+        <div className={classes.headerWrapper}>
+          <Typography
+            className={classes.light}
+            variant="h3"
+            data-testid="profile-title"
+          >
+            Profile
+          </Typography>
+          <img className={classes.icon} src={ProfileIcon} alt="profile" />
         </div>
-        <div className={classes.tab}>
-          <div className={classes.blob}>
-            <img
-              className={classes.photo}
-              src={biaUser.photoUrl}
-              alt="user profile"
-            />
-            <Typography
-              className={classes.light}
-              variant="h3"
-              data-testid="profile-title"
-            >
-              {biaUser.name}
-            </Typography>
-            <Typography
-              className={classes.location}
-              variant="subtitle2"
-              data-testid="profile-subtitle"
-            >
-              {biaUser.location}
-            </Typography>
-          </div>
-          <div className={classes.about}>
-            <Typography
-              className={classes.aboutHeading}
-              variant="h4"
-              data-testid="profile-title"
-            >
-              About
-            </Typography>
-            <Typography
-              className={classes.grey}
-              variant="body1"
-              data-testid="profile-about"
-            >
-              {biaUser.about}
-            </Typography>
-            <div className={classes.activities}>{mappedActivities}</div>
-            <Typography
-              className={classes.aboutHeading}
-              variant="h4"
-              data-testid="profile-title"
-            >
-              Goals
-              <div className={classes.goals}>{goals}</div>
-            </Typography>
-          </div>
-        </div>
-        <Navbar />
+        <button className={classes.settingsButton}>
+          <img className={classes.settings} src={Settings} alt="settings" />
+        </button>
       </div>
-    )
+      <div className={classes.tab}>
+        <div className={classes.blob}>
+          <img
+            className={classes.photo}
+            src={biaUser.photoUrl}
+            alt="user profile"
+          />
+          <Typography
+            className={classes.light}
+            variant="h3"
+            data-testid="profile-title"
+          >
+            {biaUser.name}
+          </Typography>
+          <Typography
+            className={classes.location}
+            variant="subtitle2"
+            data-testid="profile-subtitle"
+          >
+            {biaUser.location}
+          </Typography>
+        </div>
+        <div className={classes.about}>
+          <Typography
+            className={classes.aboutHeading}
+            variant="h4"
+            data-testid="profile-title"
+          >
+            About
+          </Typography>
+          <Typography
+            className={classes.grey}
+            variant="body1"
+            data-testid="profile-about"
+          >
+            {biaUser.about}
+          </Typography>
+          <div className={classes.activities}>{mappedActivities}</div>
+          <Typography
+            className={classes.aboutHeading}
+            variant="h4"
+            data-testid="profile-title"
+          >
+            Goals
+            <div className={classes.goals}>{goals}</div>
+          </Typography>
+        </div>
+      </div>
+      <Navbar />
+    </div>
+  ) : (
+    <></>
   );
 };
 
