@@ -3,6 +3,8 @@ import * as React from "react";
 import { useState } from "react";
 import { BiaUserContext } from "./AppContext";
 import Routes from "./routes/Routes";
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
 
 const sampleUser: UserModel = {
   uid: "string",
@@ -16,13 +18,34 @@ const sampleUser: UserModel = {
   goals: [""],
   users: {},
 };
-
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    appWrapper: {
+      maxWidth: "768px",
+      maxHeight: "1024px",
+      padding: 0,
+    },
+    nonMobileWrapper: {
+      minWidth: "100vw",
+      minHeight: "100vh",
+      backgroundColor: "yellow",
+      padding: 0,
+      display: "flex",
+      justifyContent: "flex-end",
+    },
+  })
+);
 const App: React.FC = () => {
   const [biaUser, setBiaUser] = useState(sampleUser);
+  const classes = useStyles();
 
   return (
     <BiaUserContext.Provider value={{ biaUser, setBiaUser }}>
-      <Routes />
+      <Container className={classes.nonMobileWrapper}>
+        <Container className={classes.appWrapper}>
+          <Routes />
+        </Container>
+      </Container>
     </BiaUserContext.Provider>
   );
 };

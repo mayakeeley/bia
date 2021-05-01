@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
       zIndex: theme.zIndex.appBar,
       position: "fixed",
       bottom: 0,
-      width: "100%",
+      width: window.innerWidth <= 768 ? window.innerWidth : "768px",
       boxSizing: "border-box",
     },
   })
