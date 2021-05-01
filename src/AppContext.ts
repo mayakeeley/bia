@@ -2,12 +2,12 @@ import { UserModel } from "models/user.model";
 import { createContext, useContext } from "react";
 
 export type UserContextType = {
-  biaUser: UserModel | null;
+  biaUser?: UserModel;
   setBiaUser: (user: UserModel) => void;
 };
 
 export const BiaUserContext = createContext<UserContextType>({
-  biaUser: null,
+  biaUser: undefined,
   setBiaUser: (biaUser) => console.warn("no user provider"),
 });
 

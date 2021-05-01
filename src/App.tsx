@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme: Theme) =>
 const App: React.FC = () => {
   const [biaUser, setBiaUser] = useState(sampleUser);
   const classes = useStyles();
-
   return (
     <BiaUserContext.Provider value={{ biaUser, setBiaUser }}>
       <Container className={classes.nonMobileWrapper}>

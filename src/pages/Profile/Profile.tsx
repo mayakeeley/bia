@@ -12,9 +12,9 @@ import {
 } from "theme";
 import { firestore } from "../../firebase";
 import { ActivityModel } from "models/activity.model";
-import { useBiaUserContext } from "AppContext";
 import firebase from "firebase";
 import { useHistory } from "react-router-dom";
+import { deleteBiaUser, getBiaUser } from "utils/localstorage";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -174,7 +174,7 @@ const Profile: React.FC<{
     const [activities, setActivities] = useState<ActivityModel[]>();
     const classes = useStyles();
     const history = useHistory();
-    const { biaUser } = useBiaUserContext();
+    const biaUser = getBiaUser();
 
     const getActivities = () => {
         firestore
@@ -198,7 +198,7 @@ const Profile: React.FC<{
             .auth()
             .signOut()
             .then(() => {
-                setUser(undefined);
+                deleteBiaUser();
                 history.push("/");
             })
             .catch((error) => {
