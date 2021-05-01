@@ -1,11 +1,11 @@
+import { createStyles, makeStyles, Theme } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
 import { UserModel } from "models/user.model";
 import * as React from "react";
 import { useState } from "react";
+import { azalea } from "theme";
 import { BiaUserContext } from "./AppContext";
 import Routes from "./routes/Routes";
-import { createStyles, makeStyles, Theme } from "@material-ui/core";
-import Container from "@material-ui/core/Container";
-import { grey, white, mauvelous, black, azalea } from "theme";
 
 const sampleUser: UserModel = {
   uid: "string",
