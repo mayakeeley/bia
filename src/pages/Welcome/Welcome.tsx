@@ -72,18 +72,6 @@ const Welcome: React.FC<{
       });
   };
 
-  const signOut = async () => {
-    await firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        setUser(undefined);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   return (
     <div className={classes.welcome} data-testid="welcome-page">
       <Typography variant="h1" data-testid="welcome-title">

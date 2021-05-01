@@ -14,6 +14,8 @@ import Settings from "assets/icons/settings.svg";
 import { firestore } from "../../firebase";
 import { ActivityModel } from "models/activity.model";
 import { useBiaUserContext } from "AppContext";
+import firebase from "firebase";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,6 +39,19 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: "transparent",
       border: "none",
       cursor: "pointer",
+      marginLeft: "auto",
+    },
+    logoutButton: {
+      cursor: "pointer",
+      borderRadius: "2em",
+      border: "none",
+      backgroundColor: jordyBlue,
+      padding: "0.2em 1em",
+      marginBottom: "0.3em",
+      marginRight: "-1em",
+    },
+    logoutText: {
+      color: white,
     },
     grey: {
       color: grey,
@@ -154,9 +169,12 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Profile: React.FC = () => {
+const Profile: React.FC<{
+  setUser: (user: firebase.User | undefined) => void;
+}> = ({ setUser }) => {
   const [activities, setActivities] = useState<ActivityModel[]>();
   const classes = useStyles();
+  const history = useHistory();
   const { biaUser } = useBiaUserContext();
 
   const getActivities = () => {
@@ -174,6 +192,19 @@ const Profile: React.FC = () => {
         setActivities(activities);
       })
       .catch((error) => console.log(error));
+  };
+
+  const signOut = async () => {
+    await firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        setUser(undefined);
+        history.push("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -243,6 +274,11 @@ const Profile: React.FC = () => {
           </div>
           <button className={classes.settingsButton}>
             <img className={classes.settings} src={Settings} alt="settings" />
+          </button>
+          <button className={classes.logoutButton} onClick={signOut}>
+            <Typography className={classes.logoutText} variant="subtitle2">
+              Log Out
+            </Typography>
           </button>
         </div>
         <div className={classes.tab}>
