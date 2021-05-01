@@ -47,7 +47,11 @@ const App: React.FC = () => {
           exact
           path="/profile"
           component={() =>
-            biaUser ? <Profile /> : <Welcome setUser={setUser} />
+            biaUser ? (
+              <Profile setUser={setUser} />
+            ) : (
+              <Welcome setUser={setUser} />
+            )
           }
         />
       </Switch>
