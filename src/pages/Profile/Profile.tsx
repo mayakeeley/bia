@@ -47,7 +47,6 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: jordyBlue,
             padding: "0.2em 1em",
             marginBottom: "0.3em",
-            marginRight: "-1em",
         },
         logoutText: {
             color: white,
