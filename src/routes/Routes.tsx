@@ -6,13 +6,11 @@ import firebase from "../firebase";
 import CreateProfile from "pages/CreateProfile/CreateProfile";
 import Messages from "../pages/Messages/Messages";
 import Profile from "../pages/Profile/Profile";
-import { useBiaUserContext } from "AppContext";
 import Chat from "pages/Chat/Chat";
 import PrivateRoute from "../utils/PrivateRoute";
 
 const App: React.FC = () => {
     const [user, setUser] = useState<firebase.User | undefined>();
-    const { biaUser } = useBiaUserContext();
 
     return (
         <Router>
