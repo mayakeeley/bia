@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: "center",
             color: black,
             margin: theme.spacing(1),
-            padding: theme.spacing(1),
+            padding: "0.5em 1em",
+            cursor: "pointer",
         },
         selectedLevel: {
             backgroundColor: azalea,
@@ -86,8 +87,7 @@ const Level: React.FC<{
                     Level
                 </Typography>
                 <Typography variant="subtitle2" className={classes.infoText}>
-                    Select your level for
-                    <br /> each activity
+                    Select your level for each activity
                 </Typography>
             </div>
             <Grid
