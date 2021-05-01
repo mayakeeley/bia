@@ -93,14 +93,16 @@ const Messages: React.FC = () => {
 
     return (
       user && (
-        <Message
-          name={user.name}
-          photoUrl={user.photoUrl}
-          shortDate={shortDate}
-          messageText={displayedMessage?.messageContent || ""}
-          key={index}
-          matchId={match.matchId}
-        />
+        <div key={index}>
+          <Message
+            name={user.name}
+            photoUrl={user.photoUrl}
+            shortDate={shortDate}
+            messageText={displayedMessage?.messageContent || ""}
+            index={index}
+            matchId={match.matchId}
+          />
+        </div>
       )
     );
   });
