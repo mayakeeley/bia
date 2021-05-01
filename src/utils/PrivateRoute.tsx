@@ -1,18 +1,13 @@
-import React from "react";
 import { Redirect, Route } from "react-router-dom";
-import { useBiaUserContext } from "AppContext";
+import { getBiaUser } from "./localstorage";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    const { biaUser } = useBiaUserContext();
+    const biaUser = getBiaUser();
     return (
         <Route
             {...rest}
             render={(props) =>
-                biaUser?.uid !== "string" ? (
-                    <Component {...props} />
-                ) : (
-                    <Redirect to="/" />
-                )
+                biaUser ? <Component {...props} /> : <Redirect to="/" />
             }
         ></Route>
     );
