@@ -8,6 +8,7 @@ import Messages from "../pages/Messages/Messages";
 import Profile from "../pages/Profile/Profile";
 import Chat from "pages/Chat/Chat";
 import PrivateRoute from "../utils/PrivateRoute";
+import PublicRoute from "../utils/PublicRoute";
 
 const App: React.FC = () => {
     const [user, setUser] = useState<firebase.User | undefined>();
@@ -15,7 +16,7 @@ const App: React.FC = () => {
     return (
         <Router>
             <Switch>
-                <Route
+                <PublicRoute
                     exact
                     path="/"
                     component={() => <Welcome setUser={setUser} />}
